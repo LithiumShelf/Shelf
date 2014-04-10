@@ -1,0 +1,28 @@
+body {
+	background-color: #eee;
+	text-align: center;
+	font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+}
+
+#nav_bar ul {
+	list-style: none;
+	padding: 0;
+}
+
+#nav_bar li {
+	display: inline-block;
+}
+
+#nav_bar li a {
+	display: inline-block;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	width: 100px;
+	text-decoration: none;
+	color: black;
+}
+
+#nav_bar li a:hover {
+	background-color: #555;
+	color: white;
+};
