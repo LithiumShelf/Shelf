@@ -40,7 +40,7 @@ function callHook() {
     $queryString = $urlArray;
  
     $controllerName = $controller;
-    $controller = ucwords($controller);
+    $controller = $controller;
     $model = rtrim($controller, 's');
     $controller .= 'Controller';
     $dispatch = new $controller($model,$controllerName,$action);
