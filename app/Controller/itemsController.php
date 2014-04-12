@@ -4,21 +4,24 @@
             
         }
         
-        function removefromborrowing(){
+        function removefromlending(){
             
         }
         
-        function viewborrowing(){
+        function borrowing(){
             
         }
         
-        function viewitempage(){
+        function itempage(){
             
         }
         
-        function viewlending(){
+        function lending(){
             
         }
         
+        function itemsbyuser(){
+            
+        }
     }
 ?>

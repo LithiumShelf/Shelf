@@ -26,14 +26,14 @@ class PDOhandler {
     function select($id) {
         $query = 'SELECT * FROM :thistable WHERE id = :id';
         $params = array(':id' => $id);
-	return $this->query($query, $params, 1);   
+	return $this->query($query, $params);   
     }
     
     //delete by id
     function delete($id) {
 	$query = 'DELETE FROM :table WHERE id = :id';
 	$params = array(':id' => $id);
-	return $this->query($query, $params, 1);  
+	return $this->query($query, $params);  
     }
     
     
@@ -42,7 +42,7 @@ class PDOhandler {
     // insert command will also return the insert id for display
     // $query: The mysql query or command (ex.->'SELECT * FROM tweets WHERE id = :i;';)
     // $params: associative arrays that associate the query variable with a variable object (ex.-> array(':i' => $id);)
-    function query($query, $params, $singleResult = 0){
+    function query($query, $params){
 		if($params[":thistable"]){
 		    $params[":thistable"] = $this->_table;
 		}

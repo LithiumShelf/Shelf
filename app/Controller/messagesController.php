@@ -8,7 +8,11 @@
             
         }
         
-        function viewmessage(){
+        function sendmessage(){
+            
+        }
+        
+        function readmessage(){
             
         }
     }
