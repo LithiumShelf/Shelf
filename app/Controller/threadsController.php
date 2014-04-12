@@ -1,10 +1,22 @@
 <?php
     class transactionsController extends controller{
-        function borrow(){
+        function incrementrep(){
             
         }
         
-        function lend(){
+        function itemrequest(){
+            
+        }
+        
+        function unpend(){
+            
+        }
+        
+        function viewallthreads(){
+            
+        }
+        
+        function viewthread(){
             
         }
     }

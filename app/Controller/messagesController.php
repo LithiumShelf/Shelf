@@ -1,10 +1,14 @@
 <?php
     class messagesController extends controller{
-        function send(){
+        function composemessage(){
             
         }
         
-        function view(){
+        function friendrequest(){
+            
+        }
+        
+        function viewmessage(){
             
         }
     }

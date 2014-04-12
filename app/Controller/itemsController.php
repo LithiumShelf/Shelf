@@ -1,15 +1,24 @@
 <?php
     class itemsController extends controller{
-        function add(){
+        function putupforlending(){
             
         }
         
-        function remove(){
+        function removefromborrowing(){
             
         }
         
-        function edit(){
+        function viewborrowing(){
             
         }
+        
+        function viewitempage(){
+            
+        }
+        
+        function viewlending(){
+            
+        }
+        
     }
 ?>

@@ -8,7 +8,7 @@
                     $this->_limit = PAGINATE_LIMIT;
                     //find a datatable that matches the className
                     $this->_model = get_class($this); 
-                    $this->_table = strtolower($this->_model);
+                    $this->_table = $this->_model;
             }
     
             function __destruct() {
