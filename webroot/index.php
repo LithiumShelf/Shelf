@@ -28,6 +28,7 @@ require_once (ROOT . DS . 'bootstrap.php');
         <script src="<?= $BASE_URL ?>/js/jquery.mobile-1.4.2.min.js"></script>
     </head>
     <body>
-        <?php include(ROOT . DS . 'app' . DS . 'view' . DS . 'header.php');?>
+        <?php include(ROOT . DS . 'app' . DS . 'View' . DS . 'header.php');?>
+        <?php callHook(); ?>
     </body>
 </html>

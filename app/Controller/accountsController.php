@@ -1,5 +1,5 @@
 <?php
-class accountsController extends controller {
+class accountsController extends Controller {
         function addfriend($id = null){
             //add a new friend
             //check if the user already sent you a friend request
@@ -13,7 +13,7 @@ class accountsController extends controller {
                 // http://www.php.net/manual/en/session.examples.basic.php
                 $params = array(':username' => $_POST['username'],
                                 ':passhash' => $_POST['passhash']);
-                $this->('user', $this->Account->query('SELECT * FROM :thistable WHERE Username = :username AND passhash = :passhash');
+                $this->set('user', $this->Account->query('SELECT * FROM :thistable WHERE Username = :username AND passhash = :passhash');
         }
         
         function logonform(){

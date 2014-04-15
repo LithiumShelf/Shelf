@@ -47,6 +47,7 @@ function callHook() {
  
     if ((int)method_exists($controller, $action)) {
         call_user_func_array(array($dispatch,$action),$queryString);
+	echo "potential success";
     } else {
         /* Error Generation Code Here */
         echo "the controller method does not exist";
@@ -56,12 +57,12 @@ function callHook() {
 /** Autoload any classes that are required **/
 
 function my_autoloader($className) {
-    if (file_exists('lib' . DS . strtolower($className) . '.php')) {
-        require_once('lib' . DS . strtolower($className) . '.php');
-    } else if (file_exists('app' . DS . 'Controller' . DS . strtolower($className) . '.php')) {
-        require_once('app' . DS . 'Controller' . DS . strtolower($className) . '.php');
-    } else if (file_exists('app' . DS . 'Model' . DS . strtolower($className) . '.php')) {
-        require_once('app' . DS . 'Model' . DS . strtolower($className) . '.php');
+    if (file_exists(ROOT . DS . 'lib' . DS . strtolower($className) . '.php')) {
+        require_once(ROOT . DS . 'lib' . DS . strtolower($className) . '.php');
+    } else if (ROOT . DS . file_exists('app' . DS . 'Controller' . DS . strtolower($className) . '.php')) {
+        require_once(ROOT . DS . 'app' . DS . 'Controller' . DS . strtolower($className) . '.php');
+    } else if (ROOT . DS . file_exists('app' . DS . 'Model' . DS . strtolower($className) . '.php')) {
+        require_once(ROOT . DS . 'app' . DS . 'Model' . DS . strtolower($className) . '.php');
     } else {
         /* Error Generation Code Here */
         echo "the method or class could not be autoloaded";
