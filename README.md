@@ -11,5 +11,8 @@ Make sure files under MVC are all lowercase (Model, Controller, and View folders
 
 Users: 
 
-No HTTPS TLS support planned in the near future, please use fake passwords you would never use and post only low-value items for lending
+No HTTPS TLS support planned in the near future, please use fake passwords you would never use elsewhere
+and please post only low-value items for lending
 Do not meet with anyone outside of the UW network, and do try to meet in public places.
+
+Password recovery also might not get implemented in time, so please contact one of the developers to have your account deleted or reset.
