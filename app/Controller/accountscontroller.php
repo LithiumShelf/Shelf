@@ -13,7 +13,7 @@ class accountsController extends Controller {
                 // http://www.php.net/manual/en/session.examples.basic.php
                 $params = array(':username' => $_POST['username'],
                                 ':passhash' => $_POST['passhash']);
-                $this->set('user', $this->Account->query('SELECT * FROM :thistable WHERE Username = :username AND passhash = :passhash');
+                $this->set('user', $this->Account->query('SELECT * FROM :thistable WHERE Username = :username AND passhash = :passhash'));
         }
         
         function logonform(){
@@ -22,7 +22,7 @@ class accountsController extends Controller {
         
         function profile($id){
             // view the profile of a user by the Account table ID
-                $this->set('user', $this->Account->query('SELECT * FROM :thistable JOIN Reputation ON (Account.id = Reputation.id) WHERE id = :id');
+                $this->set('user', $this->Account->query('SELECT * FROM :thistable JOIN Reputation ON (Account.id = Reputation.id) WHERE id = :id'));
         }
         
         function register(){
@@ -37,12 +37,12 @@ class accountsController extends Controller {
         }
         
         function friends(){
-                $params = array(':userid' => $_SESSION['userid'])
+                $params = array(':userid' => $_SESSION['userid']);
                 $this->set('friends', $this->Account->query('SELECT Account.* FROM Account JOIN Friend ON (Friend.Friend = Account.id)'));
         }
         
         function local(){
-                $this->set('localusers', $this->Account->query('SELECT * FROM Account WHERE localid = 1'); 
+                $this->set('localusers', $this->Account->query('SELECT * FROM Account WHERE localid = 1')); 
         }
 }
 

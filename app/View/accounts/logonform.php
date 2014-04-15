@@ -1,7 +1,7 @@
 <?php
 
     if(!empty($_SESSION["userid"])){
-            echo "You are already logged in"
+            echo "You are already logged in";
     }
 
 ?>

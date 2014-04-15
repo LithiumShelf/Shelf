@@ -1,5 +1,5 @@
 <?php
-    class Account extends{
+    class Account extends Model{
         
     }
 ?>

@@ -18,7 +18,7 @@
         /** Display Template **/
         function render() {
             extract($this->variables);
-            include (ROOT . DS . 'app' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');      
+            include (ROOT . DS . 'app' . DS . 'View' . DS . $this->_controller . DS . $this->_action . '.php');      
         }
     }
 ?>

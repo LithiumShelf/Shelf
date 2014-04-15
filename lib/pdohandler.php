@@ -1,15 +1,15 @@
 <?php
 
 class PDOhandler {
-    protected $_dbh
+    protected $_dbh;
     protected $_result;
 	protected $_query;
 	protected $_table;
 	
     function connect(){
-        $this->_dbh = new PDO("mysql:dbname=DB_NAME;host=DB_HOST", DB_USER, DB_PASSWORD);
+        $this->_dbh = new PDO("mysql:dbname=" . DB_NAME . ";host=" . DB_HOST, DB_USER, DB_PASSWORD);
         // Make any SQL syntax errors result in PHP errors.
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->_dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
     function disconnect(){

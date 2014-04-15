@@ -9,7 +9,7 @@
   define('DB_NAME', 'loztwodc_shelf');
   define('DB_USER', 'loztwodc_shelf');
   define('DB_PASSWORD', 'Lithium_INFO');
-  define('DB_HOST', 'localhome');
+  define('DB_HOST', 'localhost');
   
   define('PAGINATE_LIMIT', '5');
   
