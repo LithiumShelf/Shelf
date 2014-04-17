@@ -31,6 +31,8 @@ require_once (ROOT . DS . 'bootstrap.php');
             if(isset($_GET['url'])){
                  $url = $_GET['url'];
                 callHook();
+           }else{
+                include(ROOT . DS . 'app' . DS . 'View' . DS . $page . '.php');
            }
         ?>
     </body>
