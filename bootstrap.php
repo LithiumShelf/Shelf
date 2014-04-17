@@ -28,30 +28,32 @@ if ( get_magic_quotes_gpc() ) {
 /** Main Call Function **/
 function callHook() {
     global $url;
- 
-    $urlArray = array();
-    $urlArray = explode("/",$url);
-    
-    //must have page designated as the first thing before controller and action
-    $controller = $urlArray[0];
-    array_shift($urlArray);
-    $action = $urlArray[0];
-    array_shift($urlArray);
-    $queryString = $urlArray;
- 
-    $controllerName = $controller;
-    $controller = $controller;
-    $model = rtrim($controller, 's');
-    $controller .= 'Controller';
-    $dispatch = new $controller($model,$controllerName,$action);
- 
-    if ((int)method_exists($controller, $action)) {
-        call_user_func_array(array($dispatch,$action),$queryString);
-	//echo "potential success";
-    } else {
-        /* Error Generation Code Here */
-        echo "the controller method does not exist";
+    if(isset($url) && $url != ""){
+	$urlArray = array();
+	    $urlArray = explode("/",$url);
+	    
+	    //must have page designated as the first thing before controller and action
+	    $controller = $urlArray[0];
+	    array_shift($urlArray);
+	    $action = $urlArray[0];
+	    array_shift($urlArray);
+	    $queryString = $urlArray;
+	 
+	    $controllerName = $controller;
+	    $controller = $controller;
+	    $model = rtrim($controller, 's');
+	    $controller .= 'Controller';
+	    $dispatch = new $controller($model,$controllerName,$action);
+	 
+	    if ((int)method_exists($controller, $action)) {
+		call_user_func_array(array($dispatch,$action),$queryString);
+		//echo "potential success";
+	    } else {
+		/* Error Generation Code Here */
+		echo "the controller method does not exist";
+	    }
     }
+    
 }
 
 /** Autoload any classes that are required **/

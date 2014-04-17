@@ -11,9 +11,7 @@ if(isset($_GET['page'])){
     $page = "feed";
 }
 
-if(isset($_GET['page'])){
-    $url = $_GET['url'];
-}
+
 
 require_once (ROOT . DS . 'bootstrap.php');
 ?>
@@ -29,6 +27,11 @@ require_once (ROOT . DS . 'bootstrap.php');
     </head>
     <body>
         <?php include(ROOT . DS . 'app' . DS . 'View' . DS . 'header.php');?>
-        <?php callHook(); ?>
+        <?php
+            if(isset($_GET['url'])){
+                 $url = $_GET['url'];
+                callHook();
+           }
+        ?>
     </body>
 </html>
