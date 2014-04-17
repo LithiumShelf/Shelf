@@ -28,10 +28,11 @@ class accountsController extends Controller {
         function register(){
                 //add a new account to Accounts table
                 //generate passhash using sha256 | $hashedPW = hash('sha256', $saltedPW);
+                $hashedpass = hash (SHA256,$_POST['passhash'])
                 $params = array(':fname' => $_POST['fname'],
                                 ':lname' => $_POST['lname'],
                                 ':username' => $_POST['username'],
-                                ':passhash' => $_POST['passhash']);
+                                ':passhash' => $hashedpass);
                 //Only location is ID 1: Seattle WA
                 $this->set('register', $this->Account->query('INSERT INTO :thistable (Username, firstName, lastName, passhash, LocationID) values (:username, :fname, :lname, :passhash, 1)'));
         }
