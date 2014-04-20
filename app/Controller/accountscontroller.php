@@ -34,7 +34,7 @@ class accountsController extends Controller {
                                 ':username' => $_POST['username'],
                                 ':passhash' => $hashedpass);
                 //Only location is ID 1: Seattle WA
-                $this->set('register', $this->Account->query('INSERT INTO :thistable (Username, firstName, lastName, passhash, LocationID) values (:username, :fname, :lname, :passhash, 1)'));
+                $this->set('register', $this->Account->query('INSERT INTO :thistable (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash, 1)'));
         }
         
         function friends(){
