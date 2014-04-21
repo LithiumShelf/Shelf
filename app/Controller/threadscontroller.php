@@ -41,23 +41,20 @@
         
         function viewthread($id){
             $params = array(':id' => $id);
-            $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.id = Thread.id) WHERE id = :id'));
+            $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.ThreadID = Thread.id) WHERE id = :id'));
+            // ADD CODE TO UPDATE THE ABOVE TABLE AND MARK ALL hasRead as "true"
         }
         
-        function composemessage(){
-            
-        }
-        
-        function friendrequest(){
-            
-        }
-        
-        function sendmessage(){
-            
+        function composemessage($threadID){
+            //add a new message to a thread
+            $params = array(':subject' => $_POST['subject'],
+                            ':body' => $_POST['body'],
+                            ':thread' => $threadID);
+            $this->set('message', $this->Thread->query('INSERT INTO Message VALUES (NULL, NOW(), :subject, :body, false, :thread)'))
         }
         
         function readmessage(){
-            
+            //This might not need to be programmed, because the "viewthread" JOINS Thread to Message anyways.
         }
     }
 
