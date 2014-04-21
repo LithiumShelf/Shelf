@@ -43,6 +43,22 @@
             $params = array(':id' => $id);
             $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.id = Thread.id) WHERE id = :id'));
         }
+        
+        function composemessage(){
+            
+        }
+        
+        function friendrequest(){
+            
+        }
+        
+        function sendmessage(){
+            
+        }
+        
+        function readmessage(){
+            
+        }
     }
 
 ?>
