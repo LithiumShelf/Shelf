@@ -43,7 +43,7 @@ class PDOhandler {
     // $query: The mysql query or command (ex.->'SELECT * FROM tweets WHERE id = :i;';)
     // $params: associative arrays that associate the query variable with a variable object (ex.-> array(':i' => $id);)
     function query($query, $params){
-		if($params[":thistable"]){
+		if(!$params[":thistable"]){
 		    $params[":thistable"] = $this->_table;
 		}
 

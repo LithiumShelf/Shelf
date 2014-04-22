@@ -71,4 +71,6 @@ function printSearchResults($parsed_xml){
 </ul>
 <?php 
 }
+//Run and Print (perform the item lookup)
+ItemLookup($item["ASIN"]);
 ?>

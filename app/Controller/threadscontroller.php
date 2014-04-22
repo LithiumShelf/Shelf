@@ -28,14 +28,22 @@
             }
         }
         
-        function viewallthreads($public = null){
-            if(!$public){
+        function viewallthreads(){
+            if($page != "feed"){
                 //Select all your threads
-                $params = array(':UserID' => $_SESSION['userid']);
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable WHERE BorrowerID = :accountID'));
+                GLOBAL $page;
+                $params = array(':UserID' => $_SESSION['userid'];
+                if($page == "lend"){
+                    //Find threads for which you are the lender
+                    $params[":actionID"] = "LenderID"
+                }elseif($page == "borrow"){
+                    //Find threads for which you are the borrower
+                    $params[":actionID"] = "BorrowerID"
+                }
+                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID'));
             }else{
                 //Select the top 10 public threads
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable LIMIT 10'));   
+                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10'));   
             }
         }
         
