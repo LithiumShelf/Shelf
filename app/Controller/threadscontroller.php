@@ -41,8 +41,11 @@
                     $params[":actionID"] = "BorrowerID"
                 }
                 $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID'));
+                //GROUP BY Thread Status
             }else{
-                //Select the top 10 public threads
+                //Select the top 10 public (your friends) threads
+                //JOIN with your friends
+                //Reverse chronological order (check the timestamp);
                 $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10'));   
             }
         }
