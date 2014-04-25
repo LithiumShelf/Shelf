@@ -1,19 +1,22 @@
 <?php
-
+//get info for a particular item off of amazon given its Amazon Serial Item Number
 
 //Enter your IDs
 define("Access_Key_ID", "AKIAIIDBSE7VIVWZP7VA");
 define("Associate_tag", "ekurea-20");
 
+//set default time zone
+date_default_timezone_set('UTC');
+
 //check your search results
-function checkSearchResults($parsed_xml);
+function checkSearchResults($parsed_xml){
     //Verify a successful request
     foreach($parsed_xml->OperationRequest->Errors->Error as $error){
        echo "Error code: " . $error->Code . "\r\n";
        echo $error->Message . "\r\n";
        echo "\r\n";
+    }
 }
-
 //Set up the operation in the request
 function ItemLookup($ASIN){
 
@@ -26,26 +29,22 @@ $ResponseGroup = "Images,ItemAttributes,Similarities";
 
 //Define the request
 
-$stringtoencode = "
-GET
-webservices.amazon.com
-/onca/xml
-"
+$requestheader= "GET\nwebservices.amazon.com\n/onca/xml\n";
 
 $request=
-   "Service=AWSECommerceService"
-   . "&AssociateTag=" . Associate_tag
-   . "&AWSAccessKeyId=" . Access_Key_ID
-   . "&ItemId=" . $ASIN
-    . "&Operation=" . $Operation
-   . "&ResponseGroup=" . $ResponseGroup
-   . "&Timestamp=" . urlencode(date('Y-m-d\TH:i:s\Z'))
-   . "&Version=" . $Version
+    "AWSAccessKeyId=" . Access_Key_ID
+   . "&AssociateTag=" . rawurlencode(Associate_tag)
+   . "&ItemId=" . rawurlencode($ASIN)
+   . "&Operation=" . rawurlencode($Operation)
+   . "&ResponseGroup=" . rawurlencode($ResponseGroup)
+   . "&Service=AWSECommerceService"
+   . "&Timestamp=" . rawurlencode(date('Y-m-d\TH:i:s.000\Z'))
+   . "&Version=" . $Version;
    
-$request .= "&Signature=" hash_hmac(SHA256, $stringtoencode . $request, [Insert Amazon Secret Key Here])
+$request .= "&Signature=" . base64_encode(hash_hmac('SHA256', $requestheader . $request, [Replace with AMAZON API SECRET KEY], true));
 
 //Catch the response in the $response object
-$response = file_get_contents("http://webservices.amazon.com/onca/xml?" . $request);
+$response = file_get_contents('http://webservices.amazon.com/onca/xml?' . $request);
 $parsed_xml = simplexml_load_string($response);
 printSearchResults($parsed_xml);
 }
