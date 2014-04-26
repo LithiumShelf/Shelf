@@ -92,7 +92,7 @@ if (isset($keywords)){
 } else {
 ?>
     <form name="itemSearch" action="../lendingform" method="get">
-        What do you wish to lend?: <input type="text" name="keywords">
+        What do you wish to lend?: <input type="search" name="keywords">
         <input type="submit" value="Submit">
     </form>
 <?php

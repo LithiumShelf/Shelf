@@ -4,7 +4,7 @@
             //action must be "Lent" or "Borrowed"
             $params = array(':action' => $action
                             ':UserID' => $_SESSION['userid']);
-            $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID'););
+            $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID', $params););
         }
         
         function itemrequest($itemid){
@@ -14,7 +14,7 @@
                             ':threadstatus' => "Init"
                             );
             $this->set('thread', $this->Thread->query('INSERT INTO :thistable (ThreadStatus, BorrowerID, ItemID, DueDate)
-                                                      VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)');
+                                                      VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
         }
         
         function changestatus($id, $nextstatus, $availability = null, $hash = null){
@@ -24,7 +24,7 @@
                             ':availability' => $availability);
             $this->set('thread', $this->Thread->query('UPDATE :thistable SET ThreadStatus=:newstatus WHERE id=:id'));
             if($availability){
-                $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE (SELECT ItemID FROM :thistable WHERE id=:id)'));
+                $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE (SELECT ItemID FROM :thistable WHERE id=:id)', $params));
             }
         }
         
@@ -40,19 +40,19 @@
                     //Find threads for which you are the borrower
                     $params[":actionID"] = "BorrowerID"
                 }
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID'));
+                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID', $params));
                 //GROUP BY Thread Status
             }else{
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10'));   
+                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10', $params));   
             }
         }
         
         function viewthread($id){
             $params = array(':id' => $id);
-            $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.ThreadID = Thread.id) WHERE id = :id'));
+            $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.ThreadID = Thread.id) WHERE id = :id', $params));
             // ADD CODE TO UPDATE THE ABOVE TABLE AND MARK ALL hasRead as "true"
         }
         
@@ -61,7 +61,7 @@
             $params = array(':subject' => $_POST['subject'],
                             ':body' => $_POST['body'],
                             ':thread' => $threadID);
-            $this->set('message', $this->Thread->query('INSERT INTO Message VALUES (NULL, NOW(), :subject, :body, false, :thread)'))
+            $this->set('message', $this->Thread->query('INSERT INTO Message VALUES (NULL, NOW(), :subject, :body, false, :thread)', $params));
         }
         
         function readmessage(){
