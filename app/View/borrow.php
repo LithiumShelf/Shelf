@@ -21,6 +21,7 @@
 				-Recieve + Cancel Button
 				-Hash Code text field
 		-->
+		<?php?>
 	</section>
 	
 	<section id="borrowing">
@@ -32,6 +33,7 @@
 				
 				-Return button
 		-->
+		<?php?>
 		<button type="button" name="borrow_history">Borrow History</button>
 	</section>
 	
