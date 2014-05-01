@@ -2,18 +2,7 @@
 	//For debugging, assume login
 	//echo "HELLO WORLD";
 	$_SESSION['userid']=  2;
-	global $url;
-	$queryString = $url;
-	$action = 'viewallthreads';
-	$controller= 'threadsController';
-	$dispatch = new $controller('Thread','threads',$action);
-	if ((int)method_exists($controller, $action)) {
-		call_user_func_array(array($dispatch,$action),$queryString);
-		echo "potential success";
-	} else {
-		/* Error Generation Code Here */
-		echo "the controller method does not exist";
-	}
+	insertView('threads', 'viewallthreads');
 ?>
 <!--NEED: Search, Borrow History view-->
 <!--Container-->
