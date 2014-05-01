@@ -41,7 +41,7 @@ function callHook() {
 	 
 	    $controllerName = $controller;
 	    $controller = $controller;
-	    $model = rtrim($controller, 's');
+	    $model = ucfirst(rtrim($controller, 's'));
 	    $controller .= 'Controller';
 	    $dispatch = new $controller($model,$controllerName,$action);
 	 
@@ -74,4 +74,21 @@ function my_autoloader($className) {
 spl_autoload_register('my_autoloader');
 
 removeMagicQuotes();
+
+function insertView($controller, $action){
+	global $url;
+	    $controllerName = $controller;
+	    $controller = $controller;
+	    $model = ucfirst(rtrim($controller, 's'));
+	    $controller .= 'Controller';
+	    $dispatch = new $controller($model,$controllerName,$action);
+	if ((int)method_exists($controller, $action)) {
+		call_user_func_array(array($dispatch,$action),$url);
+		//echo "potential success";
+	} else {
+		/* Error Generation Code Here */
+		echo "the controller method does not exist";
+	}
+
+}
 ?>

@@ -33,6 +33,7 @@
             if($page != "feed"){
                 //Select all your threads
                 GLOBAL $page;
+                $_SESSION['userid']=  2;
                 $params = array(':UserID' => $_SESSION['userid']);
                 if($page == "lend"){
                     //Find threads for which you are the lender
@@ -43,6 +44,7 @@
                     $params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
                 }
+                $this->set('type', "feed");
                 $this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE :actionID= :UserID', $params));
                 //GROUP BY Thread Status
             }else{

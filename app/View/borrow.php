@@ -1,5 +1,6 @@
 <?php
 	//For debugging, assume login
+	//echo "HELLO WORLD";
 	$_SESSION['userid']=  2;
 	global $url;
 	$queryString = $url;
@@ -8,7 +9,7 @@
 	$dispatch = new $controller('Thread','threads',$action);
 	if ((int)method_exists($controller, $action)) {
 		call_user_func_array(array($dispatch,$action),$queryString);
-		//echo "potential success";
+		echo "potential success";
 	} else {
 		/* Error Generation Code Here */
 		echo "the controller method does not exist";
@@ -45,6 +46,7 @@
 				WHERE :actionID= :UserID
 
 			*/
+			echo $type;
 			print_r($threads);
 			foreach ($threads as $thread) {
 				$status = $thread["ThreadStatus"];
