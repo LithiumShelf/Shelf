@@ -43,14 +43,15 @@ class PDOhandler {
     // $query: The mysql query or command (ex.->'SELECT * FROM tweets WHERE id = :i;';)
     // $params: associative arrays that associate the query variable with a variable object (ex.-> array(':i' => $id);)
     function query($query, $params){
-		if(!$params[":thistable"]){
-		    $params[":thistable"] = $this->_table;
-		}
+		$DEBUG = true;
+		//if(!isset($params[":thistable"])){
+		//    $params[":thistable"] = $this->_table;
+		//}
 
 		try {
-			$q = $dbh->prepare($query);
+			$q = $this->_dbh->prepare($query);
 			$q->execute($params);
-			$id = $dbh->lastInsertId(); // will be 0 if query wasn't an INSERT
+			$id = $this->_dbh->lastInsertId(); // will be 0 if query wasn't an INSERT
 			if ($id && stristr($query, 'insert')) {
 			  return $id;
 			} else {
@@ -58,8 +59,10 @@ class PDOhandler {
 			}
 		} catch (PDOException $e) {
 		  // Oops, something went wrong.
+		 /* 
 		  header("HTTP/1.1 500 Internal Server Error");
 		  header("Content-type: text/plain");
+		  */
 		  if ($DEBUG) {
 			// Detailed error for testing/debugging
 			die("There was a SQL error:\n\n" . $e->getMessage());

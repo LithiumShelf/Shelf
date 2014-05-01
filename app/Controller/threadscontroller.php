@@ -1,10 +1,10 @@
 <?php
-    class transactionsController extends controller{
+    class threadsController extends Controller{
         function incrementrep($action){
             //action must be "Lent" or "Borrowed"
-            $params = array(':action' => $action
+            $params = array(':action' => $action,
                             ':UserID' => $_SESSION['userid']);
-            $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID', $params););
+            $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID', $params));
         }
         
         function itemrequest(){
@@ -29,10 +29,11 @@
         }
         
         function viewallthreads(){
+			global $page;
             if($page != "feed"){
                 //Select all your threads
                 GLOBAL $page;
-                $params = array(':UserID' => $_SESSION['userid'];
+                $params = array(':UserID' => $_SESSION['userid']);
                 if($page == "lend"){
                     //Find threads for which you are the lender
                     $params[":actionID"] = "LenderID";
@@ -42,7 +43,7 @@
                     $params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
                 }
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID', $params));
+                $this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE :actionID= :UserID', $params));
                 //GROUP BY Thread Status
             }else{
                 //Select the top 10 public (your friends) threads
