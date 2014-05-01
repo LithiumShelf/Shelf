@@ -45,7 +45,7 @@
 					$this->set('type', "borrow");
                 }
                 $this->set('type', "feed");
-                $this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE :actionID= :UserID', $params));
+                $this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id)' /*WHERE :actionID= :UserID'*/, $params));
                 //GROUP BY Thread Status
             }else{
                 //Select the top 10 public (your friends) threads
