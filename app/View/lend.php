@@ -3,7 +3,7 @@
 ?>
 <!--NEED: Item entry view-->
 <!--Container-->
-<div id="main">
+<div id="lend_container">
 	<section id="add_item">
 		<h1>Add an item</h1>
 		<button type="button" name="add">+</button>
@@ -21,7 +21,7 @@
 		<?php?>
 	</section>
 	
-	<section id="current_lending">
+	<section id="past_lending">
 		<h1>Past Lending</h1>
 		<!--Load older lending transaction threads-->
 		<?php?>

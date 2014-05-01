@@ -3,6 +3,6 @@
 ?>
 <!--NEED: php for different tile-types-->
 <!--Container-->
-<div id="main">
+<div id="feed_container">
 	<?php?>
 </div>

@@ -7,8 +7,8 @@
             $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID', $params););
         }
         
-        function itemrequest($itemid){
-            $params = array(':itemid' => $itemid,
+        function itemrequest(){
+            $params = array(':itemid' => $_POST['itemid'],
                             ':BorrowerID' => $_SESSION['userid'],
                             ':DueDate' => $_POST['DueDate'],
                             ':threadstatus' => "Init"
@@ -17,11 +17,11 @@
                                                       VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
         }
         
-        function changestatus($id, $nextstatus, $availability = null, $hash = null){
+        function changestatus(){
             //change thread status
-            $params = array(':id' => $id,
-                            ':nextstatus' => $nextstatus,
-                            ':availability' => $availability);
+            $params = array(':id' => $_POST('id'),
+                            ':nextstatus' => $_POST('nextstatus'),
+                            ':availability' => $_POST('availability'));
             $this->set('thread', $this->Thread->query('UPDATE :thistable SET ThreadStatus=:newstatus WHERE id=:id'));
             if($availability){
                 $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE (SELECT ItemID FROM :thistable WHERE id=:id)', $params));
@@ -35,10 +35,12 @@
                 $params = array(':UserID' => $_SESSION['userid'];
                 if($page == "lend"){
                     //Find threads for which you are the lender
-                    $params[":actionID"] = "LenderID"
-                }elseif($page == "borrow"){
+                    $params[":actionID"] = "LenderID";
+					$this->set('type', "lend");
+				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
-                    $params[":actionID"] = "BorrowerID"
+                    $params[":actionID"] = "BorrowerID";
+					$this->set('type', "borrow");
                 }
                 $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) WHERE :actionID = :accountID', $params));
                 //GROUP BY Thread Status
