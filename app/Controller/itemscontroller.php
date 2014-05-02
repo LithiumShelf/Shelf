@@ -35,9 +35,16 @@
             $this->set('inventory', $this->Item->query('SELECT Item.* FROM :thistable JOIN Account ON (Item.LenderID = Account.id) WHERE Account.id = :userid', $params));
         }
         
-        function findbycategory($category){
+        function findbycategory(){
+            if(isset($_GET["category"])){
+                $category = $_GET["category"];
+            }
             $params = array(':category' => $category);
             $this->set('items', $this->Item->query('SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID) WHERE Category.Category = :category', $params));
+        }
+
+        function searchresults(){
+            
         }
     }
 ?>
