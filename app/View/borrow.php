@@ -2,24 +2,28 @@
 	//For debugging, assume login
 	//echo "HELLO WORLD";
 	$_SESSION['userid']=  2;
-	insertView('threads', 'viewallthreads');
 ?>
 <!--NEED: Search, Borrow History view-->
 <!--Container-->
 <div id="borrow_container">
 	<section id="find_item">
 		<h1>Find an item</h1>
-		<input id="search_item" type="text" size="25" formaction="/items/searchresults" value="Search by item" >
-		<button type="submit" name="browse_cat" formaction="/items/findbycategory">Browse by Category</button>
-		<button type="submit" name="browse_friend" formaction="/items/findbyuser">Browse by Friend</button>
+		<form action="borrow/items/searchresults" method="get">
+			<input name="search_item" type="text" size="25"  value="Search by item" >
+			<button type="submit">Search</button>
+			<button type="submit" name="browse_cat" formaction="borrow/items/findbycategory"> 
+				Browse by Category
+			</button>
+			<button type="submit" name="browse_friend" formaction="borrow/items/findbyuser">Browse by Friend</button>
+		</form>
 	</section>
 	
 	<section id="currently_requested">
 		<h1>Currently requested</h1>
 		<!--Load requests:
-				-Profile image + Username + Item name
+				-Profile image + lender name + Item name
 				-Reputation
-				-Status
+				-Status of transaction
 				
 				-Receive + Cancel Button
 				-Hash Code text field
@@ -35,11 +39,12 @@
 				WHERE :actionID= :UserID
 
 			*/
+			insertView('threads', 'viewallthreads');
 			echo $type;
 			print_r($threads);
 			foreach ($threads as $thread) {
 				$status = $thread["ThreadStatus"];
-				if ($status == 'Pending') { 
+				if ($status == 'Open') { 
 			?>
 				<li class="borrow_active"> 
 					<img src="<?= $thread["ItemPic"] ?>" >

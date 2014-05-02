@@ -9,6 +9,9 @@ switch ($type) {
     case "borrow":
         print_r($threads);
         echo "HELLO WORLD";
+		
+		/* Sort tiles here */
+		
         break;
     case "lend":
         echo "lend";

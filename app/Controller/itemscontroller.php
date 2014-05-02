@@ -37,7 +37,7 @@
         
         function findbycategory($category){
             $params = array(':category' => $category);
-            $this->set('items', $this->Item->query('SELECT Item.* FROM :thistable JOIN Category ON (Category.id = Item.CategoryID) WHERE Category.Category = :category', $params));
+            $this->set('items', $this->Item->query('SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID) WHERE Category.Category = :category', $params));
         }
     }
 ?>
