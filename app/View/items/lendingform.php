@@ -91,7 +91,7 @@ if (isset($keywords)){
     ItemSearch($keywords);
 } else {
 ?>
-    <form name="itemSearch" action="../lendingform" method="get">
+    <form name="itemSearch" action="" method="get">
         What do you wish to lend?: <input type="search" name="keywords">
         <input type="submit" value="Submit">
     </form>
