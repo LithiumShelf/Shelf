@@ -13,7 +13,7 @@
                             ':DueDate' => $_POST['DueDate'],
                             ':threadstatus' => "Init"
                             );
-            $this->set('thread', $this->Thread->query('INSERT INTO :thistable (ThreadStatus, BorrowerID, ItemID, DueDate)
+            $this->set('thread', $this->Thread->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate)
                                                       VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
         }
         
@@ -22,9 +22,9 @@
             $params = array(':id' => $_POST('id'),
                             ':nextstatus' => $_POST('nextstatus'),
                             ':availability' => $_POST('availability'));
-            $this->set('thread', $this->Thread->query('UPDATE :thistable SET ThreadStatus=:newstatus WHERE id=:id'));
+            $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:id'));
             if($availability){
-                $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE (SELECT ItemID FROM :thistable WHERE id=:id)', $params));
+                $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE (SELECT ItemID FROM Thread WHERE id=:id)', $params));
             }
         }
         
@@ -51,13 +51,13 @@
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
-                $this->set('threads', $this->Thread->query('SELECT * FROM :thistable JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10', $params));   
+                $this->set('threads', $this->Thread->query('SELECT * FROM Thread JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10', $params));   
             }
         }
         
         function viewthread($id){
             $params = array(':id' => $id);
-            $this->set('thread', $this->Thread->query('SELECT * FROM :thistable JOIN Message ON (Message.ThreadID = Thread.id) WHERE id = :id', $params));
+            $this->set('thread', $this->Thread->query('SELECT * FROM Thread JOIN Message ON (Message.ThreadID = Thread.id) WHERE id = :id', $params));
             // ADD CODE TO UPDATE THE ABOVE TABLE AND MARK ALL hasRead as "true"
         }
         
