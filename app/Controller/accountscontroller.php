@@ -1,13 +1,19 @@
 <?php
 class accountsController extends Controller {
         function addfriend(){
-            //add a new friend
-            $params = array(':userid' => $_SESSION['userid'],
+                if(isset($_POST['id'])){
+                    //add a new friend
+                        $params = array(':userid' => $_SESSION['userid'],
                             ':friendid' => $_POST['id']);
-            //check if the user already sent you a friend request
-        ////$this->set('accept',$this->Account->query(''), $params);
-            //send the user a new friend request
-            $this->set('request', $this->Account->query('INSERT INTO Friend (:userid, :friendid)', $params));
+                    //check if the user already sent you a friend request
+                ////$this->set('accept',$this->Account->query(''), $params);
+                    //send the user a new friend request, or accepts an existing request.
+                    $this->set('request', $this->Account->query('INSERT INTO Friend (:userid, :friendid)', $params));
+                }else{
+                        
+                }
+
+            
         }
         
         function login(){
@@ -45,12 +51,20 @@ class accountsController extends Controller {
         }
         
         function friends(){
+                //Check Requests (return AccountID of users who have requested friendship)
+                $params = array(':userid' => $_SESSION['userid'],
+                                ':userid2' => $_SESSION['userid']);
+                $this->set('requests', $this->Account->query('SELECT id FROM Account JOIN Friend ON (Friend.User = Account.id) 
+                        WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid2)', $params))
+                //List out confirm friends JOINed with Accounts
                 $params = array(':userid' => $_SESSION['userid']);
-                $this->set('friends', $this->Account->query('SELECT Account.* FROM Account JOIN Friend ON (Friend.Friend = Account.id)', $params));
+                $this->set('friends', $this->Account->query('SELECT * FROM loztwodc_shelf.friends WHERE User = :userid;)', $params));
         }
         
         function local(){
-                $this->set('localusers', $this->Account->query('SELECT * FROM Account WHERE localid = 1', $params)); 
+                //find hot item owners in your area
+                $params = array(':userid' => $_SESSION['userid']);
+                $this->set('localusers', $this->Account->query('SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid)', $params)); 
         }
         
         function uploadprofileimg(){
