@@ -1,10 +1,12 @@
 <?php
     class threadsController extends Controller{
-        function incrementrep($action){
+        function incrementrep(){
             //action must be "Lent" or "Borrowed"
-            $params = array(':action' => $action,
-                            ':UserID' => $_SESSION['userid']);
-            $this->set('reputation', $this->Thread->query('UPDATE Reputation SET :action = :action + 1 WHERE id = :UserID', $params));
+            // DO NOT USE incrementrep, PLEASE INTEGRATE THIS FUNCTIONALITY INTO
+            // CHANGE STATUS TO MONITOR FOR CERTAIN SET PHASES IN ITEM STATUS
+            //$params = array(':action' => $action,
+             //               ':UserID' => $_SESSION['userid']);
+            //$this->set('reputation', $this->Thread->query('UPDATE Account SET :action = :action + 1 WHERE id = :UserID', $params));
         }
         
         function itemrequest(){
@@ -19,7 +21,7 @@
         
         function changestatus(){
             //change thread status
-            $params = array(':id' => $_POST('id'),
+            $params = array(':id' => $_POST['id'],
                             ':nextstatus' => $_POST('nextstatus'),
                             ':availability' => $_POST('availability'));
             $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:id'));

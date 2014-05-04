@@ -25,8 +25,10 @@ class accountsController extends Controller {
         }
         
         function profile($id){
+                $this->set('id', $id);
+                $params = array(':id' => $id);
             // view the profile of a user by the Account table ID
-                $this->set('user', $this->Account->query('SELECT * FROM Account JOIN Reputation ON (Account.id = Reputation.id) WHERE id = :id', $params));
+                $this->set('user', $this->Account->query('SELECT * FROM Account WHERE id = :id', $params));
         }
         
         function register(){
@@ -39,7 +41,7 @@ class accountsController extends Controller {
                                 ':passhash' => $hashedpass,
                                 ':location' => $_POST['location']);
                 //Only location is ID 1: Seattle WA
-                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash)', $params));
+                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash, :location)', $params));
         }
         
         function friends(){
