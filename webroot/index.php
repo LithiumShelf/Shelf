@@ -11,9 +11,9 @@ if(isset($_GET['page'])){
     $page = "feed";
 }
 
-
-
 require_once (ROOT . DS . 'bootstrap.php');
+
+session_start();
 ?>
 <!DOCTYPE html>
 <html>

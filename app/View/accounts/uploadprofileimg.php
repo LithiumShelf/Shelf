@@ -6,6 +6,6 @@
 <form action="" method="post"
 enctype="multipart/form-data">
 <label for="file">Filename:</label>
-<input type="file" name="profileimg" id="upload"><br>
+<input type="file" name="profileimg" id="upload" accept="image/*"><br>
 <input type="submit" name="submit" value="Submit">
 </form>

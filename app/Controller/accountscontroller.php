@@ -13,13 +13,15 @@ class accountsController extends Controller {
         function login(){
                 // find your account and persist that id number storing it in the sessions
                 // http://www.php.net/manual/en/session.examples.basic.php
+                $hashedpass = hash('SHA256',$_POST['password']);
                 $params = array(':username' => $_POST['username'],
-                                ':passhash' => $_POST['passhash']);
+                                ':passhash' => $hashedpass);
                 $this->set('user', $this->Account->query('SELECT * FROM Account WHERE Username = :username AND passhash = :passhash', $params));
         }
         
         function logonform(){
                 // page for the user to logon for register
+                $this->set('locations', $this->Account->query('SELECT * FROM Location', null));
         }
         
         function profile($id){
@@ -30,13 +32,14 @@ class accountsController extends Controller {
         function register(){
                 //add a new account to Accounts table
                 //generate passhash using sha256 | $hashedPW = hash('sha256', $saltedPW);
-                $hashedpass = hash (SHA256,$_POST['passhash'])
+                $hashedpass = hash('SHA256',$_POST['password']);
                 $params = array(':fname' => $_POST['fname'],
                                 ':lname' => $_POST['lname'],
                                 ':username' => $_POST['username'],
-                                ':passhash' => $hashedpass);
+                                ':passhash' => $hashedpass,
+                                ':location' => $_POST['location']);
                 //Only location is ID 1: Seattle WA
-                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash, 1)', $params));
+                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash)', $params));
         }
         
         function friends(){
@@ -78,7 +81,7 @@ class accountsController extends Controller {
                                                  echo "Stored in: " . $path . $_FILES["file"]["name"];
                                                  //replace $_FILES["file"]["name"] with the newly saved filename
                                                 $params = array(':userid' => $_SESSION['userid'],
-                                                                ':filepath' => 'profile' . DS . $_FILES["file"]["name"]));
+                                                                ':filepath' => 'profile' . DS . $_FILES["file"]["name"]);
                                                 $this->set('file', $this->Account->query('UPDATE Account SET profilePic = :filepath WHERE id = :userid', params));
                                          }
                                 }

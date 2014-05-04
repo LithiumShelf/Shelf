@@ -47,14 +47,19 @@ class PDOhandler {
 		//if(!isset($params[":thistable"])){
 		//    $params[":thistable"] = $this->_table;
 		//}
-
+		//echo $query;
+		print_r($params);
 		try {
 			$q = $this->_dbh->prepare($query);
 			$q->execute($params);
+			//print_r($q->fetchAll());
+			//print_r($q->fetchAll(PDO::FETCH_ASSOC));
 			$id = $this->_dbh->lastInsertId(); // will be 0 if query wasn't an INSERT
 			if ($id && stristr($query, 'insert')) {
 			  return $id;
 			} else {
+			    //print_r($q->fetchAll());
+			    //print_r($q->fetchAll(PDO::FETCH_ASSOC));
 			  return $q->fetchAll(PDO::FETCH_ASSOC);
 			}
 		} catch (PDOException $e) {
