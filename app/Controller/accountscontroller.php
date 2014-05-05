@@ -12,8 +12,6 @@ class accountsController extends Controller {
                 }else{
                         
                 }
-
-            
         }
         
         function login(){
