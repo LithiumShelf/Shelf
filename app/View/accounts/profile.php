@@ -1,7 +1,10 @@
 <?php
 
+	/*Page template for both user's profile and other people's profile.
+	*/
+
 ?>
-<div id="main">
+<div id="profile_container">
 	<section id="info">
 		<h1><?=?></h1>
 		<img src=<?=?> alt=<?=?>>
@@ -34,6 +37,4 @@
 		<h1>Reviews</h1>
 		<?php?>
 	</section>
-
 </div>
-
