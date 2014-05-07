@@ -22,6 +22,7 @@ session_start();
          <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="<?= $BASE_URL ?>/css/jquery.mobile-1.4.2.css" />
         <link rel="stylesheet" type="text/css" href="<?= $BASE_URL ?>/css/jquery.mobile.theme-1.4.2.css" />
+		<link rel="stylesheet" type="text/css" href="<?= $BASE_URL ?>/css/general.css" />
         <script src="<?= $BASE_URL ?>/js/jquery-2.1.0.min.js"></script>
         <script src="<?= $BASE_URL ?>/js/jquery.mobile-1.4.2.min.js"></script>
     </head>
