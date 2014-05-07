@@ -48,8 +48,13 @@ switch ($type) {
 					<button type="button" name="return">Return</item> 
 					<?php  } else { 
 					?>
+<<<<<<< HEAD
 					<button type="button" name="" formaction="">Receive</button>
 					<button type="button" name="" formaction="">Cancel</button>
+=======
+					<button type="button" name="">Receive</button>
+					<button type="button" name="">Cancel</button>
+>>>>>>> 56a5d015de8e558cc583c403aad3600623ed248d
 				</div>
 			</li>
 		<?php 
