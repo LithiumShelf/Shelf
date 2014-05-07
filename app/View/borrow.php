@@ -30,15 +30,6 @@
 		-->
 		<ul>
 		<?php 
-			//NEED: Change query so that JOINs with Account to get First and Last Name
-			//NEED: Different ThreadStatus in test data: Pending, Open, Closed
-			/*
-				SELECT * FROM :thistable 
-					RIGHT JOIN Item ON (Item.id = Thread.ItemID) 
-					JOIN Account ON (Item.LenderID = Account.id)
-				WHERE :actionID= :UserID
-
-			*/
 			insertView('threads', 'viewallthreads');
 			echo $type;
 			print_r($threads);

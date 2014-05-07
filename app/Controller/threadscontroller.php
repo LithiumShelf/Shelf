@@ -35,21 +35,29 @@
             if($page != "feed"){
                 //Select all your threads
                 GLOBAL $page;
-                $_SESSION['userid']=  2;
-                $params = array(':UserID' => $_SESSION['userid']);
+                //$_SESSION['userid'] = 2;
+                $params = array(':UserID' => 2 /*$_SESSION['userid']*/);
                 if($page == "lend"){
                     //Find threads for which you are the lender
-                    $params[":actionID"] = "LenderID";
+                    //$params[":actionID"] = "LenderID";
 					$this->set('type', "lend");
+					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.LenderID = Account.id) WHERE LenderID = :UserID', $params));
 				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
-                    $params[":actionID"] = "BorrowerID";
+                    //$params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
-                }
-                $this->set('type', "feed");
-                $this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id)' /*WHERE :actionID= :UserID'*/, $params));
+                
+				/*
+					SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) 
+					JOIN Account as Borrow ON (Thread.BorrowerID = brrw.id)
+					JOIN Account as Lend ON (Item.LenderID = lnd.id)
+				*/
+				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
                 //GROUP BY Thread Status
+				}
+
             }else{
+				$this->set('type', "feed");
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
