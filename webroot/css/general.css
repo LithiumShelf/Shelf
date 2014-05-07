@@ -1,3 +1,8 @@
+::selection {
+	background: #777;
+	color: white;
+}
+
 body {
 	background-color: #eee;
 	text-align: center;
@@ -5,6 +10,8 @@ body {
 	font-weight: 100 !important;
 	box-shadow: none !important;
 	text-shadow: none !important;
+	border-radius: none !important;
+	-webkit-border-radius: none !important;
 }
 
 #nav_bar ul {
@@ -23,7 +30,7 @@ body {
 	padding-bottom: 25px;
 	width: 100px;
 	text-decoration: none;
-	color: black;
+	color: black;	
 }
 
 #nav_bar li a:hover {
@@ -31,9 +38,53 @@ body {
 	color: white;
 }
 
-button {
-	background-color: #bbb !important;
-	color: white !important;
+button, .ui-corner-all, .ui-btn, .ui-shadow {
+	border-radius: none !important;
+	-moz-border-radius: none !important;
+	-webkit-border-radius: none !important;
+}
+
+.ui-btn-active {
+	background-color: #0061C1 !important;
+}
+
+.ui-btn {
+	border: none !important;
 	text-shadow: none !important;
 	box-shadow: none !important;
+	border-radius: none !important;
+	-webkit-border-radius: none !important;
+}
+
+button {
+	background-color: #777 !important;
+	color: white !important;
+}
+
+#feed_container, #borrow_container, #lend_container, #more_container {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.Open, .Closed{
+	background-color: #0061C1;
+	color: white;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	display: block;
+	padding: 2%;
+}
+
+.Open button, .Closed button {
+	color: black !important;
+	background-color: white !important;
+	width: 40%;
+	display: inline-block;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.Open a, .Closed a, .Open a:hover, .Closed a:hover {
+	color: white;
+	text-shadow: none;
 }
