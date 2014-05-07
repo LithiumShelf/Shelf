@@ -62,8 +62,10 @@ button {
 }
 
 #feed_container, #borrow_container, #lend_container, #more_container {
-	padding-left: 5%;
-	padding-right: 5%;
+	display: block;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .Open, .Closed{
@@ -87,4 +89,16 @@ button {
 .Open a, .Closed a, .Open a:hover, .Closed a:hover {
 	color: white;
 	text-shadow: none;
+}
+
+.post {
+	background-color: #0061C1;
+	color: white;
+	display: block;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
