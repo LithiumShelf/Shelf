@@ -19,47 +19,13 @@
 	
 	<section id="currently_requested">
 		<h1>Currently requested</h1>
-		<!--Load requests:
-				-Profile image + lender name + Item name
-				-Reputation
-				-Status of transaction
-				
-				-Receive + Cancel Button
-				-Hash Code text field
-		-->
 		<ul>
-		<?php 
-			insertView('threads', 'viewallthreads');
-			echo $type;
-			print_r($threads);
-			foreach ($threads as $thread) {
-				$status = $thread["ThreadStatus"];
-				if ($status == 'Open') { 
+			<?php 
+				insertView('threads', 'viewallthreads');
+				echo $type;
+				print_r($threads);
 			?>
-				<li class="borrow_active"> 
-					<img src="<?= $thread["ItemPic"] ?>" >
-				</li>
-		<?php 
-				}
-			} 
-		?>
 		</ul>
-	</section>
-	
-	<section id="borrowing">
-		<h1>Borrowing</h1>
-		<!--Load items:
-				-Profile image + Username + Item name
-				-Reputation
-				-Due date
-				
-				-Return button
-		-->
-		<?php
-			print_r ($threads);
-		?>
-		
-			
 		<button type="button" name="borrow_history">Borrow History</button>
 	</section>
 	

@@ -19,6 +19,11 @@
                                                       VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
         }
         
+		
+		/*
+			-Award points
+			-
+		*/
         function changestatus(){
             //change thread status
             $params = array(':id' => $_POST['id'],

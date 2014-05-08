@@ -77,6 +77,10 @@ button {
 	padding: 2%;
 }
 
+#borrow_container .Open {
+
+}
+
 .Open button, .Closed button {
 	color: black !important;
 	background-color: white !important;

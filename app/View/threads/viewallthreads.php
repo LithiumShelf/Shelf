@@ -11,11 +11,23 @@ switch ($type) {
         echo "HELLO WORLD";
 		
 		/* Sort Borrow tiles here */
-
+		$oldstatus = "Open"; /*Should be for pending status*/
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
 			$due = $thread['DueDate'];
+			
 		?>
+			
+		<!--
+			If status of current status != previous status
+			make new section
+		-->
+		<?php if($status != $oldstatus) {  ?>
+			</ul>
+			<h1>Borrowing</h1>
+			<ul>
+		<? } else { ?>
+		
 			<li class="<?= $status ?>">
 				<div>
 					<a href="/accounts/profile/<?= $thread['LenderID']?>">
@@ -30,10 +42,13 @@ switch ($type) {
 						<strong><?= $thread['Name'] ?>Item</strong> from <strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> <br> 
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
-						<!--Reputation-->
+						<!--Status-->
+						<?= $status ?>
+						<br>
 						<?php 
 							if(isset($due)) {
 								print "Due Date: ". $due;
+
 							} else {
 								print "Pending";
 							}
@@ -48,21 +63,17 @@ switch ($type) {
 					<button type="button" name="return">Return</item> 
 					<?php  } else { 
 					?>
-<<<<<<< HEAD
+
 					<button type="button" name="" formaction="">Receive</button>
 					<button type="button" name="" formaction="">Cancel</button>
-=======
-					<button type="button" name="">Receive</button>
-					<button type="button" name="">Cancel</button>
->>>>>>> 56a5d015de8e558cc583c403aad3600623ed248d
+					<?php } ?>
 				</div>
 			</li>
 		<?php 
 			}
-		}
+		
 		break;
     case "lend":
         echo "lend";
         break;
 }?>
-<p>hello pearl world</p>
