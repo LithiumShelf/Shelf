@@ -1,28 +1,20 @@
 <?php
 //CASE SWITCH FOR FEED/BORROW/LEND
 //$_SESSION['userid']=  2;
-echo "HELLO WORLD";
 switch ($type) {
     case "feed":
         echo "feed";
         break;
     case "borrow":
-        print_r($threads);
-        echo "HELLO WORLD";
-		
-		/* Sort Borrow tiles here */
 		$oldstatus = "Open"; /*Should be for pending status*/
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
 			$due = $thread['DueDate'];
 			
-		?>
-			
-		<!--
-			If status of current status != previous status
-			make new section
-		-->
-		<?php if($status != $oldstatus) {  ?>
+		/*	If status of current status changes & != previous status
+		 *	make new section
+		 */
+			if($status != $oldstatus) {  ?>
 			</ul>
 			<h1>Borrowing</h1>
 			<ul>

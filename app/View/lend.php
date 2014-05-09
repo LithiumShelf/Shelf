@@ -6,7 +6,7 @@
 <div id="lend_container">
 	<section id="add_item">
 		<h1>Add an item</h1>
-		<button type="button" name="add">+</button>
+		<button type="button" name="add" onClick="window.location='lend/items/lendingform'">+</button>
 	</section>
 	
 	<section id="to_review">

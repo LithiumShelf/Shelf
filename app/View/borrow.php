@@ -23,7 +23,6 @@
 			<?php 
 				insertView('threads', 'viewallthreads');
 				echo $type;
-				print_r($threads);
 			?>
 		</ul>
 		<button type="button" name="borrow_history">Borrow History</button>
