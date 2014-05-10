@@ -45,17 +45,12 @@
                     //Find threads for which you are the lender
                     //$params[":actionID"] = "LenderID";
 					$this->set('type', "lend");
-					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.LenderID = Account.id) WHERE LenderID = :UserID', $params));
+					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE LenderID = :UserID', $params));
 				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
                     //$params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
                 
-				/*
-					SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) 
-					JOIN Account as Borrow ON (Thread.BorrowerID = brrw.id)
-					JOIN Account as Lend ON (Item.LenderID = lnd.id)
-				*/
 				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
                 //GROUP BY Thread Status
 				}
@@ -65,7 +60,7 @@
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
-                $this->set('threads', $this->Thread->query('SELECT * FROM Thread JOIN Item ON (Item.id = Thread.ItemID) LIMIT 10', $params));   
+                $this->set('threads', $this->Thread->query('SELECT * FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (BorrowerID = Account.id) JOIN Friend ON (Account.ID = Friend.User) WHERE Friend = 2 LIMIT 10', $params));   
             }
         }
         

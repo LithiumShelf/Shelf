@@ -2,6 +2,23 @@
 //CASE SWITCH FOR FEED/BORROW/LEND
 switch ($type) {
     case "feed":
+		foreach ($threads as $thread) { 
+			$itemname = $thread['Name'];
+			$src = $thread['ItemPic'];
+			$person = $thread['firstName']." ".$thread['lastName'];
+			$asin = $thread['ASIN'];
+		 ?>
+		<li>
+			<a href="/accounts/profile/<?= $thread['LenderID']?>">
+				<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+			</a>
+			<strong><?=$person?></strong> is borrowing <strong><?=$itemname ?></strong>.
+			<img src="<?=$src?>" alt="<?=$itemname?>">
+			<button type=submit" value="<?=$asin?>" onclick="alert(<?=$asin?>)">Find a similar item</button>
+		</li>
+		
+		<?php
+		}
         echo "feed";
         break;
 		
@@ -19,7 +36,7 @@ switch ($type) {
 				</ul>
 				<h1>Borrowing</h1>
 				<ul>
-			<? } else { ?>
+			<? } ?>
 		
 			<li class="<?= $status ?>">
 				<div>
@@ -66,7 +83,7 @@ switch ($type) {
 				</div>
 			</li>
 		<?php 
-			}}
+			}
 		break;
 		
     case "lend":
@@ -79,7 +96,7 @@ switch ($type) {
 				</ul>
 				<h1>Past Lending</h1>
 				<ul>
-			<?php } else {
+			<?php }
 			?>
 			<li class="<?= $status ?>">
 				<div>
@@ -102,7 +119,7 @@ switch ($type) {
 					</div>
 				</a>	
 		
-		<?php } }
+		<?php }
         echo "lend";
         break;
 }?>
