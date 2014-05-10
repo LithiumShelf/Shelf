@@ -18,7 +18,6 @@
             $this->set('thread', $this->Thread->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate)
                                                       VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
         }
-        
 		
 		/*
 			-Award points
