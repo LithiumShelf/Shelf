@@ -70,8 +70,12 @@ function printSearchResults($parsed_xml){
                 <legend>Choose your product</legend>
         <?php
         foreach($parsed_xml->Items->Item as $current){
+            $values = $current->ASIN . '|' . $current->ItemAttributes->Title . '|' . $current->ItemAttributes->ProductGroup;
+            if($current->ItemAttributes->ListPrice->Amount){
+                $values .= "|" . $current->ItemAttributes->ListPrice->Amount / 100;
+            }
 ?>
-    <input type="radio" name="product" id="<?= $current->ASIN ?>" value="<?= $current->ASIN . '|' . $current->ItemAttributes->Title . '|' . $current->ItemAttributes->ProductGroup ?>">
+    <input type="radio" name="product" id="<?= $current->ASIN ?>" value="<?= $values ?>">
     <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
         <a href="<?= $current->DetailPageURL ?>"></a>

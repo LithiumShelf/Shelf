@@ -67,7 +67,6 @@ function printSearchResults($parsed_xml, $item){
 <?php } ?>
 </a>
 <ul>
-    
     <li>Owner is: <?= $item[0]["Username"] ?></li>
     <li>Click here to request item</li>
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ProductGroup)){ ?>
@@ -82,6 +81,18 @@ function printSearchResults($parsed_xml, $item){
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ListPrice->FormattedPrice)){ ?>
         <li>List Price:<?= $parsed_xml->Items->Item->ItemAttributes->ListPrice->FormattedPrice ?></li>
     <?php } ?>
+    <?php if(isset($current->DetailPageURL)){ ?>
+         <li><a href=<?= $current->DetailPageURL ?>>Product Detail Page on Amazon</a></li>
+    <?php } ?>
+</ul>
+
+<h4>Amazon Recommends:</h4>
+<ul>
+<?php
+foreach($parsed_xml->Items->Item->SimilarProducts->SimilarProduct as $SimilarProduct){
+?>
+<li><a href="http://www.amazon.com/dp/<?= $SimilarProduct->ASIN ?>"><?= $SimilarProduct->Title ?></a></li>
+<?php } ?>
 </ul>
 <?php
     }

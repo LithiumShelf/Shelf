@@ -16,12 +16,22 @@ class PDOhandler {
         $this->_dbh = null;
     }
     
+    function getFriends($params){
+	$query = 'SELECT * FROM loztwodc_shelf.friends WHERE User = :userid';
+        return $this->query($query, $params);
+    }
+        
+    function getLocalUsers($params){
+	$query = 'SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid  AND a2.id != :userid';
+        return $this->query($query, $params);
+    }
+    
     // calls a custom query, with the option of including parameters.
     // will return all data as an associative array
     // insert command will also return the insert id for display
     // $query: The mysql query or command (ex.->'SELECT * FROM tweets WHERE id = :i;';)
     // $params: associative arrays that associate the query variable with a variable object (ex.-> array(':i' => $id);)
-    function query($query, $params){
+    function query($query, $params = null){
 		$DEBUG = true;
 		//if(!isset($params[":thistable"])){
 		//    $params[":thistable"] = $this->_table;
@@ -30,7 +40,12 @@ class PDOhandler {
 		//print_r($params);
 		try {
 			$q = $this->_dbh->prepare($query);
-			$q->execute($params);
+			if(isset($params)){
+			    $q->execute($params);
+			}else{
+			    $q->execute();
+			}
+			
 			//print_r($q->fetchAll());
 			//print_r($q->fetchAll(PDO::FETCH_ASSOC));
 			$id = $this->_dbh->lastInsertId(); // will be 0 if query wasn't an INSERT

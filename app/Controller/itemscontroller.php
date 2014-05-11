@@ -22,13 +22,19 @@
                 $params = array(':cat' => $product[2]);
                 $productGroup = $this->Item->query('INSERT INTO Category VALUES(null, :cat)', $params);
             }
+            if($product[3]){
+                $listprice = $product[3];
+            }else{
+                $listprice = null;
+            }
             $params = array(':userid' => $_SESSION["userid"],
                             ':asin' => $product[0],
                             ':name' => $product[1],
                             ':category' => $productGroup[0]["id"],
                             ':picURL' => null/*$_POST['picurl']*/,
-                            ':status' => "Available");
-            $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid)', $params));
+                            ':status' => "Available",
+                            ':listprice' => $listprice);
+            $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid, :listprice)', $params));
         }
         
         function removefromlending(){
@@ -44,28 +50,48 @@
         function findbyuser(){
             //Get Friends
             $params = array(':userid' => $_SESSION['userid']);
-            $this->set('friends', $this->Account->query('SELECT * FROM loztwodc_shelf.friends WHERE User = :userid;)', $params));
+            $this->set('friends', $this->Item->getFriends($params));
             //Get Local
             //find hot item owners in your area
-            $params = array(':userid' => $_SESSION['userid']);
-            $this->set('localusers', $this->Account->query('SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid)', $params)); 
+            $this->set('localusers', $this->Item->getLocalUsers($params)); 
         }
         
         function findbycategory(){
-
+            $this->set('cats', $this->Item->getCategories());
         }
 
         function searchresults(){
-            if(isset($_GET["category"])){
+            $params = array(':userid' => $_SESSION['userid']);
+            $this->set('cats', $this->Item->getCategories());
+            $this->set('friends', $this->Item->getFriends($params));
+            $this->set('localusers', $this->Item->getLocalUsers($params));
+            $query = 'SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID)
+                            JOIN Account ON (Item.LenderID = Account.id) ';
+            if(isset($_GET["category"]) && isset($_GET["userid"])){
                 $category = $_GET["category"];
-                $params = array(':category' => $category);
-                $this->set('items', $this->Item->query('SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID) WHERE Category.Category = :category', $params));
-            }
-            if(isset($_GET["userid"])){
                 $userid = $_GET["userid"];
-                $params = array(':userid' => $userid);
-                $this->set('items', $this->Item->query('SELECT Item.* FROM Item JOIN Account ON (Item.LenderID = Account.id) WHERE Account.id = :userid', $params));
+                $params = array(':category' => $category,
+                                ':userid' => $userid);
+                $query .= 'WHERE Category.id = :category AND Account.id = :userid';
+            }else{
+                if(isset($_GET["category"])){
+                    $category = $_GET["category"];
+                    $params = array(':category' => $category);
+                    $query .= 'WHERE Category.id = :category';
+                }
+                if(isset($_GET["userid"])){
+                    $userid = $_GET["userid"];
+                    //$params = array(':userid' => $userid);
+                    $query .= 'WHERE Account.id = :userid';
+                }
             }
+            if(isset($_GET["pricerange"]) && !empty($_GET["pricerange"]) ){
+                $pricebounds = explode('-', $_GET["pricerange"]);
+                $params[':min'] = $pricebounds[0];
+                $params[':max'] = $pricebounds[1];
+                $query .= ' AND ListPrice > :min AND ListPrice > :max';
+            }
+            $this->set('items', $this->Item->query($query, $params));
         }
     }
 ?>

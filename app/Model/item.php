@@ -19,6 +19,11 @@
             return $this->query($query, $params); 
         }
         
+        function getCategories(){
+            $query = 'SELECT * FROM Category ORDER BY Category ASC';
+            return $this->query($query); 
+        }
+        
         //delete by id
         function delete($id) {
             $query = 'DELETE FROM Item WHERE id = :id';
