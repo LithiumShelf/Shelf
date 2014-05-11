@@ -47,7 +47,7 @@ $request=
    . "&Timestamp=" . rawurlencode(date('Y-m-d\TH:i:s.000\Z'))
    . "&Version=" . $Version;
    
-$request .= "&Signature=" . rawurlencode(base64_encode(hash_hmac('SHA256', $requestheader . $request, [Replace with AMAZON API SECRET KEY], true)));
+$request .= "&Signature=" . rawurlencode(base64_encode(hash_hmac('SHA256', $requestheader . $request, AMAZON_SECRET, true)));
 
 //Catch the response in the $response object
 $response = file_get_contents('http://webservices.amazon.com/onca/xml?' . $request);
@@ -60,12 +60,22 @@ printSearchResults($parsed_xml);
 function printSearchResults($parsed_xml){
     $numOfItems = $parsed_xml->Items->TotalResults;
     if($numOfItems){
+        ?>
+            <div class="ui-field-contain">
+            <form action="../putupforlending" method="post">
+            Upload your own image: <input type="file" name="img">
+             
+            <fieldset data-role="controlgroup">
+                <button type="submit" value="Submit">Submit</button>
+                <legend>Choose your product</legend>
+        <?php
         foreach($parsed_xml->Items->Item as $current){
 ?>
+    <input type="radio" name="product" id="<?= $current->ASIN ?>" value="<?= $current->ASIN . '|' . $current->ItemAttributes->Title . '|' . $current->ItemAttributes->ProductGroup ?>">
+    <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
         <a href="<?= $current->DetailPageURL ?>"></a>
-        <img src="<?= $current->LargeImage->URL ?>" height="<?= $parsed_xml->Items->Item->LargeImage->Height?>" width="<?= $parsed_xml->Items->Item->LargeImage->Width ?>">
-        </a>
+        <img src="<?= $current->MediumImage->URL ?>" height="<?= $parsed_xml->Items->Item->MediumImage->Height?>" width="<?= $parsed_xml->Items->Item->MediumImage->Width ?>">
         <ul>
             <?php if(isset($current->ASIN)){ ?>
                 <li>Amazon Serial Identification Number a.k.a ASIN:<?= $current->ASIN ?></li>
@@ -83,10 +93,18 @@ function printSearchResults($parsed_xml){
                 <li>Manufacturer:<?= $current->ItemAttributes->Manufacturer ?></li>
             <?php } ?>
         </ul>
+    </label>
 <?php
         }
+        ?>
+        
+            </fieldset>
+         </form>
+        </div>
+        <?php
     }
 }
+
 if (isset($keywords)){
     ItemSearch($keywords);
 } else {

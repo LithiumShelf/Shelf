@@ -13,21 +13,32 @@
         }
         
         function putupforlending(){
-            $params = array(':userid' => $_SESSION['userid'],
-                            ':asin' => $_POST['asin'],
-                            ':category' => $_POST['category'],
-                            ':picURL' => $_POST['picurl'],
+            //print_r($_POST);
+            $product = explode("|", $_POST["product"]);
+            $params = array(':cat' => $product[2],
+                            ':catplural' => $product[2] + "s");
+            $productGroup = $this->Item->query('SELECT * FROM Category WHERE Category = :cat OR Category = :catplural', $params);
+            if(!isset($productGroup[0])){
+                $params = array(':cat' => $product[2]);
+                $productGroup = $this->Item->query('INSERT INTO Category VALUES(null, :cat)', $params);
+            }
+            $params = array(':userid' => $_SESSION["userid"],
+                            ':asin' => $product[0],
+                            ':name' => $product[1],
+                            ':category' => $productGroup[0]["id"],
+                            ':picURL' => null/*$_POST['picurl']*/,
                             ':status' => "Available");
-            $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :picURL, :status, :userid)', $params));
+            $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid)', $params));
         }
         
-        function removefromlending($id){
-            $params = array(':id' => $id);
-            $this->set('inventory', $this->Item->query('DELETE FROM Item WHERE id = :id', $params));
+        function removefromlending(){
+            $params = array(':id' => $_POST["id"],
+                            ':userid' => $_SESSION["userid"]);
+            $this->set('inventory', $this->Item->query('DELETE FROM Item WHERE LenderID = :userid AND id = :id', $params));
         }
         
-        function itempage(){
-            $this->set('item', $this->Item->select($id));
+        function itempage($id){
+            $this->set('item', $this->Item->selectjoinaccount($id));
         }
         
         function findbyuser(){

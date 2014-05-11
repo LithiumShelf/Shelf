@@ -2,6 +2,7 @@
 
 ?>
 <div id="main">
+    <!--
 	<h3>Item Name</h3>
 	<input id="input_item_name" type="text" size="25" value="Item name">
 	
@@ -28,4 +29,6 @@
 	<h3>Click here to upload a photo</h3>
 	<img>
 	<button type="button" id="item_submit">Submit</button>
+    -->
+    <h3>You have successfully put this item up for lending</h3>
 </div>

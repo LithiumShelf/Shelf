@@ -18,7 +18,7 @@ function checkSearchResults($parsed_xml){
     }
 }
 //Set up the operation in the request
-function ItemLookup($ASIN){
+function ItemLookup($ASIN, $item){
 
 //Set the values for some of the parameters
 $Operation = "ItemLookup";
@@ -41,23 +41,35 @@ $request=
    . "&Timestamp=" . rawurlencode(date('Y-m-d\TH:i:s.000\Z'))
    . "&Version=" . $Version;
    
-$request .= "&Signature=" . base64_encode(hash_hmac('SHA256', $requestheader . $request, [Replace with AMAZON API SECRET KEY], true));
-
+$request .= "&Signature=" . rawurlencode(base64_encode(hash_hmac('SHA256', $requestheader . $request, AMAZON_SECRET, true)));
+//echo $request;
 //Catch the response in the $response object
 $response = file_get_contents('http://webservices.amazon.com/onca/xml?' . $request);
 $parsed_xml = simplexml_load_string($response);
-printSearchResults($parsed_xml);
+printSearchResults($parsed_xml, $item);
 }
 ?>
 
 <?php
-function printSearchResults($parsed_xml){
+function printSearchResults($parsed_xml, $item){
+    if($parsed_xml->Items->Request->Errors){
+        //Item cannot be accessed via API.
+        echo "Error Code: " . $parsed_xml->Items->Request->Errors->Error->Code;
+        echo "Message: " . $parsed_xml->Items->Request->Errors->Error->Message;
+    }else{
 ?>
 <h2> <?= $parsed_xml->Items->Item->ItemAttributes->Title ?> </h2>
 <a href="<?= $parsed_xml->Items->Item->DetailPageURL ?>"></a>
+<?php if(isset($item[0]["ItemPic"])){ ?>
+<img src="<?= $BASE_URL ?>/images/item/<?=$item[0]["ItemPic"]?> ?>">
+<?php }else{ ?>
 <img src="<?= $parsed_xml->Items->Item->LargeImage->URL ?>" height="<?= $parsed_xml->Items->Item->LargeImage->Height?>" width="<?= $parsed_xml->Items->Item->LargeImage->Width ?>">
+<?php } ?>
 </a>
 <ul>
+    
+    <li>Owner is: <?= $item[0]["Username"] ?></li>
+    <li>Click here to request item</li>
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ProductGroup)){ ?>
         <li>Product Group:<?= $parsed_xml->Items->Item->ItemAttributes->ProductGroup ?></li>
     <?php } ?>
@@ -67,9 +79,13 @@ function printSearchResults($parsed_xml){
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->Manufacturer)){ ?>
         <li>Manufacturer:<?= $parsed_xml->Items->Item->ItemAttributes->Manufacturer ?></li>
     <?php } ?>
+    <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ListPrice->FormattedPrice)){ ?>
+        <li>List Price:<?= $parsed_xml->Items->Item->ItemAttributes->ListPrice->FormattedPrice ?></li>
+    <?php } ?>
 </ul>
-<?php 
+<?php
+    }
 }
 //Run and Print (perform the item lookup)
-ItemLookup($item["ASIN"]);
+ItemLookup($item[0]["ASIN"], $item);
 ?>

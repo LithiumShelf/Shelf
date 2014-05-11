@@ -16,27 +16,6 @@ class PDOhandler {
         $this->_dbh = null;
     }
     
-    //select * from $_table
-        function selectAll() {
-        $query = 'SELECT * FROM :thistable';
-        return $this->query($query);
-    }
-    
-    //select $id from $_table
-    function select($id) {
-        $query = 'SELECT * FROM :thistable WHERE id = :id';
-        $params = array(':id' => $id);
-	return $this->query($query, $params);   
-    }
-    
-    //delete by id
-    function delete($id) {
-	$query = 'DELETE FROM :table WHERE id = :id';
-	$params = array(':id' => $id);
-	return $this->query($query, $params);  
-    }
-    
-    
     // calls a custom query, with the option of including parameters.
     // will return all data as an associative array
     // insert command will also return the insert id for display
@@ -48,7 +27,7 @@ class PDOhandler {
 		//    $params[":thistable"] = $this->_table;
 		//}
 		//echo $query;
-		print_r($params);
+		//print_r($params);
 		try {
 			$q = $this->_dbh->prepare($query);
 			$q->execute($params);
