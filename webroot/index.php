@@ -1,19 +1,28 @@
 <?php
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
+require_once (ROOT . DS . 'bootstrap.php');
 
 //specify navigation order
 $pages = array("feed", "borrow", "lend", "more");
 
 if(isset($_GET['page'])){
     $page = $_GET['page'];
+    
 }else{
     $page = "feed";
 }
-
-require_once (ROOT . DS . 'bootstrap.php');
-
 session_start();
+if($page == "ajax"){
+                if(isset($_GET['url'])){
+                     $url = $_GET['url'];
+                    callHook();
+               }else{
+                    include(ROOT . DS . 'app' . DS . 'View' . DS . $page . '.php');
+               }
+}else{
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,12 +39,14 @@ session_start();
     <body>
         <?php include(ROOT . DS . 'app' . DS . 'View' . DS . 'header.php');?>
         <?php
-            if(isset($_GET['url'])){
-                 $url = $_GET['url'];
-                callHook();
-           }else{
-                include(ROOT . DS . 'app' . DS . 'View' . DS . $page . '.php');
-           }
+                if(isset($_GET['url'])){
+                     $url = $_GET['url'];
+                    callHook();
+               }else{
+                    include(ROOT . DS . 'app' . DS . 'View' . DS . $page . '.php');
+               }
         ?>
     </body>
 </html>
+
+<?php } ?>

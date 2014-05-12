@@ -7,8 +7,8 @@ RewriteRule ^.*$ - [L]
  
  #index.php always
 #RewriteRule ^(.*)$ index.php?url=$1 [PT,L]
-RewriteRule ^(feed|lend|borrow|more)/(.*) index.php?url=$2&page=$1 [PT,L,QSA]
-RewriteRule ^(feed|lend|borrow|more)?/? index.php?page=$1 [PT,L]
+RewriteRule ^(ajax|feed|lend|borrow|more)/(.*) index.php?url=$2&page=$1 [PT,L,QSA]
+RewriteRule ^(ajax|feed|lend|borrow|more)?/? index.php?page=$1 [PT,L]
  
  #Error Pages
 ErrorDocument 404     /404.html
