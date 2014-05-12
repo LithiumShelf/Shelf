@@ -9,7 +9,7 @@
 			echo "You don't have any friends... Invite your friends and add them! Or go and accept outstanding friend invites";
 		}else{
 			foreach($friends as $friend){
-				printUser($user);
+				printUser($friend);
 			}
 		}
 	?>
@@ -48,7 +48,7 @@ function printUser($user){
 			<h4><?= $user["firstName"] . " " . $user["lastName"] ?></h4>
 			<p>
 				Level <br>
-				<?php if($b + $l == 0){
+				<?php if($lent + $borrowed == 0){
 					echo "0%";
 				    }else{ ?>
 				<?= round(100*($user["numSuccessful"]/($lent + $borrowed)), 0) ?>% Reputation<br>			<?php } ?>
