@@ -48,7 +48,10 @@ function printUser($user){
 			<h4><?= $user["firstName"] . " " . $user["lastName"] ?></h4>
 			<p>
 				Level <br>
-				<?= round(100*($user["numSuccessful"]/($lent + $borrowed)), 0) ?>% Reputation<br>
+				<?php if($b + $l == 0){
+					echo "0%";
+				    }else{ ?>
+				<?= round(100*($user["numSuccessful"]/($lent + $borrowed)), 0) ?>% Reputation<br>			<?php } ?>
 				Lent <?= $lent ?> times | Borrowed <?= $borrowed ?> times
 			</p>
 		</div>

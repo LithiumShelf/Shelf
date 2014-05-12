@@ -8,9 +8,7 @@ class accountsController extends Controller {
                     //check if the user already sent you a friend request
                 ////$this->set('accept',$this->Account->query(''), $params);
                     //send the user a new friend request, or accepts an existing request.
-                    $this->set('request', $this->Account->query('INSERT INTO Friend (:userid, :friendid)', $params));
-                }else{
-                        
+                    $this->set('request', $this->Account->query('INSERT INTO Friend VALUES (:userid, :friendid)', $params));
                 }
         }
         
@@ -51,18 +49,19 @@ class accountsController extends Controller {
         function friends(){
                 //Check Requests (return AccountID of users who have requested friendship)
                 $params = array(':userid' => $_SESSION['userid']);
-                $this->set('requests', $this->Account->query('SELECT id FROM Account JOIN Friend ON (Friend.User = Account.id) 
-                        WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid', $params))
+                $this->set('requests', $this->Account->query('SELECT Account.* FROM Account JOIN Friend ON (Friend.User = Account.id) 
+                        WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid)', $params));
                 //List out confirm friends JOINed with Accounts
-                $this->set('friends', $this->Account->getFriends($params);
+                $this->set('friends', $this->Account->getFriends($params));
                 //$this->set('friends', $this->Account->query('SELECT * FROM loztwodc_shelf.friends WHERE User = :userid;)', $params));
         }
         
         function local(){
                 //find hot item owners in your area
                 $params = array(':userid' => $_SESSION['userid']);
-                $this->set('localusers', $this->Account->getLocalUsers($params);
+                $this->set('localusers', $this->Account->potentialfriends($params));
                 //$this->set('localusers', $this->Account->query('SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid', $params)); 
+                
         }
         
         function uploadprofileimg(){

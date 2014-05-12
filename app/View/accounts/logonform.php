@@ -7,7 +7,8 @@
         <h2>Login</h2>
         Username: <input input type="text" name="username">
         Password: <input type="password" name="password">
-        <input type=submit value="Login">
+        <!--<input type=submit value="Login">-->
+        <button type="submit">Login</button>
         </form>
         
         <form action="register" method="post">
@@ -25,7 +26,8 @@
         ?>
         </select>
         Password: <input type="password" name="password">
-        <input type=submit value="Register">
+        <!--<input type=submit value="Register">-->
+        <button type="submit">Register</button>
         </form>
 <?php
     }
