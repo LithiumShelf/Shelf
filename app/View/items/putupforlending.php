@@ -30,5 +30,9 @@
 	<img>
 	<button type="button" id="item_submit">Submit</button>
     -->
+    <?php if($inventory){ ?>
     <h3>You have successfully put this item up for lending</h3>
+    <?php }else{ ?>
+    <h3>There has been an error, please make sure you've selected an item</h3>
+    <?php } ?>
 </div>

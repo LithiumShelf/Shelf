@@ -62,7 +62,7 @@ function printSearchResults($parsed_xml){
     if($numOfItems){
         ?>
             <div class="ui-field-contain">
-            <form action="../putupforlending" method="post" data-ajax="false">
+            <form action="putupforlending" method="post" data-ajax="false">
             Upload your own image: <input type="file" name="img">
              
             <fieldset data-role="controlgroup">

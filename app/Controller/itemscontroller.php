@@ -14,27 +14,29 @@
         
         function putupforlending(){
             //print_r($_POST);
-            $product = explode("|", $_POST["product"]);
-            $params = array(':cat' => $product[2],
-                            ':catplural' => $product[2] + "s");
-            $productGroup = $this->Item->query('SELECT * FROM Category WHERE Category = :cat OR Category = :catplural', $params);
-            if(!isset($productGroup[0])){
-                $params = array(':cat' => $product[2]);
-                $productGroup = $this->Item->query('INSERT INTO Category VALUES(null, :cat)', $params);
+            if(isset($_POST["product"])){
+                $product = explode("|", $_POST["product"]);
+                $params = array(':cat' => $product[2],
+                                ':catplural' => $product[2] + "s");
+                $productGroup = $this->Item->query('SELECT * FROM Category WHERE Category = :cat OR Category = :catplural', $params);
+                if(!isset($productGroup[0])){
+                    $params = array(':cat' => $product[2]);
+                    $productGroup = $this->Item->query('INSERT INTO Category VALUES(null, :cat)', $params);
+                }
+                if($product[3]){
+                    $listprice = $product[3];
+                }else{
+                    $listprice = null;
+                }
+                $params = array(':userid' => $_SESSION["userid"],
+                                ':asin' => $product[0],
+                                ':name' => $product[1],
+                                ':category' => $productGroup[0]["id"],
+                                ':picURL' => null/*$_POST['picurl']*/,
+                                ':status' => "Available",
+                                ':listprice' => $listprice);
+                $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid, :listprice)', $params));
             }
-            if($product[3]){
-                $listprice = $product[3];
-            }else{
-                $listprice = null;
-            }
-            $params = array(':userid' => $_SESSION["userid"],
-                            ':asin' => $product[0],
-                            ':name' => $product[1],
-                            ':category' => $productGroup[0]["id"],
-                            ':picURL' => null/*$_POST['picurl']*/,
-                            ':status' => "Available",
-                            ':listprice' => $listprice);
-            $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid, :listprice)', $params));
         }
         
         function removefromlending(){
