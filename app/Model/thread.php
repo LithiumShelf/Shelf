@@ -19,5 +19,9 @@
             $params = array(':id' => $id);
             return $this->query($query, $params);  
         }
+
+        function joinitem($params, $queryAppend = null) {
+            
+        }
     }
 ?>
