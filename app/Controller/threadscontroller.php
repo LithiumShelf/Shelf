@@ -36,11 +36,12 @@
         
         function viewallthreads(){
 			global $page;
+            $params = array(':UserID' => 2 /*$_SESSION['userid']*/);
             if($page != "feed"){
                 //Select all your threads
                 GLOBAL $page;
                 //$_SESSION['userid'] = 2;
-                $params = array(':UserID' => 2 /*$_SESSION['userid']*/);
+                
                 if($page == "lend"){
                     //Find threads for which you are the lender
                     //$params[":actionID"] = "LenderID";
@@ -60,7 +61,7 @@
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
-                $this->set('threads', $this->Thread->query('SELECT * FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (BorrowerID = Account.id) JOIN Friend ON (Account.ID = Friend.User) WHERE Friend = 2 LIMIT 10', $params));   
+                $this->set('threads', $this->Thread->query('SELECT * FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (BorrowerID = Account.id) JOIN Friend ON (Account.ID = Friend.User) WHERE Friend = :UserID LIMIT 10', $params));   
             }
         }
         
