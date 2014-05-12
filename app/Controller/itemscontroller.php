@@ -22,8 +22,10 @@
                 if(!isset($productGroup[0])){
                     $params = array(':cat' => $product[2]);
                     $productGroup = $this->Item->query('INSERT INTO Category VALUES(null, :cat)', $params);
+                }else{
+                    $productGroup = $productGroup[0]["id"];
                 }
-                if($product[3]){
+                if(isset($product[3])){
                     $listprice = $product[3];
                 }else{
                     $listprice = null;
@@ -31,7 +33,7 @@
                 $params = array(':userid' => $_SESSION["userid"],
                                 ':asin' => $product[0],
                                 ':name' => $product[1],
-                                ':category' => $productGroup[0]["id"],
+                                ':category' => $productGroup,
                                 ':picURL' => null/*$_POST['picurl']*/,
                                 ':status' => "Available",
                                 ':listprice' => $listprice);
