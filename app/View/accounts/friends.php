@@ -33,9 +33,7 @@
     <a href="profile/<?= $user["id"] ?>">
     <div class="user">
         <?php if (isset($user['profilepic'])){
-            $pic = $user['profilepic'];
-            $ext = array_pop(explode('.', $pic));
-            $thumb = $pic . '_thumb' . $ext;
+            $thumb = findThumbnailPath($user['profilepic']);
             ?>
             <a href="<?= $BASE_URL ?>/webroot/<?= $user['profileimg'] ?>">
             <img src="<?= $BASE_URL ?>/webroot/<?= $thumb ?>"

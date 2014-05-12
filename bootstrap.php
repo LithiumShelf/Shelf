@@ -91,4 +91,11 @@ function insertView($controller, $action){
 	}
 
 }
+
+function findThumbnailPath($filename){
+	$pic = $filename;
+        $ext = array_pop(explode('.', $pic));
+        $thumb = $pic . '_thumb' . $ext;
+	return $thumb;
+}
 ?>

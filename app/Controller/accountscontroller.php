@@ -45,7 +45,8 @@ class accountsController extends Controller {
                                 ':passhash' => $hashedpass,
                                 ':location' => $_POST['location']);
                 //Only location is ID 1: Seattle WA
-                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash, :location)', $params));
+                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID, Lent, Borrowed, numSuccessful)
+                                                             VALUES (:username, :fname, :lname, :passhash, :location, 0, 0, 0)', $params));
         }
         
         function friends(){
@@ -53,7 +54,7 @@ class accountsController extends Controller {
                 $params = array(':userid' => $_SESSION['userid'],
                                 ':userid2' => $_SESSION['userid']);
                 $this->set('requests', $this->Account->query('SELECT id FROM Account JOIN Friend ON (Friend.User = Account.id) 
-                        WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid2)', $params))
+                        WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid2)', $params));
                 //List out confirm friends JOINed with Accounts
                 $params = array(':userid' => $_SESSION['userid']);
                 $this->set('friends', $this->Account->query('SELECT * FROM loztwodc_shelf.friends WHERE User = :userid;)', $params));
@@ -66,50 +67,52 @@ class accountsController extends Controller {
         }
         
         function uploadprofileimg(){
+                if($_FILES){
                 //http://www.w3schools.com/php/php_file_upload.asp
                 $allowedExts = array("gif", "jpeg", "jpg", "png");
-                $temp = explode(".", $_FILES["file"]["name"]);
+                $temp = explode(".", $_FILES["profileimg"]["name"]);
                 $extension = end($temp);
-                if ((($_FILES["file"]["type"] == "image/gif")
-                        || ($_FILES["file"]["type"] == "image/jpeg")
-                        || ($_FILES["file"]["type"] == "image/jpg")
-                        || ($_FILES["file"]["type"] == "image/pjpeg")
-                        || ($_FILES["file"]["type"] == "image/x-png")
-                        || ($_FILES["file"]["type"] == "image/png"))
-                        && ($_FILES["file"]["size"] < 1024000)
+                if ((($_FILES["profileimg"]["type"] == "image/gif")
+                        || ($_FILES["profileimg"]["type"] == "image/jpeg")
+                        || ($_FILES["profileimg"]["type"] == "image/jpg")
+                        || ($_FILES["profileimg"]["type"] == "image/pjpeg")
+                        || ($_FILES["profileimg"]["type"] == "image/x-png")
+                        || ($_FILES["profileimg"]["type"] == "image/png"))
+                        && ($_FILES["profileimg"]["size"] < 1024000)
                         && in_array($extension, $allowedExts)) {
-                                if ($_FILES["file"]["error"] > 0) {
-                                        echo "Error: " . $_FILES["file"]["error"] . "<br>";
+                                if ($_FILES["profileimg"]["error"] > 0) {
+                                        echo "Error: " . $_FILES["profileimg"]["error"] . "<br>";
                                 } else {
-                                        echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-                                        echo "Type: " . $_FILES["file"]["type"] . "<br>";
-                                        echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+                                        echo "Upload: " . $_FILES["profileimg"]["name"] . "<br>";
+                                        echo "Type: " . $_FILES["profileimg"]["type"] . "<br>";
+                                        echo "Size: " . ($_FILES["profileimg"]["size"] / 1024) . " kB<br>";
                                         $path = ROOT . DS . 'webroot' . DS . 'images' . DS . 'profile' . DS;
-                                        if (file_exists($path . $_FILES["file"]["name"])) {
-                                                echo $_FILES["file"]["name"] . " already exists. ";
+                                        if (file_exists($path . $_FILES["profileimg"]["name"])) {
+                                                echo $_FILES["profileimg"]["name"] . " already exists. ";
                                          } else {
                                                 //save file to directory
-                                                move_uploaded_file($_FILES["file"]["tmp_name"],
-                                                $path .  $_FILES["file"]["name"]);
+                                                move_uploaded_file($_FILES["profileimg"]["tmp_name"],
+                                                $path .  $_FILES["profileimg"]["name"]);
                                                 //run imageMagic to make thumbnail of the new file at file_thumb.ext
                                                 
                                                 //thumbnail image created, write to directory
-                                                $imagethumbnailpath = $_FILES["file"]["name"]._thumb.jpg;
+                                                $imagethumbnailpath = findThumbnailPath($_FILES["profileimg"]["name"]);//$_FILES["profileimg"]["name"]."_thumb.jpg";
                                                 $imagethumbnail = new imagick($imagethumbnailpath);
                                                 $imagethumbnail->cropThumbnailImage(150, 150);
                                                 //$imagethumbnail->writeImage() 
                                                 //bool Imagick::cropThumbnailImage ()
 
-                                                 echo "Stored in: " . $path . $_FILES["file"]["name"];
+                                                 echo "Stored in: " . $path . $_FILES["profileimg"]["name"];
                                                  //replace $_FILES["file"]["name"] with the newly saved filename
                                                 $params = array(':userid' => $_SESSION['userid'],
-                                                                ':filepath' => 'profile' . DS . $_FILES["file"]["name"]);
+                                                                ':filepath' => 'profile' . DS . $_FILES["profileimg"]["name"]);
                                                 $this->set('file', $this->Account->query('UPDATE Account SET profilePic = :filepath WHERE id = :userid', params));
                                          }
                                 }
                         }else {
                                 echo "Invalid file";
                         }
+                }
                 }
         }
 
