@@ -227,7 +227,6 @@ webroot/css/images/icons-svg/arrow-d-l-black.svg
 webroot/css/images/icons-svg/arrow-d-l-white.svg
 webroot/css/images/icons-svg/arrow-d-l-black.svg
 webroot/css/images/icons-svg/arrow-d-r-white.svg
-*.svg
 webroot/css/jquery.mobile-1.4.2.css
 webroot/css/jquery.mobile-1.4.2.min.css
 webroot/css/jquery.mobile.external-png-1.4.2.css
@@ -244,7 +243,6 @@ webroot/css/jquery.mobile.theme-1.4.2.css
 webroot/css/jquery.mobile.theme-1.4.2.css
 webroot/css/lithified.css
 webroot/css/testified.css
-*.svg
 webroot/css/jquery.mobile-1.4.2.css
 webroot/css/jquery.mobile-1.4.2.min.css
 webroot/css/jquery.mobile.external-png-1.4.2.css
@@ -266,3 +264,4 @@ webroot/js/jquery.mobile-1.4.2.js
 webroot/css/debug.css
 webroot/css/bootstrap.min.css
 *.config
+*.svg
