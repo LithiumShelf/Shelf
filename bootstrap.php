@@ -75,15 +75,15 @@ spl_autoload_register('my_autoloader');
 
 removeMagicQuotes();
 
-function insertView($controller, $action){
-	global $url;
+function insertView($controller, $action, $queryString = null){
+	//global $url;
 	    $controllerName = $controller;
 	    $controller = $controller;
 	    $model = ucfirst(rtrim($controller, 's'));
 	    $controller .= 'Controller';
 	    $dispatch = new $controller($model,$controllerName,$action);
 	if ((int)method_exists($controller, $action)) {
-		call_user_func_array(array($dispatch,$action),$url);
+		call_user_func_array(array($dispatch,$action),$queryString);
 		//echo "potential success";
 	} else {
 		/* Error Generation Code Here */
