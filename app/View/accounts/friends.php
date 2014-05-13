@@ -30,7 +30,7 @@
 <?php
     function printuser($user, $request){
 ?>
-    <a href="profile/<?= $user["id"] ?>">
+    <a href="profile/<?= $user["id"]?>">
     <div class="user">
         <?php if (isset($user['profilepic'])){
             $thumb = findThumbnailPath($user['profilepic']);
