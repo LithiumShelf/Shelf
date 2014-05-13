@@ -2,7 +2,7 @@
 
 	/*Page template for both user's profile and other people's profile.
 	*/
-
+	print $_GET["id"];
 ?>
 <div id="profile_container">
 	<section id="info">

@@ -9,7 +9,7 @@ switch ($type) {
 			$asin = $thread['ASIN'];
 		 ?>
 		<li>
-			<a href="/accounts/profile/<?= $thread['LenderID']?>">
+			<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 				<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 			</a>
 			<strong><?=$person?></strong> is borrowing <strong><?=$itemname ?></strong>.
@@ -41,7 +41,7 @@ switch ($type) {
 			<li class="<?= $status ?>">
 				<div>
 			<!--PLACEHOLDER: Pass person's account id and load profile-->
-					<a href="/accounts/profile/<?= $thread['LenderID']?>">
+					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
 				</div>
@@ -50,7 +50,7 @@ switch ($type) {
 				<a href="http://www.google.com#q=thread">
 					<div style="float: left;">
 						<!--General-->
-						<strong><?= $thread['Name'] ?>Item</strong> from <strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> <br> 
+						<strong><?= $thread['Name'] ?></strong> from <strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> <br> 
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<!--Status-->
@@ -93,15 +93,15 @@ switch ($type) {
 			$due = $thread['DueDate'];
 			if ($newsection == 0 && $status == "Closed") {
 				$newsection++;?>
-				</ul>
-				<h1>Past Lending</h1>
+				</ul> <br>
+				<h1>Past Lending</h1><br>
 				<ul>
 			<?php }
 			?>
 			<li class="<?= $status ?>">
 				<div>
 			<!--PLACEHOLDER: Pass person's account id and load profile-->
-					<a href="/accounts/profile/<?= $thread['LenderID']?>">
+					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
 				</div>
@@ -110,7 +110,7 @@ switch ($type) {
 				<a href="http://www.google.com#q=thread">
 					<div style="float: left;">
 						<!--General-->
-						<strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> - <strong><?= $thread['Name'] ?>Item</strong>  <br> 
+						<strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> - <strong><?= $thread['Name'] ?></strong>  <br> 
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<br>
@@ -118,7 +118,7 @@ switch ($type) {
 						
 					</div>
 				</a>	
-		
+			</li>
 		<?php }
         echo "lend";
         break;
