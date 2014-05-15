@@ -5,14 +5,15 @@
 	color: white;
 }
 
-body, div {
-	background-color: /*#eee*/F2F2F2;
+body, section, .ui-collapsible-content {
+	background-color: #eee !important;
 	font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 	font-weight: 100 !important;
 	box-shadow: none !important;
 	text-shadow: none !important;
 	border-radius: none !important;
 	-webkit-border-radius: none !important;
+	border:none;
 }
 
 img {
@@ -42,6 +43,10 @@ li a:link, li a:visited, li a:hover, li a:active {
 
 .ui-block-c .ui-btn-active {
 	background-color:#CA0065 !important;
+}
+
+.ui-collapsible-content {
+	background-color: 
 }
 
 button, .ui-btn, .ui-shadow, .ui-corner-all, .ui-li-count {
@@ -95,8 +100,8 @@ section ul {
 
 /************* CONTAINERS *************/
 
-#feed_container, #borrow_container, #lend_container, #more_container, #cat_container, #by_friend_container, #by_local_container, #search_results {
-	//display: block;
+#feed_container, #borrow_container, #lend_container, #more_container, #cat_container, #by_friend_container, #by_local_container, #search_results, #friend_container, #profile_container, #main  {
+	display: block;
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
@@ -165,11 +170,17 @@ section ul {
 	text-align: left;
 }
 
+/************* UNSURE *************/
 
+#info, #inventory, #reviews {
+	background-color: #777 !important;
+	padding:20px;
+	margin:20px;
+}
 
-
-
-
+#info h1, #inventory h1, #reviews h1, #info h2, #inventory h2, #reviews h2 {
+	color: white;
+}
 
 
 
