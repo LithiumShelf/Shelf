@@ -42,7 +42,11 @@ switch ($type) {
 		//HEADER: If transition from Currently Requested to Borrowing, increment counter
 			if($newsection == 0 && $notPending ){  
 				$newsection++; 
-				$currentstat="Closed";?>
+				if($status != "Current" ){
+					$currentstat="Closed";
+					
+				}?>
+					
 				</ul>
 				<h1>Borrowing</h1>
 				<ul>
@@ -92,7 +96,17 @@ switch ($type) {
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
 			$due = $thread['DueDate'];
-			if ($newsection == 0 && $status == "Closed") {
+			$done = $status == "Complete" || $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
+			
+			//HEADER: From 'To Review' to  'Currently Lending'
+			if ($newsection == 0 && $status=="Current") {
+				$newsection++;?>
+				</ul> <br>
+				<h1>Current Lending</h1><br>
+				<ul>
+			<?php
+			//HEADER: From 'Currently Lending' to 'Past Lending'
+			} else if ($newsection == 1 && $done) {
 				$newsection++;?>
 				</ul> <br>
 				<h1>Past Lending</h1><br>
@@ -100,15 +114,15 @@ switch ($type) {
 			<?php }
 			?>
 			<li class="<?= $status ?>">
-				<div>
-					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
+				<div style="float:left">
+					<a href="more/accounts/profile/<?= $thread['BorrowerID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
 				</div>
 				
 			<!--PLACEHOLDER: Link to thread on click-->
 				<a href="http://www.google.com#q=thread">
-					<div style="float: left;">
+					<div>
 						<!--General-->
 						<strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> - <strong><?= $thread['Name'] ?></strong>  <br> 
 						<!--Reputation-->

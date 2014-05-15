@@ -125,6 +125,10 @@
         function viewallthreads(){
 		global $page;
             $params = array(':UserID' => 2 /*$_SESSION['userid']*/);
+			
+			//SQL code that orders threads by stats (custom order). To be appended to end of lend/borrow queries.
+			$orderby = " ORDER BY ( CASE WHEN ThreadStatus = 'Requested' OR ThreadStatus = 'Approved' OR ThreadStatus = 'Waiting' THEN 0	WHEN ThreadStatus = 'Current' THEN 1 ELSE 3	END),ThreadStatus";
+			
             if($page != "feed"){
                 //Select all your threads
                 GLOBAL $page;
@@ -134,14 +138,14 @@
                     //Find threads for which you are the lender
                     //$params[":actionID"] = "LenderID";
 					$this->set('type', "lend");
-					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE LenderID = :UserID', $params));
+					$this->set('threads', $this->Thread->query("SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE LenderID = :UserID".$orderby, $params));
 				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
                     //$params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
 					
                 //$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
-				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE BorrowerID = :UserID', $params));
+				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE BorrowerID = :UserID'.$orderby, $params));
                 //GROUP BY Thread Status
 				}
 
