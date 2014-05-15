@@ -32,3 +32,15 @@
 	-->
 	
 </div>
+
+<script>
+	var id = $(this).parent().parent().parent('li').attr('id');
+    $('button:not(button:first)').click(function(){
+        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>"},function(data,status){
+            $('this').html(data);
+        });
+        console.log(id + " " + $(this).val());
+    }); 
+    //"/ajax/threads/viewthread"
+</script>
+

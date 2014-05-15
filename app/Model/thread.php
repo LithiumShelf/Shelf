@@ -27,18 +27,28 @@
         function isBorrower($params){
             //$params = array(':userid' => $_SESSION[":userid"],
             //                ':threadid' => $threadid);
-            return $this->Thread->query('SELECT Thread.id, Thread.ItemID, Thread.ThreadStatus, Thread.BorrowerID, Item.LenderID, Thread.DueDate, Thread.HashCode FROM Thread JOIN Item ON (Thread.ItemID = Item.id) WHERE Thread.id = :threadid AND Thread.BorrowerID = :userid', $params)[0];
+            $borrower = $this->query('SELECT Thread.id, Thread.ItemID, Thread.ThreadStatus, Thread.BorrowerID, Item.LenderID, Thread.DueDate, Thread.HashCode FROM Thread JOIN Item ON (Thread.ItemID = Item.id) WHERE Thread.id = :threadid AND Thread.BorrowerID = :userid', $params);
+            if($lender){
+                return $borrower[0];
+            }else{
+                die("you are not the borrower");
+            }
         }
         
         function isLender($params){
             //$params = array(':userid' => $_SESSION[":userid"],
             //                ':threadid' => $threadid);
-            return $this->Thread->query('SELECT Thread.id, Thread.ItemID, Thread.ThreadStatus, Thread.BorrowerID, Item.LenderID, Thread.DueDate, Thread.HashCode FROM Thread JOIN Item ON (Thread.ItemID = Item.id) WHERE Thread.id = :threadid AND Item.LenderID = :userid', $params)[0];
+            $lender = $this->query('SELECT Thread.id, Thread.ItemID, Thread.ThreadStatus, Thread.BorrowerID, Item.LenderID, Thread.DueDate, Thread.HashCode FROM Thread JOIN Item ON (Thread.ItemID = Item.id) WHERE Thread.id = :threadid AND Item.LenderID = :userid', $params);
+            if($lender){
+                return $lender[0];
+            }else{
+                die("you are not the lender");
+            }
         }
         
         function givePoint($id, $role){ //$role is lend/borrow/success
             $params = array(':id' => $id);
-            $switch($role){
+            switch($role){
                 case "lend":
                     return $this->Thread->query('UPDATE Account SET Lent = Lent + 1 WHERE id = :id', $params);
                 case "borrow":

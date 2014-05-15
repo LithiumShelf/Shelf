@@ -41,11 +41,12 @@
              *@Params
              *$_SESSION[":userid"]
              *$_POST['id'] (Thread id)
-             *
+             *$_POST['action']
+             *$_POST["$page"]
              */
-            global $page;
+            $page = $_POST["page"];
             $threadid = $_POST['id'];
-            $params = array(':userid' => $_SESSION[":userid"],
+            $params = array(':userid' => $_SESSION["userid"],
                             ':threadid' => $threadid);
             if($page == "borrow"){
                $thread = $this->Thread->isBorrower($params);
@@ -67,8 +68,11 @@
                             //force borrower to enter hashcode
                             //set availability to unavailable
                                 if(isset($_POST['hashCode']) && $_POST['hashCode'] == $thread["hashCode"]){
-                                    $changeStatusTo = "current";
-                                    $availability = "unavailable";
+                                    if(isset($_POST['action']) && $_POST['action'] == "current"){
+                                        $changeStatusTo = "current";
+                                        $availability = "unavailable";
+                                    }
+                                    $changeStatusTo = "cancelled";
                                     $this->Thread->givePoint($thread["BorrowerID"], "borrow");
                                     $this->Thread->givePoint($thread["LenderID"], "lend");
                                     $this->Thread->givePoint($thread["LenderID"], "success");
@@ -138,14 +142,14 @@
                     //Find threads for which you are the lender
                     //$params[":actionID"] = "LenderID";
 					$this->set('type', "lend");
-					$this->set('threads', $this->Thread->query("SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE LenderID = :UserID".$orderby, $params));
+					$this->set('threads', $this->Thread->query("SELECT *, Thread.id AS ThreadID FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE LenderID = :UserID".$orderby, $params));
 				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
                     //$params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
 					
                 //$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
-				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE BorrowerID = :UserID'.$orderby, $params));
+				$this->set('threads', $this->Thread->query('SELECT *, Thread.id AS ThreadID FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE BorrowerID = :UserID'.$orderby, $params));
                 //GROUP BY Thread Status
 				}
 
@@ -163,8 +167,8 @@
             }
         }
         
-        function viewthread($id){
-            $params = array(':id' => $id);
+        function viewthread(){
+            $params = array(':id' => $_POST["id"]);
             $this->set('messages', $this->Thread->query('SELECT Lender.Username AS LenderName, Borrower.Username AS BorrowerName, Message.*
                 FROM Thread JOIN Item ON (Thread.ItemID = Item.id) 
                 JOIN Account Borrower ON (Borrower.id = Thread.BorrowerID) JOIN Account Lender ON (Lender.id = Item.LenderID)
