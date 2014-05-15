@@ -113,7 +113,7 @@ section ul {
 
 /************* BORROW *************/
 
-.Open, .Closed, .Requested, .Current, .Complete, .Rejected, li , .User {
+.Open, .Closed, .requested, .current, .complete, .rejected, li , .User {
 	color: white;
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -127,7 +127,7 @@ section ul {
 	background-color: #0061C1;
 }
 
-.Open button, .Closed button, .Requested button, .Current button, .Complete button, .Rejected button, #activity button {
+.Open button, .Closed button, .requested button, .current button, .complete button, .rejected button, #activity button {
 	background-color: white !important;
 	display: block;
 	/** FOR TWO BUTTONS SIDE BY SIDE
@@ -141,11 +141,11 @@ section ul {
 	color: #0061C1 !important;
 }
 
-.Requested button, .Current button, .Complete button, .Rejected button, #activity button   {
+.requested button, .current button, .complete button, .rejected button, #activity button   {
 	color: #CA0065 !important;
 }
 
-.Open a, .Closed a, .Open a:hover, .Closed a:hover, .Requested a, .Requested a:hover, .Current a, .Current a:hover, .Complete a, .Complete a:hover, .Rejected a, .Rejected a:hover {
+.Open a, .Closed a, .Open a:hover, .Closed a:hover, .requested a, .requested a:hover, .current a, .current a:hover, .complete a, .complete a:hover, .rejected a, .rejected a:hover {
 	color: white !important;
 	text-shadow: none;
 	text-decoration: none;
@@ -153,7 +153,7 @@ section ul {
 }
 
 /************* BORROW *************/
-.Requested, .Current, .Complete, .Rejected {
+.requested, .current, .complete, .rejected {
 	background-color: #CA0065;
 }
 

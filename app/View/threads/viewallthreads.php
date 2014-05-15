@@ -46,10 +46,10 @@ switch ($type) {
 			foreach ($threads as $thread) { 
 				$status = $thread['ThreadStatus'];
 				$due = $thread['DueDate'];
-				$done = $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
+				$done = $status =="Closed" || $status == "rejected" || $status =="late" || $status == "failed";
 			//HEADER: If transition from Currently Requested to Borrowing, increment counter
 				// To make it so that they still show up even if empty, remove else if...
-				if($newsection == 0 && $status=="Current" ){  
+				if($newsection == 0 && $status=="current" ){  
 					$newsection++; 
 					?>	
 					</ul>
@@ -69,7 +69,7 @@ switch ($type) {
 				?>
 				
 				
-				<li class="<?= $currentstat?>" id="<?=$thread['id']?>">
+				<li class="<?= $currentstat?>" id="<?=$thread['ThreadID']?>">
 					<div style="float: left;">
 						<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 							<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
@@ -99,17 +99,17 @@ switch ($type) {
 				<!--BUTTONS-->
 					<div style = "clear:left;" class="ui-grid-b ui-responsive">
 						<?php
-							if($status=="Open"|| $status=="Current" ) {
+							if($status=="Open"|| $status=="current" ) {
 						?>
-						<div><button type="button" name="current">Return</button> </div>
-						<?php  } else if ($status=="Requested" ) { 
+						<div><button type="button" name="action" value="return">Return</button> </div>
+						<?php  } else if ($status=="requested" ) { 
 						?>
 
 						<div class="ui-block-a"> 
-							<button type="button" name="requested" value="complete">Receive</button>
+							<button type="button" name="action" value="current">Receive</button>
 						</div>
 						<div class="ui-block-b">
-							<button type="button" name="requested" value="failed">Cancel</button>
+							<button type="button" name="action" value="cancelled">Cancel</button>
 						</div>
 						<?php } else {
 						} ?>
@@ -132,10 +132,10 @@ switch ($type) {
 			foreach ($threads as $thread) { 
 				$status = $thread['ThreadStatus'];
 				$due = $thread['DueDate'];
-				$done = $status == "Complete" || $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
+				$done = $status == "complete" || $status =="Closed" || $status == "rejected" || $status =="late" || $status == "failed";
 				
 				//HEADER: From 'To Review' to  'Currently Lending'
-				if ($newsection == 0 && $status=="Current") {
+				if ($newsection == 0 && $status=="current") {
 					$newsection++;?>
 					</ul> 
 					<h1>Current Lending</h1>
@@ -150,7 +150,7 @@ switch ($type) {
 						<ul>
 				<?php }
 				?>
-				<li class="<?= $status ?>" id="<?=$thread['id']?>">
+				<li class="<?= $status ?>" id="<?=$thread['ThreadID']?>">
 					<div style="float:left">
 						<a href="more/accounts/profile/<?= $thread['BorrowerID']?>">
 							<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
@@ -179,17 +179,23 @@ switch ($type) {
 				<!--BUTTONS-->
 					<div style = "clear:left;" class="ui-grid-a ui-responsive">
 						<?php
-							if($status=="Open"|| $status=="Current" ) {
-						?>
-						<div><button type="button" name="current">Take Back</button> </div>
-						<?php  } else if ($status=="Requested" ) { 
+							if($status=="Open"|| $status=="current" ) {
 						?>
 						<div class="ui-block-a" style = "clear:none;">
-							<button type="button" name="requested" value="approved">Approve</button>
+							<button type="button" name="action" value="complete">Complete</button> 
+						</div>
+						<div class="ui-block-b" style = "clear:none;">
+							<button type="button" name="action" value="failed">Fail</button> 
+						</div>
+						
+						<?php  } else if ($status=="requested" ) { 
+						?>
+						<div class="ui-block-a" style = "clear:none;">
+							<button type="button" name="action" value="approved">Approve</button>
 						</div>
 						
 						<div class="ui-block-b" style = "clear:none;">
-							<button type="button" name="requested" value="rejected">Reject</button>
+							<button type="button" name="action" value="rejected">Reject</button>
 						</div>
 						<?php } else {
 						} ?>
