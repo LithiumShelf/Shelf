@@ -35,6 +35,7 @@ $borrowed = $user["Borrowed"];
 	<?php if($user['id'] != $_SESSION['userid']) {?>
 	<section id="actions">
 		<button class="lend" type="button" name="offer">Offer an item</button>
+		<button type="button" name="message">Send a message</button>
 	</section>
 	<?php }?>
 
