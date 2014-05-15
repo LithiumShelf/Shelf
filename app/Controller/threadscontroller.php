@@ -154,8 +154,12 @@
                 //Select the top 10 public (your friends) threads
                 //JOIN with your friends
                 //Reverse chronological order (check the timestamp);
-                $this->set('threads', $this->Thread->query('SELECT Thread.*, Item.* FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account A1 ON (BorrowerID = A1.id) JOIN Account A2 ON (Item.LenderID = A2.id)
+				 $this->set('threads', $this->Thread->query('SELECT DISTINCT Thread.*, Item.*, A1.firstName as bFirst, A1.lastName as bLast, A1.profilePic, A2.firstName as lFirst, A2.lastName as lLast FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account A1 ON (BorrowerID = A1.id) JOIN Account A2 ON (Item.LenderID = A2.id)
   JOIN Friend F1 ON (A1.id = F1.User) JOIN Friend F2 ON (A2.id = F2.User) WHERE (F1.Friend = :UserID OR F2.Friend = :UserID) AND (F1.User != :UserID  AND F2.User != :UserID) LIMIT 10', $params));   
+				/*
+                $this->set('threads', $this->Thread->query('SELECT Thread.*, Item.* FROM Thread JOIN Item ON (Item.id = Thread.ItemID) JOIN Account A1 ON (BorrowerID = A1.id) JOIN Account A2 ON (Item.LenderID = A2.id)
+  JOIN Friend F1 ON (A1.id = F1.User) JOIN Friend F2 ON (A2.id = F2.User) WHERE (F1.Friend = :UserID OR F2.Friend = :UserID) AND (F1.User != :UserID  AND F2.User != :UserID) LIMIT 10', $params));  
+				*/
             }
         }
         
@@ -197,7 +201,7 @@
             $lastInsertMsgID = $this->Thread->query('INSERT INTO Message VALUES (NULL, NOW(), :subject, :body, 0, :thread, :isBorrower)', $params);
             $params = array(':messageid' => $lastInsertMsgID);
             //capture the previously inserted message
-            $this->set('message', $this->Thread->query('SELECT * FROM ', $params));
+            $this->set('message', $this->Thread->query('SELECT * FROM Messages WHERE id = :messageid', $params));
             //In Ajax Call, If fromBorrower = 1, print Borrower Name, If 0, print your User's name
         }
         

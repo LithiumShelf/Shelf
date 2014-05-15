@@ -22,10 +22,8 @@
 		<ul>
 			<?php 
 				insertView('threads', 'viewallthreads');
-				echo $type;
 			?>
 		</ul>
-		<button type="button" name="borrow_history">Borrow History</button>
 	</section>
 	
 </div>

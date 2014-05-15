@@ -5,14 +5,14 @@ switch ($type) {
 		foreach ($threads as $thread) { 
 			$itemname = $thread['Name'];
 			$src = $thread['ItemPic'];
-			$person = $thread['firstName']." ".$thread['lastName'];
+			$person = $thread['bFirst']." ".$thread['bLast'];
 			$asin = $thread['ASIN'];
 		 ?>
 		<li>
 			<!--Feed Tile: Top-->
 			<div style="float: left;"> 
-				<a href="more/accounts/profile/<?= $thread['LenderID']?>">
-					<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+				<a href="more/accounts/profile/<?= $thread['BorrowerID']?>">
+					<img src="<?= $BASE_URL ?>/images/profile/<?= $thread['profilePic']?>" alt="<?=$person?>" style="float: left; width: 50px; height: 50px;">
 				</a>
 			</div>
 			
@@ -20,11 +20,11 @@ switch ($type) {
 			
 			<!--Feed Tile: Image-->
 			<a href="borrow/items/searchresults?search_item=<?=$itemname?>">
-				<img src="<?=$src?>" alt="<?=$itemname?>">
+					<img src="<?= $BASE_URL ?>/images/item/<?=$src?> ?>" alt="<?=$itemname?>">
 			</a>
 			
 			<!--Feed Tile: Bottom-->
-			<button type=submit" value="<?=$itemname?>" onclick="borrow/items/searchresults?search_item=<?=$itemname?>" style="clear: left;">Find a similar item</button>
+			<button type=submit" value="<?=$itemname?>" onclick="window.location='borrow/items/searchresults?search_item=<?=$itemname?>'" style="clear: left;">Find a similar item</button>
 		</li>
 		
 		<?php
@@ -75,6 +75,7 @@ switch ($type) {
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<!--Status-->
 						<?= $status ?>
+						<?= $due ?>
 					</div>
 				</a>
 				
@@ -139,6 +140,7 @@ switch ($type) {
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<?= $status ?>
+						<?= $due ?>
 						<!--Latest Message-->
 					</div>
 				</a>	
