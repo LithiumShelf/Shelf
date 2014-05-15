@@ -19,16 +19,16 @@
 		</ul>
 	</section>
 	
+	<!--	
+	
 	<section id="current_lending">
 		<h1>Currently Lending</h1>
-		<!--Load current threads-->
-		<?php ?>
 	</section>
 	
 	<section id="past_lending">
 		<h1>Past Lending</h1>
-		<!--Load older lending transaction threads-->
-		<?php ?>
-	</section>
+	</section> 
+	
+	-->
 	
 </div>

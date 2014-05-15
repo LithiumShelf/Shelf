@@ -100,7 +100,7 @@ switch ($type) {
 			<?php }
 			?>
 			<li class="<?= $status ?>">
-				<div style="float:left;">
+				<div>
 					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
@@ -113,7 +113,7 @@ switch ($type) {
 						<strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> - <strong><?= $thread['Name'] ?></strong>  <br> 
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
-						<br>
+						<?= $status ?>
 						<!--Latest Message-->
 						
 					</div>
