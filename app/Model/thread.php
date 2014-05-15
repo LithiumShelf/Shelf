@@ -50,11 +50,14 @@
             $params = array(':id' => $id);
             switch($role){
                 case "lend":
-                    return $this->Thread->query('UPDATE Account SET Lent = Lent + 1 WHERE id = :id', $params);
+                    $this->query('UPDATE Account SET Lent = Lent + 1 WHERE id = :id', $params);
+                    break;
                 case "borrow":
-                    return $this->Thread->query('UPDATE Account SET Borrowed = Borrowed + 1 WHERE id = :id', $params);
+                    $this->query('UPDATE Account SET Borrowed = Borrowed + 1 WHERE id = :id', $params);
+                    break;
                 case "success":
-                    return $this->Thread->query('UPDATE Account SET numSuccessful = numSuccessful + 1 WHERE id = :id', $params);
+                    $this->query('UPDATE Account SET numSuccessful = numSuccessful + 1 WHERE id = :id', $params);
+                    break;
             }
         }
     }

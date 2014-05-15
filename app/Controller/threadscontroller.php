@@ -44,6 +44,7 @@
              *$_POST['action']
              *$_POST["$page"]
              */
+            $availability = null;
             $page = $_POST["page"];
             $threadid = $_POST['id'];
             $params = array(':userid' => $_SESSION["userid"],
@@ -57,13 +58,12 @@
             }
             //confirmed role in, page setting, and participation in thread
             if(isset($thread)){
-
                 switch($page){
-                    
                     case "borrow":
                         switch($thread["ThreadStatus"]){
                             case "offered": //borrower -> requested
                                 $changeStatusTo = "requested";
+                                break;
                             case "approved": //borrower -> current
                             //force borrower to enter hashcode
                             //set availability to unavailable
@@ -79,15 +79,17 @@
                                 }else{
                                     die("incorrect code");
                                 }
+                                break;
                              default: //fail and die
                                 die("One or more parameters are out of bounds, please contact Shelf development team");
                         }
-                        
+                        break;
                     case "lend":
                         switch($thread["ThreadStatus"]){
                             case "requested": //lender -> approve or reject
                                 //display hashcode to lender (handled in view)
                                 $changeStatusTo = $_POST['action']; //"approved" or "rejected"
+                                break;
                             case "current": //lender -> "rejected", "complete", "late", "failed"
                                 //increment lend for lender and borrow for borrower
                                 /*
@@ -104,21 +106,25 @@
                                     $changeStatusTo = "failed";
                                     $availability = "missing";
                                 }
+                                break;
                             default: //fail and die
                                 die("One or more parameters are out of bounds, please contact Shelf development team");
                         }
+                        break;
                     default://fail and die
-                    die("One or more parameters are out of bounds, please contact Shelf development team");
+                        die("The page you are in is out of bounds, please contact Shelf development team");
                 }
-                
+                //echo $changeStatusTo;
+                $params = array(':threadid' => $threadid,
+                                ':newstatus' => $changeStatusTo);
                 //change thread status
-                $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:threadid'));
-                if($availability){
+                $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:threadid', $params));
+                if(isset($availability)){
                     $params = array(':itemid' => $thread["ItemID"],
-                        ':nextstatus' => $changeStatusTo,
                         ':availability' => $availability);
                     $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE id = :itemid', $params));
                 }
+                echo "success";
                 //change item availability
             }else{
                 echo "There was an error";

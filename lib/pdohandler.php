@@ -51,10 +51,12 @@ class PDOhandler {
 			$id = $this->_dbh->lastInsertId(); // will be 0 if query wasn't an INSERT
 			if ($id && stristr($query, 'insert')) {
 			  return $id;
-			} else {
-			    //print_r($q->fetchAll());
+			} elseif(stristr($query, 'select')) {
+				//print_r($q->fetchAll());
 			    //print_r($q->fetchAll(PDO::FETCH_ASSOC));
 			  return $q->fetchAll(PDO::FETCH_ASSOC);
+			} else {
+
 			}
 		} catch (PDOException $e) {
 		  // Oops, something went wrong.

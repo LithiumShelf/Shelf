@@ -1,6 +1,7 @@
 <?php
 
 ?>
+
 <!--NEED: Item entry view-->
 <!--Container-->
 <div id="lend_container">
@@ -34,12 +35,13 @@
 </div>
 
 <script>
-	var id = $(this).parent().parent().parent('li').attr('id');
     $('button:not(button:first)').click(function(){
-        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>"},function(data,status){
-            $('this').html(data);
+    	var id = $(this).parent().parent().parent('li').attr('id');
+    	var $this = $(this);
+        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>"}, function(data, status){
+        	console.log(data);
+        		$this.html(data);
         });
-        console.log(id + " " + $(this).val());
     }); 
     //"/ajax/threads/viewthread"
 </script>
