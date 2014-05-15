@@ -1,3 +1,5 @@
+/************* GLOBAL *************/
+
 ::selection {
 	background: #777;
 	color: white;
@@ -14,28 +16,8 @@ body {
 	-webkit-border-radius: none !important;
 }
 
-#nav_bar ul {
-	list-style: none;
-	padding: 0;
-}
-
-#nav_bar li {
-	display: inline-block;
-	border:none;
-}
-
-#nav_bar li a {
-	display: inline-block;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	width: 100px;
-	text-decoration: none;
-	color: black;	
-}
-
-#nav_bar li a:hover {
-	background-color: #555;
-	color: white;
+li a:link, li a:visited, li a:hover, li a:active {
+ color: white;
 }
 
 button, .ui-corner-all, .ui-btn, .ui-shadow {
@@ -61,6 +43,40 @@ button {
 	color: white !important;
 }
 
+section ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+/************* NAV BAR *************/
+
+#nav_bar ul {
+	list-style: none;
+	padding: 0;
+}
+
+#nav_bar li {
+	display: inline-block;
+	border:none;
+}
+
+#nav_bar li a {
+	display: inline-block;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	width: 100px;
+	text-decoration: none;
+	color: black;	
+}
+
+#nav_bar li a:hover {
+	background-color: #555;
+	color: white;
+}
+
+/************* CONTAINERS *************/
+
 #feed_container, #borrow_container, #lend_container, #more_container {
 	//display: block;
 	width: 90%;
@@ -68,17 +84,13 @@ button {
 	margin-right: auto;
 }
 
-
-section ul {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
+#activity li {
+	background-color: #CA0065;
 }
 
+/************* BORROW *************/
 
-
-.Open, .Closed{
-	background-color: #0061C1;
+.Open, .Closed, .Requested, .Current, .Complete, .Rejected {
 	color: white;
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -87,12 +99,12 @@ section ul {
 	margin-left: 0px;
 }
 
-#borrow_container .Open {
-
+.Open, .Closed {
+	background-color: #0061C1;
 }
 
-.Open button, .Closed button {
-	color: black !important;
+.Open button, .Closed button, .Requested button, .Current button, .Complete button, .Rejected button {
+	color: #555 !important;
 	background-color: white !important;
 	width: 40%;
 	display: inline-block;
@@ -100,10 +112,32 @@ section ul {
 	margin-right:10px;
 }
 
-.Open a, .Closed a, .Open a:hover, .Closed a:hover {
-	color: white;
+.Open a, .Closed a, .Open a:hover, .Closed a:hover, .Requested a, .Requested a:hover, .Current a, .Current a:hover, .Complete a, .Complete a:hover, .Rejected a, .Rejected a:hover {
+	color: white !important;
 	text-shadow: none;
+	text-decoration: none;
+	text-align: left;
+	padding-left:20px;
 }
+
+/************* BORROW *************/
+.Requested, .Current, .Complete, .Rejected {
+	background-color: #CA0065;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************* UNSURE *************/
 
 .post {
 	background-color: #0061C1;
@@ -115,8 +149,4 @@ section ul {
 	padding: 10px;
 	margin-top: 30px;
 	margin-bottom: 30px;
-}
-
-li a:link, li a:visited, li a:hover, li a:active {
- color: white;
 }
