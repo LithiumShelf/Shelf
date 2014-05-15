@@ -38,20 +38,26 @@ switch ($type) {
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
 			$due = $thread['DueDate'];
-			$notPending = $status == "Current" || $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
+			$done = $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
 		//HEADER: If transition from Currently Requested to Borrowing, increment counter
-			if($newsection == 0 && $notPending ){  
+			if($newsection == 0 && $status=="Current" ){  
 				$newsection++; 
-				if($status != "Current" ){
-					$currentstat="Closed";
-					
-				}?>
-					
+				?>	
 				</ul>
 				<h1>Borrowing</h1>
 				<ul>
-			<?php } ?>
-		
+			<?php } else if ($newsection ==1 && $done) { 
+				$currentstat="Closed";
+				?>
+				</ul>
+				<div data-role="collapsible">
+					<h1>Borrow History</h1>
+					<ul>
+			<?php 
+				}
+			?>
+			
+			
 			<li class="<?= $currentstat?>">
 				<div style="float: left;">
 					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
@@ -71,23 +77,26 @@ switch ($type) {
 					</div>
 				</a>
 				
-			<!--NEXT STEPS-->
+			<!--BUTTONS-->
 				<div style = "clear:left;">
 					<?php
 						if($status=="Open"|| $status=="Current" ) {
 					?>
-					<button type="button" name="return">Return</item> 
+					<button type="button" name="current">Return</item> 
 					<?php  } else if ($status=="Requested" ) { 
 					?>
 
-					<button type="button" name="" formaction="">Receive</button>
-					<button type="button" name="" formaction="">Cancel</button>
+					<button type="button" name="requested" value="complete">Receive</button>
+					<button type="button" name="requested" value="failed">Cancel</button>
 					<?php } else {
 					} ?>
 				</div>
 			</li>
-		<?php 
-			}
+		<?php }
+		if ($newsection == 1) {
+		?>
+		</div>
+		<?php }
 		break;
 		
     case "lend":
@@ -129,9 +138,23 @@ switch ($type) {
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<?= $status ?>
 						<!--Latest Message-->
-						
 					</div>
 				</a>	
+				
+			<!--BUTTONS-->
+				<div style = "clear:left;">
+					<?php
+						if($status=="Open"|| $status=="Current" ) {
+					?>
+					<button type="button" name="current">Take Back</item> 
+					<?php  } else if ($status=="Requested" ) { 
+					?>
+
+					<button type="button" name="requested" value="approved">Approve</button>
+					<button type="button" name="requested" value="rejected">Reject</button>
+					<?php } else {
+					} ?>
+				</div>
 			</li>
 		<?php }
         break;
