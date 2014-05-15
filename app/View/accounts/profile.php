@@ -23,7 +23,6 @@ $borrowed = $user["Borrowed"];
 		
 		
 		<p>
-			Level <br>
 			<?php if($lent + $borrowed == 0){
 				echo "0%";
 				}else{ ?>
@@ -36,8 +35,6 @@ $borrowed = $user["Borrowed"];
 	<?php if($user['id'] != $_SESSION['userid']) {?>
 	<section id="actions">
 		<button class="lend" type="button" name="offer">Offer an item</button>
-		<button type="button" name="addFriend">Request as friend</button>
-		<button type="button" name="message">Send a message</button>
 	</section>
 	<?php }?>
 

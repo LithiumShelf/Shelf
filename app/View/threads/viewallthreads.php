@@ -9,38 +9,47 @@ switch ($type) {
 			$asin = $thread['ASIN'];
 		 ?>
 		<li>
-			<a href="more/accounts/profile/<?= $thread['LenderID']?>">
-				<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+			<!--Feed Tile: Top-->
+			<div style="float: left;"> 
+				<a href="more/accounts/profile/<?= $thread['LenderID']?>">
+					<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+				</a>
+			</div>
+			
+			<p><strong><?=$person?></strong> is borrowing <strong><?=$itemname ?></strong>.</p>
+			
+			<!--Feed Tile: Image-->
+			<a href="borrow/items/searchresults?search_item=<?=$itemname?>">
+				<img src="<?=$src?>" alt="<?=$itemname?>">
 			</a>
-			<strong><?=$person?></strong> is borrowing <strong><?=$itemname ?></strong>.
-			<img src="<?=$src?>" alt="<?=$itemname?>">
-			<button type=submit" value="<?=$asin?>" onclick="alert(<?=$asin?>)">Find a similar item</button>
+			
+			<!--Feed Tile: Bottom-->
+			<button type=submit" value="<?=$itemname?>" onclick="borrow/items/searchresults?search_item=<?=$itemname?>" style="clear: left;">Find a similar item</button>
 		</li>
 		
 		<?php
 		}
-        echo "feed";
         break;
 		
     case "borrow":
-		// Counter for when to separate Currently Requested from Borrowing, fencepost
+		//LOOP: Counter for when to separate Currently Requested from Borrowing, (fencepost)
 		$newsection = 0; 
+		$currentstat = "Open";
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
 			$due = $thread['DueDate'];
-			
-		// If transition from Currently Requested to Borrowing, increment counter
-		// PLACEHOLDER: Need actual status names to be updated in DB
-			if($newsection == 0 && $status == "Closed") {  
-				$newsection++; ?>
+			$notPending = $status == "Current" || $status =="Closed" || $status == "Rejected" || $status =="Late" || $status == "Failed";
+		//HEADER: If transition from Currently Requested to Borrowing, increment counter
+			if($newsection == 0 && $notPending ){  
+				$newsection++; 
+				$currentstat="Closed";?>
 				</ul>
 				<h1>Borrowing</h1>
 				<ul>
-			<? } ?>
+			<?php } ?>
 		
-			<li class="<?= $status ?>">
-				<div>
-			<!--PLACEHOLDER: Pass person's account id and load profile-->
+			<li class="<?= $currentstat?>">
+				<div style="float: left;">
 					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
@@ -48,38 +57,29 @@ switch ($type) {
 				
 			<!--PLACEHOLDER: Link to thread on click-->
 				<a href="http://www.google.com#q=thread">
-					<div style="float: left;">
+					<div >
 						<!--General-->
 						<strong><?= $thread['Name'] ?></strong> from <strong><?= $thread['firstName']." ".$thread['lastName'] ?></strong> <br> 
 						<!--Reputation-->
 						Borrowed <?= $thread['Borrowed'] ?> Lent <?= $thread['Lent'] ?> <br>
 						<!--Status-->
 						<?= $status ?>
-						<br>
-						<?php 
-							if(isset($due)) {
-								print "Due Date: ". $due;
-
-							} else {
-								print "Pending";
-							}
-						?>
 					</div>
 				</a>
-			<!--Next steps
-			PLACEHOLDER: Until we add the additional status states into our DB
-			-->
+				
+			<!--NEXT STEPS-->
 				<div style = "clear:left;">
 					<?php
-						if(isset($due) && $status=="Open") {
+						if($status=="Open"|| $status=="Current" ) {
 					?>
 					<button type="button" name="return">Return</item> 
-					<?php  } else if (!isset($due) && $status=="Open" ) { 
+					<?php  } else if ($status=="Requested" ) { 
 					?>
 
 					<button type="button" name="" formaction="">Receive</button>
 					<button type="button" name="" formaction="">Cancel</button>
-					<?php } else {} ?>
+					<?php } else {
+					} ?>
 				</div>
 			</li>
 		<?php 
@@ -87,6 +87,7 @@ switch ($type) {
 		break;
 		
     case "lend":
+		//Counter to determine new section header (fencepost)
 		$newsection = 0; 
 		foreach ($threads as $thread) { 
 			$status = $thread['ThreadStatus'];
@@ -99,8 +100,7 @@ switch ($type) {
 			<?php }
 			?>
 			<li class="<?= $status ?>">
-				<div>
-			<!--PLACEHOLDER: Pass person's account id and load profile-->
+				<div style="float:left;">
 					<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 						<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
 					</a>
@@ -120,6 +120,5 @@ switch ($type) {
 				</a>	
 			</li>
 		<?php }
-        echo "lend";
         break;
 }?>

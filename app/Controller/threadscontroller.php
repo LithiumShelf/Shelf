@@ -89,7 +89,7 @@
                                 /*
                                     Set to either "complete", "late", "failed"
                                 */
-                                $changeStatusTo = "$_POST['action']"; //complete or failed
+                                $changeStatusTo = $_POST['action']; //complete or failed
                                 if($changeStatusTo == "complete"){
                                     if(isset($thread["DueDate"]) && date("Y-m-d H:i:s") > $thread["DueDate"]){
                                         $changeStatusTo = "late";
@@ -134,13 +134,14 @@
                     //Find threads for which you are the lender
                     //$params[":actionID"] = "LenderID";
 					$this->set('type', "lend");
-					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE LenderID = :UserID', $params));
+					$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE LenderID = :UserID', $params));
 				}elseif($page == "borrow"){
                     //Find threads for which you are the borrower
                     //$params[":actionID"] = "BorrowerID";
 					$this->set('type', "borrow");
-                
-				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
+					
+                //$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Thread.BorrowerID = Account.id) WHERE BorrowerID = :UserID', $params));
+				$this->set('threads', $this->Thread->query('SELECT * FROM Thread RIGHT JOIN Item ON (Item.id = Thread.ItemID) JOIN Account ON (Item.LenderID = Account.id) WHERE BorrowerID = :UserID', $params));
                 //GROUP BY Thread Status
 				}
 
@@ -183,6 +184,7 @@
                         $isBorrower = 0;
                     default:
                         die("Parameter out of bounds");
+				}
             }
             $params = array(':subject' => $_POST['subject'],
                             ':body' => $_POST['body'],
