@@ -46,7 +46,8 @@ switch ($type) {
 				</ul>
 				<h1>Borrowing</h1>
 				<ul>
-			<?php } else if ($newsection ==1 && $done) { 
+			<?php } else if ($newsection <= 1 && $done) { 
+				$newsection= 2;
 				$currentstat="Closed";
 				?>
 				</ul>
@@ -93,7 +94,7 @@ switch ($type) {
 				</div>
 			</li>
 		<?php }
-		if ($newsection == 1) {
+		if ($newsection > 1) {
 		?>
 		</div>
 		<?php }
@@ -115,11 +116,12 @@ switch ($type) {
 				<ul>
 			<?php
 			//HEADER: From 'Currently Lending' to 'Past Lending'
-			} else if ($newsection == 1 && $done) {
+			} else if ($newsection <= 1 && $done) {
 				$newsection++;?>
 				</ul> <br>
-				<h1>Past Lending</h1><br>
-				<ul>
+				<div data-role="collapsible">
+					<h1>Past Lending</h1><br>
+					<ul>
 			<?php }
 			?>
 			<li class="<?= $status ?>">
@@ -156,6 +158,9 @@ switch ($type) {
 					} ?>
 				</div>
 			</li>
+		<?php }
+		if ($newsection > 1) {	?>
+			</div>
 		<?php }
         break;
 }?>
