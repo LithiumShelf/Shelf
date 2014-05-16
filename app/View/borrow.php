@@ -31,7 +31,7 @@
 
 
 <script>
-$('.Closed').click(function(){
+$('.Closed, .Open').click(function(){
 		var id = $(this).attr('id');
 		var $this = $(this);
 

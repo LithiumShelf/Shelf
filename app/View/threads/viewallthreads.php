@@ -41,7 +41,7 @@ switch ($type) {
     case "borrow":
 		//LOOP: Counter for when to separate Currently Requested from Borrowing, (fencepost)
 		$newsection = 0; 
-		$currentstat = "Open";
+		$currentstat = "Open"; //Placeholder for real status
 		if ($threads) {
 			foreach ($threads as $thread) { 
 				$status = $thread['ThreadStatus'];
@@ -49,7 +49,7 @@ switch ($type) {
 				$done = $status =="Closed" || $status == "rejected" || $status =="late" || $status == "failed";
 			//HEADER: If transition from Currently Requested to Borrowing, increment counter
 				// To make it so that they still show up even if empty, remove else if...
-				if($newsection == 0 && $status=="current" ){  
+				if($newsection == 0 && ($status=="current" || $status =="Open")){  
 					$newsection++; 
 					?>	
 					</ul>
@@ -69,7 +69,7 @@ switch ($type) {
 				?>
 				
 				
-				<li class="<?= $currentstat?>" id="<?=$thread['ThreadID']?>">
+				<li class="<?= $status?>" id="<?=$thread['ThreadID']?>">
 					<div style="float: left;">
 						<a href="more/accounts/profile/<?= $thread['LenderID']?>">
 							<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">

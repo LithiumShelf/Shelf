@@ -152,15 +152,20 @@ section ul {
 	text-align: left;
 }
 
-/************* BORROW *************/
-.requested, .current, .complete, .rejected {
+
+/************* LEND *************/
+
+.requested, .current, .approved, .waiting {
 	background-color: #CA0065;
 }
 
+.complete, .rejected, .late, .failed , .complete a, .complete a:hover, .complete a, .complete a:hover{
+	color: #CA0065;
+    background-color: rgb(215,215,215);
+}
 
 
-
-
+/************* UNSURE *************/
 .user {
 	background-color: #777;
 	color: white;
@@ -170,20 +175,15 @@ section ul {
 	text-align: left;
 }
 
-/************* UNSURE *************/
-
 #info, #inventory, #reviews {
-	background-color: #777 !important;
+	/*background-color: #777 !important;*/ /*why this*/
 	padding:20px;
 	margin:20px;
 }
 
 #info h1, #inventory h1, #reviews h1, #info h2, #inventory h2, #reviews h2 {
-	color: white;
+	/*color: white;*/
 }
-
-
-
 
 
 /************* UNSURE *************/
