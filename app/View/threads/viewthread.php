@@ -15,10 +15,11 @@
                 <b>To: <?= $to ?></b></p>
             <h4 class="messagesubject"><?= $message["MessageSubject"] ?></h4>
             <p class="messagebody"><?= $message["Body"] ?></p>
-            <?php if($message["hasRead"] == 1){ ?>
-            <span class="ui-btn ui-icon-eye ui-btn-icon-left">hasRead</a>
-            <?php } ?>
+           <!-- <?php if($message["hasRead"] == 1){ ?>
+            <span class="ui-btn ui-icon-eye ui-btn-icon-left"></span>
+            <?php } ?>-->
             <p><i>Sent on <?= $message["Messagetimestamp"] ?></i></p>
+			<hr>
         </div>
 <?php        
     }

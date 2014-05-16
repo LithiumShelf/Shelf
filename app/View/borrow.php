@@ -39,11 +39,17 @@ $('.Closed').click(function(){
 			$this.append(data);
 			//$this.html("Success");
 		});
+		$this.off('click');
 		//console.log(id + " " + $(this).val());
+		$this.click(function(){
+			$('#'+ id +' .message').toggle();
+		});
 	});
 	//button:not(button:first)
 	//ui-grid-b ui-responsive
 	//$(this).parent().parent().parent('li').attr('id');
+
+
 </script>
 
 

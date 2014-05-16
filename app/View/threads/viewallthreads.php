@@ -143,7 +143,7 @@ switch ($type) {
 				<?php
 				//HEADER: From 'Currently Lending' to 'Past Lending'
 				} else if ($newsection <= 1 && $done) {
-					$newsection++;?>
+					$newsection=2;?>
 					</ul> 
 					<div data-role="collapsible">
 						<h1>Past Lending</h1>
