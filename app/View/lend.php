@@ -34,7 +34,11 @@
 	
 </div>
 
+
+
+
 <script>
+	var id = $(this).parent().parent().parent('li').attr('id');
     $('button:not(button:first)').click(function(){
     	var id = $(this).parent().parent().parent('li').attr('id');
     	var $this = $(this);

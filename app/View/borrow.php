@@ -27,3 +27,23 @@
 	</section>
 	
 </div>
+
+
+
+<script>
+$('.Closed').click(function(){
+		var id = $(this).attr('id');
+		var $this = $(this);
+
+		$.post("/ajax/threads/viewthread",{action:$this.val(), id:id}, function(data, status){
+			$this.append(data);
+			//$this.html("Success");
+		});
+		//console.log(id + " " + $(this).val());
+	});
+	//button:not(button:first)
+	//ui-grid-b ui-responsive
+	//$(this).parent().parent().parent('li').attr('id');
+</script>
+
+
