@@ -1,8 +1,21 @@
 <?php
-
+	$message = $message[0];
+	if($message['fromBorrower'] == 1){
+            $from = $message["BorrowerName"];
+            $to = $message["LenderName"];
+        }else{
+            $from = $message["LenderName"];
+            $to = $message["BorrowerName"];
+        }
 ?>
-<div class="compose_message">
-	<textarea></textarea>
-	<button type="button" name="send">Send</button>
-	<button type="button" name="cancel">Cancel</button>
-</div>
+        <div class="message">
+            <p><b>From: <?= $from ?></b> <br>
+                <b>To: <?= $to ?></b></p>
+            <h4 class="messagesubject"><?= $message["MessageSubject"] ?></h4>
+            <p class="messagebody"><?= $message["Body"] ?></p>
+           <!-- <?php if($message["hasRead"] == 1){ ?>
+            <span class="ui-btn ui-icon-eye ui-btn-icon-left"></span>
+            <?php } ?>-->
+            <p><i>Sent on <?= $message["Messagetimestamp"] ?></i></p>
+			<hr>
+        </div>

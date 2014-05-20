@@ -178,15 +178,18 @@
             $this->set('messages', $this->Thread->query('SELECT Lender.Username AS LenderName, Borrower.Username AS BorrowerName, Message.*
                 FROM Thread JOIN Item ON (Thread.ItemID = Item.id) 
                 JOIN Account Borrower ON (Borrower.id = Thread.BorrowerID) JOIN Account Lender ON (Lender.id = Item.LenderID)
-                JOIN Message ON (Message.ThreadID = Thread.id) WHERE ThreadID = :id ORDER BY Messagetimestamp', $params));
+                JOIN Message ON (Message.ThreadID = Thread.id) WHERE ThreadID = :id ORDER BY Messagetimestamp DESC', $params));
             // ADD CODE TO UPDATE THE ABOVE TABLE AND MARK ALL hasRead as "true"
             $this->Thread->query('UPDATE Message SET hasRead = 1 WHERE ThreadID = :id', $params);
             //In view, If fromBorrower = 1, print Borrower Name, If 0, print your User's name
         }
         
         function composemessage(){
-            global $page;
+            $page = $_POST['page'];
+            $threadid = $_POST['threadID'];
             //add a new message to a thread
+            $params = array(':userid' => $_SESSION["userid"],
+                ':threadid' => $threadid);
             if($page == "borrow"){
                $thread = $this->Thread->isBorrower($params);
             } elseif ($page == "lend"){
@@ -198,20 +201,23 @@
                 switch($page){
                     case "borrow":
                         $isBorrower = 1;
+                        break;
                     case "lend":
                         $isBorrower = 0;
+                        break;
                     default:
                         die("Parameter out of bounds");
-				}
+                        break;
+		}
             }
             $params = array(':subject' => $_POST['subject'],
                             ':body' => $_POST['body'],
-                            ':thread' => $_POST['threadID'],
+                            ':thread' => $threadid,
                             ':isBorrower' => $isBorrower);
             $lastInsertMsgID = $this->Thread->query('INSERT INTO Message VALUES (NULL, NOW(), :subject, :body, 0, :thread, :isBorrower)', $params);
             $params = array(':messageid' => $lastInsertMsgID);
             //capture the previously inserted message
-            $this->set('message', $this->Thread->query('SELECT * FROM Messages WHERE id = :messageid', $params));
+            $this->set('message', $this->Thread->query('SELECT * FROM messages WHERE id = :messageid', $params));
             //In Ajax Call, If fromBorrower = 1, print Borrower Name, If 0, print your User's name
         }
         

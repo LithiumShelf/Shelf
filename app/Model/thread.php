@@ -28,7 +28,7 @@
             //$params = array(':userid' => $_SESSION[":userid"],
             //                ':threadid' => $threadid);
             $borrower = $this->query('SELECT Thread.id, Thread.ItemID, Thread.ThreadStatus, Thread.BorrowerID, Item.LenderID, Thread.DueDate, Thread.HashCode FROM Thread JOIN Item ON (Thread.ItemID = Item.id) WHERE Thread.id = :threadid AND Thread.BorrowerID = :userid', $params);
-            if($lender){
+            if($borrower){
                 return $borrower[0];
             }else{
                 die("you are not the borrower");
