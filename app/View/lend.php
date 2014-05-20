@@ -46,11 +46,15 @@ $('li').click(function(event){
 		$subject = $('<input>', {type:"text", name:"subject"});
 		$body = $('<input>', {type:"text", name:"body"});
 		$send = $('<button>', {text:"send",'data-inline':"true"});
-		$this.append("Subject:");
-		$this.append($subject);
-		$this.append("Body:");
-		$this.append($body);
-		$this.append($send);
+		$options = $('<div>').addClass('options');
+		
+		$options.append("Subject:");
+		$options.append($subject);
+		$options.append("Body:");
+		$options.append($body);
+		$options.append($send);
+		$this.append($options);
+		
 		$send.click(function(){
 			event.stopPropagation();
 			$button = $(this);
@@ -68,7 +72,8 @@ $('li').click(function(event){
 			if (event.target != this) {
 				return;
 			}
-			$('#'+ id +' .message').toggle();
+			var selector = '#' +id + ' .options, ' + '#'+ id +' .message';
+			$(selector).toggle();
 		});
 	});
 	//button:not(button:first)
