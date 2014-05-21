@@ -54,7 +54,7 @@ $('li').click(function(event){
 		$options.append($body);
 		$options.append($send);
 		$this.append($options);
-		
+			
 		$send.click(function(){
 			event.stopPropagation();
 			$button = $(this);
