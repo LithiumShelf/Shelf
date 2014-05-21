@@ -97,12 +97,15 @@ switch ($type) {
 				
 					
 				<!--BUTTONS-->
-					<div style = "clear:left;" class="ui-grid-b ui-responsive">
+					<div style = "clear:left;" class="ui-grid-a ui-responsive">
 						<?php
-							if($status=="Open"|| $status=="current" ) {
+							switch($status){
+							    case "Open":
+							    case "current":
 						?>
 						<div><button type="button" name="action" value="return">Return</button> </div>
-						<?php  } else if ($status=="requested" ) { 
+						<?php  break;
+							case "requested":
 						?>
 
 						<div class="ui-block-a"> 
@@ -111,7 +114,17 @@ switch ($type) {
 						<div class="ui-block-b">
 							<button type="button" name="action" value="cancelled">Cancel</button>
 						</div>
-						<?php } else {
+						<?php break;
+							case "approved":
+						?>
+						<div class="ui-block-a">
+						    <input type="text" name="hashCode">
+						</div>
+						<div class="ui-block-b">
+						    <button type="button" name="action" value="current" data-mini="true" data-inline="true">Borrow</button>
+						    <button type="button" name="action" value="cancelled" data-mini="true" data-inline="true">Cancel</button>
+						</div>
+						<?php
 						} ?>
 					</div>
 				</li>
@@ -179,7 +192,9 @@ switch ($type) {
 				<!--BUTTONS-->
 					<div style = "clear:left;" class="ui-grid-a ui-responsive">
 						<?php
-							if($status=="Open"|| $status=="current" ) {
+							switch($status){
+							    case "Open":
+							    case "current":
 						?>
 						<div class="ui-block-a" style = "clear:none;">
 							<button type="button" name="action" value="complete">Complete</button> 
@@ -188,7 +203,8 @@ switch ($type) {
 							<button type="button" name="action" value="failed">Fail</button> 
 						</div>
 						
-						<?php  } else if ($status=="requested" ) { 
+						<?php  break;
+							case "requested";
 						?>
 						<div class="ui-block-a" style = "clear:none;">
 							<button type="button" name="action" value="approved">Approve</button>
@@ -197,7 +213,17 @@ switch ($type) {
 						<div class="ui-block-b" style = "clear:none;">
 							<button type="button" name="action" value="rejected">Reject</button>
 						</div>
-						<?php } else {
+						<?php break;
+							case "approved":
+						?>
+						<div class="ui-block-a" style = "clear:none;">
+						    Give the borrower this code:
+						</div>
+						<div class="ui-block-b" style = "clear:none;">
+						    <?= $thread['HashCode'] ?>
+						</div>
+						<?php
+							break;
 						} ?>
 					</div>
 				</li>

@@ -67,12 +67,13 @@
                             case "approved": //borrower -> current
                             //force borrower to enter hashcode
                             //set availability to unavailable
-                                if(isset($_POST['hashCode']) && $_POST['hashCode'] == $thread["hashCode"]){
+                                if(isset($_POST['hashCode']) && $_POST['hashCode'] == $thread["HashCode"]){
                                     if(isset($_POST['action']) && $_POST['action'] == "current"){
                                         $changeStatusTo = "current";
                                         $availability = "unavailable";
+                                    }else{
+                                        $changeStatusTo = "cancelled";
                                     }
-                                    $changeStatusTo = "cancelled";
                                     $this->Thread->givePoint($thread["BorrowerID"], "borrow");
                                     $this->Thread->givePoint($thread["LenderID"], "lend");
                                     $this->Thread->givePoint($thread["LenderID"], "success");
