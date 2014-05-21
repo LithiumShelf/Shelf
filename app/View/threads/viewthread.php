@@ -11,6 +11,7 @@
         }
 ?>
         <div class="message">
+			<hr>
             <p><b>From: <?= $from ?></b> <br>
                 <b>To: <?= $to ?></b></p>
             <h4 class="messagesubject"><?= $message["MessageSubject"] ?></h4>
@@ -19,7 +20,7 @@
             <span class="ui-btn ui-icon-eye ui-btn-icon-left"></span>
             <?php } ?>-->
             <p><i>Sent on <?= $message["Messagetimestamp"] ?></i></p>
-			<hr>
+
         </div>
 <?php        
     }

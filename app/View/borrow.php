@@ -30,6 +30,7 @@
 
 <script>
 $('li').click(function(event){
+		//alert('target=<' + event.target.tagName.toLowerCase()+'>');
 		var target = $( event.target );
 		if (event.target != this) {
 			return;
@@ -61,13 +62,12 @@ $('li').click(function(event){
 		});
 		$this.off('click');
 		//console.log(id + " " + $(this).val());
-		$this.click(function(){
-			if (event.target != this ) {
+		$this.click(function(event){
+			if (event.target != this) {
 				return;
 			}
 			
 				var selector = '#' +id + ' .options, ' + '#'+ id +' .message';
-				alert(event.target);
 				$(selector).toggle();
 		
 		});

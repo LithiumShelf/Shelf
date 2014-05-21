@@ -68,7 +68,7 @@ $('li').click(function(event){
 		});
 		$this.off('click');
 		//console.log(id + " " + $(this).val());
-		$this.click(function(){
+		$this.click(function(event){
 			if (event.target != this) {
 				return;
 			}

@@ -61,7 +61,7 @@ switch ($type) {
 					$currentstat="Closed";
 					?>
 					</ul>
-					<div data-role="collapsible" data-collapsed="false">
+					<div data-role="collapsible">
 						<h1>Borrow History</h1>
 						<ul>
 				<?php 
