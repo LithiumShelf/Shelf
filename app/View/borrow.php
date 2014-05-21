@@ -72,7 +72,8 @@ $('.Closed, .Open').click(function(event){
 	event.stopPropagation();
     	var id = $(this).parent().parent().parent('li').attr('id');
     	var $this = $(this);
-        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>"}, function(data, status){
+	var hashCode = $('button').parent().siblings('div.ui-block-a').children().children();
+        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>", hashCode: hashCode}, function(data, status){
         	console.log(data);
         		$this.html(data);
         });
