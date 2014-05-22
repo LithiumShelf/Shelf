@@ -71,7 +71,7 @@
             $this->set('localusers', $this->Item->getLocalUsers($params));
             $query = 'SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID)
                             JOIN Account ON (Item.LenderID = Account.id) ';
-            if(isset($_GET["category"]) && isset($_GET["userid"]) && $_GET["category"] != "" && $_GET["category"] !=""){
+            if(isset($_GET["category"]) && isset($_GET["userid"]) && $_GET["category"] != "" && $_GET["userid"] !=""){
                 $category = $_GET["category"];
                 $userid = $_GET["userid"];
                 $params = array(':category' => $category,
@@ -88,17 +88,22 @@
                     $params = array(':userid' => $userid);
                     $query .= 'WHERE Account.id = :userid';
                 }else{
-                    $params[':youruserid'] = $_SESSION['userid'];
-                    $query .= ' WHERE Account.id != :youruserid';
+                    if(isset($_GET["category"]) && $_GET["category"] != ""){
+                        $params[':youruserid'] = $_SESSION['userid'];
+                        $query .= ' AND Account.id != :youruserid';
+                    }else{
+                        $params[':youruserid'] = $_SESSION['userid'];
+                        $query .= 'WHERE Account.id != :youruserid';
+                    }
+                    
                 }
             }
-            if(isset($_GET["pricerange"]) && !empty($_GET["pricerange"]) ){
+            if(isset($_GET["pricerange"]) && !empty($_GET["pricerange"]) && $_GET["pricerange"] != ""){
                 $pricebounds = explode('-', $_GET["pricerange"]);
                 $params[':min'] = $pricebounds[0];
                 $params[':max'] = $pricebounds[1];
                 $query .= ' AND ListPrice > :min AND ListPrice > :max';
             }
-
             $this->set('items', $this->Item->query($query, $params));
         }
     }
