@@ -32,7 +32,7 @@ class accountsController extends Controller {
                 $this->set('id', $id);
                 $params = array(':id' => $id);
             // view the profile of a user by the Account table ID
-                $this->set('user', $this->Account->query('SELECT * FROM Account WHERE id = :id', $params));
+                $this->set('user', $this->Account->query('SELECT *, Item.id as ItemID, Account.id as UserID FROM Account JOIN Item ON (Account.id = Item.LenderID) WHERE LenderID = :id', $params));
         }
         
         function register(){

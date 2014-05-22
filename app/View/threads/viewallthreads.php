@@ -11,7 +11,7 @@ switch ($type) {
 			<!--Feed Tile: Top-->
 			<div style="float: left;"> 
 				<a href="more/accounts/profile/<?= $thread['BorrowerID']?>">
-					<img src="<?= $BASE_URL ?>/images/profile/<?= $thread['profilePic']?>" alt="<?=$person?>" style="float: left; width: 50px; height: 50px;">
+					<?= placeimage("profile", $thread['profilePic'],  $person) ?>
 				</a>
 			</div>
 			
@@ -27,7 +27,7 @@ switch ($type) {
 			
 			<!--Feed Tile: Image-->
 			<a href="feed/items/itempage/<?= $thread['ItemID'] ?>">
-					<img src="<?= $BASE_URL ?>/images/item/<?=$src?> ?>" alt="<?=$itemname?>">
+					<?= placeimage("item", $src, $itemname) ?>
 			</a>
 			
 			<!--Feed Tile: Bottom-->
@@ -72,7 +72,8 @@ switch ($type) {
 				<li class="<?= $status?>" id="<?=$thread['ThreadID']?>">
 					<div style="float: left;">
 						<a href="more/accounts/profile/<?= $thread['LenderID']?>">
-							<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+
+							<?= placeimage("profile", $thread['profilePic'], "profile") ?>
 						</a>
 					</div>
 					
@@ -166,7 +167,7 @@ switch ($type) {
 				<li class="<?= $status ?>" id="<?=$thread['ThreadID']?>">
 					<div style="float:left">
 						<a href="more/accounts/profile/<?= $thread['BorrowerID']?>">
-							<img src="<?= $thread['profilePic'] ?>" style="float: left; width: 50px; height: 50px;">
+							<?= placeimage("profile", $thread['profilePic'], "profile") ?>
 						</a>
 					</div>
 					
@@ -235,4 +236,26 @@ switch ($type) {
 			print "No recent activity";
 		}
         break;
-}?>
+}
+
+function placeimage ($type, $src, $alt) {
+	if(!$src) {
+		$src = "default.jpg";
+	}
+
+	switch($type){
+		case "profile":
+			?>
+			<img src="http://www.dontbeshelfish.com/images/profile/<?=$src?>" alt="<?=$alt?>" style="float: left; width: 50px; height: 50px;">
+			<?php 
+			break;
+		case "item":
+			?>
+			<img src="http://www.dontbeshelfish.com/images/item/<?=$src?>" alt="<?=$alt?>" style="width: 100%; height 100px;">
+			<?php
+			break;
+	}
+}
+
+
+?>

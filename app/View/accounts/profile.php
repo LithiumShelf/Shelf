@@ -2,24 +2,30 @@
 
 	/*Page template for both user's profile and other people's profile.
 	*/
-$user = $user[0];
+$inventory = $user;
+$user = $inventory[0];
 $lent = $user["Lent"];
 $borrowed = $user["Borrowed"];
+$src = $user["profilePic"];
+$name = $user["firstName"]." ".$user["lastName"];
 ?>
 
 <div id="profile_container">
 	<section id="info">
-		<h1><?= $user["firstName"]." ".$user["lastName"]?></h1>
+		<h1><?= $name?></h1>
 		<h2><?= $user["Username"]?></h2>
 		
 		<?php
-			if(isset($user["profilePic"])){
+			/*if(isset($user["profilePic"])){
 				$fullsize = explode('.', $user["profilePic"]);
 				$ext = array_pop($fullsize);
-				$thumbnail = implode('.', array_push($fullsize, "_thumb", $ext));
+				$thumbnail = implode('.', array_push($fullsize, "_thumb", $ext));*/
+			if (!$src) {
+				$src = "default.jpg";
+			}
 		?>
-		<img src="<?= $BASE_URL ?>/images/profile/<?= $thumbnail ?>" alt="<?= $user['Username']?>">
-		<?php } ?>
+		<img src="http://www.dontbeshelfish.com/images/profile/<?= $src ?>" alt="<?= $name?>" style="width:50%; margin-left:25%; margin-right:50%;">
+		<?php //} ?>
 		
 		
 		<p>
@@ -32,7 +38,7 @@ $borrowed = $user["Borrowed"];
 		</p>
 	</section>
 	
-	<?php if($user['id'] != $_SESSION['userid']) {?>
+	<?php if($user['UserID'] != $_SESSION['userid']) {?>
 	<section id="actions">
 		<button class="lend" type="button" name="offer">Offer an item</button>
 		<button type="button" name="message">Send a message</button>
@@ -43,7 +49,17 @@ $borrowed = $user["Borrowed"];
 	<section id="inventory">
 		<h1>Inventory</h1>
 		<!--<a href="searchresults?userid=<?= $user['id']?>" class="ui-btn ui-corner-all">Search Inventory</a>-->
-
+		<?php 
+			foreach ($inventory as $item) {
+		?> 
+			<a href="lend/items/itempage/<?= $item['ItemID']?>">
+				<strong><?= $item['Name'] ?></strong>  
+			</a>
+			<br>
+			
+		<?php
+			}	
+		?>
 	</section>
 	
 	<section id="reviews">
