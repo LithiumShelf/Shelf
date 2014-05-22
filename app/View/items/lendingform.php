@@ -76,6 +76,13 @@ function printSearchResults($parsed_xml){
             }
 ?>
     <input type="radio" name="product" id="<?= $current->ASIN ?>" value="<?= $values ?>">
+    <style scoped>
+    label{background-color: #CA0065 !important;
+    color: #FFFFFF !important;
+    margin: 5px;}
+    li{margin: 0.4em;
+        padding:0.4em;}
+    </style>
     <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
         <a href="<?= $current->DetailPageURL ?>"></a>
