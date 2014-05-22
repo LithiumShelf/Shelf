@@ -42,6 +42,7 @@ $name = $user["firstName"]." ".$user["lastName"];
 	<section id="actions">
 		<button class="lend" type="button" name="offer">Offer an item</button>
 		<button type="button" name="message">Send a message</button>
+		<button class="addFriend" type="submit">Add Friend</button>
 	</section>
 	<?php }?>
 
@@ -51,9 +52,14 @@ $name = $user["firstName"]." ".$user["lastName"];
 		<!--<a href="searchresults?userid=<?= $user['id']?>" class="ui-btn ui-corner-all">Search Inventory</a>-->
 		<?php 
 			foreach ($inventory as $item) {
+				$itemname = $item['Name'];
+				if (!$itemname) {
+					$itemname = "Unnamed Item";
+				}
+				
 		?> 
-			<a href="lend/items/itempage/<?= $item['ItemID']?>">
-				<strong><?= $item['Name'] ?></strong>  
+			<a href="http://www.dontbeshelfish.com/lend/items/itempage/<?= $item['ItemID']?>">
+				<strong><?= $itemname ?></strong>  
 			</a>
 			<br>
 			

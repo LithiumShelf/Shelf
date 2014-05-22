@@ -68,7 +68,10 @@ function printSearchResults($parsed_xml, $item){
 </a>
 <ul>
     <li>Owner is: <?= $item[0]["Username"] ?></li>
-    <li>Click here to request item</li>
+    <li>
+		Click here to request item
+		<button type="submit" method="post" value="<?=$item[0]["id"]?>">Request</button>
+	</li>
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ProductGroup)){ ?>
         <li>Product Group:<?= $parsed_xml->Items->Item->ItemAttributes->ProductGroup ?></li>
     <?php } ?>
