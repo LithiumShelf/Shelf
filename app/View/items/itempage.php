@@ -49,7 +49,7 @@ $parsed_xml = simplexml_load_string($response);
 printSearchResults($parsed_xml, $item);
 }
 ?>
-
+<div class="itempage">
 <?php
 function printSearchResults($parsed_xml, $item){
     if($parsed_xml->Items->Request->Errors){
@@ -64,14 +64,37 @@ function printSearchResults($parsed_xml, $item){
 <img src="<?= $BASE_URL ?>/images/item/<?=$item[0]["ItemPic"]?> ?>">
 <?php }else{ ?>
 <img src="<?= $parsed_xml->Items->Item->LargeImage->URL ?>" height="<?= $parsed_xml->Items->Item->LargeImage->Height?>" width="<?= $parsed_xml->Items->Item->LargeImage->Width ?>">
-<?php } ?>
+<?php } 
+  global $page;
+  if($page == "borrow"){
+    $color = "#0061C1";
+  }elseif($page == "lend"){
+    $color = "#CA0065";
+  }else{
+    $color = "#DDD";
+  }
+?>
 </a>
+    <style scoped>
+    div.itempage > div, div.itempage > ul{background-color: <?= $color ?> !important;
+    color: #FFFFFF !important;
+    margin-left: 1em;
+    padding-left: 1em;}
+    li{margin: 0.4em;
+        padding:0.4em;}
+    </style>
 <ul>
     <li>Owner is: <?= $item[0]["Username"] ?></li>
+    <?php 
+      if($page != "lend"){
+     ?>
     <li>
 		Click here to request item
 		<button type="submit" method="post" value="<?=$item[0]["id"]?>">Request</button>
 	</li>
+    <?php
+        }
+     ?>
     <?php if(isset($parsed_xml->Items->Item->ItemAttributes->ProductGroup)){ ?>
         <li>Product Group:<?= $parsed_xml->Items->Item->ItemAttributes->ProductGroup ?></li>
     <?php } ?>
@@ -88,7 +111,7 @@ function printSearchResults($parsed_xml, $item){
          <li><a href=<?= $current->DetailPageURL ?>>Product Detail Page on Amazon</a></li>
     <?php } ?>
 </ul>
-
+<div>
 <h4>Amazon Recommends:</h4>
 <ul>
 <?php
@@ -97,6 +120,8 @@ foreach($parsed_xml->Items->Item->SimilarProducts->SimilarProduct as $SimilarPro
 <li><a href="http://www.amazon.com/dp/<?= $SimilarProduct->ASIN ?>"><?= $SimilarProduct->Title ?></a></li>
 <?php } ?>
 </ul>
+</div>
+</div>
 <?php
     }
 }
