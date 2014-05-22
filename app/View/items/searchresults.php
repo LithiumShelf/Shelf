@@ -19,7 +19,7 @@
 			<?php
 			foreach($localusers as $localuser){
 			?>
-			<option value="<?= $localuser["id"] ?>" <?php if($_GET["userid"] == $localuser["id"]){ echo 'selected="selected"'; }?>><?= $localuser["Username"] ?></option>
+			<option value="<?= $localuser["id"] ?>" <?php if($_SESSION["userid"] == $localuser["id"]){ echo 'selected="selected"'; }?>><?= $localuser["Username"] ?></option>
 			<?php } ?>
 		</select>	
 		
