@@ -100,7 +100,7 @@ class accountsController extends Controller {
                                                 $imagethumbnail->cropThumbnailImage(150, 150);
                                                 $imagethumbnail->setImageFormat("png");
                                                 header("Content-Type: image/png");
-                                                //$imagethumbnail->writeImage(""
+                                                //$imagethumbnail->writeImage
 
 
                                                 //bool Imagick::cropThumbnailImage ()
