@@ -85,8 +85,11 @@
                 }
                 if(isset($_GET["userid"])){
                     $userid = $_GET["userid"];
-                    //$params = array(':userid' => $userid);
+                    $params = array(':userid' => $userid);
                     $query .= 'WHERE Account.id = :userid';
+                }else{
+                    $params[':youruserid'] = $_SESSION['userid'];
+                    $query .= ' WHERE Account.id != :youruserid';
                 }
             }
             if(isset($_GET["pricerange"]) && !empty($_GET["pricerange"]) ){
@@ -95,6 +98,7 @@
                 $params[':max'] = $pricebounds[1];
                 $query .= ' AND ListPrice > :min AND ListPrice > :max';
             }
+
             $this->set('items', $this->Item->query($query, $params));
         }
     }

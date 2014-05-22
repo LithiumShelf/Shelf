@@ -11,7 +11,7 @@
 			<?php
 			foreach($friends as $friend){
 			?>
-			<option value="<?= $friend["id"] ?>" <?php if($_SESSION["userid"] == $friend["id"]){ echo 'selected="selected"'; }?>><?= $friend["Username"] ?></option>
+			<option value="<?= $friend["id"] ?>" <?php if(isset($_GET["userid"]) && $_GET["userid"] == $friend["id"]){ echo 'selected="selected"'; }?>><?= $friend["Username"] ?></option>
 			<?php } ?>
 			<!--Foreach (SQLarray) as $friend (join with account to get Firstlast-->
 			<!--<option value="...">FirstName Lastname</option>-->
@@ -19,7 +19,7 @@
 			<?php
 			foreach($localusers as $localuser){
 			?>
-			<option value="<?= $localuser["id"] ?>" <?php if($_SESSION["userid"] == $localuser["id"]){ echo 'selected="selected"'; }?>><?= $localuser["Username"] ?></option>
+			<option value="<?= $localuser["id"] ?>" <?php if(isset($_GET["userid"]) && $_GET["userid"] == $localuser["id"]){ echo 'selected="selected"'; }?>><?= $localuser["Username"] ?></option>
 			<?php } ?>
 		</select>	
 		
@@ -29,7 +29,7 @@
 			<?php
 			foreach($cats as $cat){
 			?>
-			<option value="<?= $cat["id"] ?>" <?php if($_GET["category"] == $cat["id"]){ echo 'selected="selected"'; }?>><?= $cat["Category"] ?></option>
+			<option value="<?= $cat["id"] ?>" <?php if(isset($_GET["category"]) && $_GET["category"] == $cat["id"]){ echo 'selected="selected"'; }?>><?= $cat["Category"] ?></option>
 			<?php } ?>
 		</select>
 		
