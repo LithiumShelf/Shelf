@@ -7,7 +7,8 @@
 		<form action="" method="get">
 		<!--Friend-->
 		<select name="userid" id="filter_friend">
-			<option value="" <?php if(!$friends){ echo 'selected="selected"'; }?>>--Friends--</option>
+			<option value="">By People</option>
+			<optgroup label="Friends">
 			<?php
 			foreach($friends as $friend){
 			?>
@@ -15,7 +16,7 @@
 			<?php } ?>
 			<!--Foreach (SQLarray) as $friend (join with account to get Firstlast-->
 			<!--<option value="...">FirstName Lastname</option>-->
-			<option value="">--Locals--</option>
+			<optgroup label="Locals">
 			<?php
 			foreach($localusers as $localuser){
 			?>
@@ -25,7 +26,7 @@
 		
 		<!--Category-->
 		<select name="category" id="filter_category">
-			<option value="" <?php if(!$cats){ echo 'selected="selected"'; }?>>--Pick a Group--</option>
+			<option value="">By Category</option>
 			<?php
 			foreach($cats as $cat){
 			?>
@@ -35,7 +36,7 @@
 		
 		<!--Price-->
 		<select name="pricerange" id="filter_price">
-			<option value="">--Value--</option>
+			<option value="">By Value</option>
 			<option value="0-20">&lt $20</option>
 			<option value="20-40">$20-40</option>
 			<option value="40-60">$40-60</option>

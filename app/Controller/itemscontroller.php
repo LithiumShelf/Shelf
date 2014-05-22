@@ -71,19 +71,19 @@
             $this->set('localusers', $this->Item->getLocalUsers($params));
             $query = 'SELECT Item.* FROM Item JOIN Category ON (Category.id = Item.CategoryID)
                             JOIN Account ON (Item.LenderID = Account.id) ';
-            if(isset($_GET["category"]) && isset($_GET["userid"])){
+            if(isset($_GET["category"]) && isset($_GET["userid"]) && $_GET["category"] != "" && $_GET["category"] !=""){
                 $category = $_GET["category"];
                 $userid = $_GET["userid"];
                 $params = array(':category' => $category,
                                 ':userid' => $userid);
                 $query .= 'WHERE Category.id = :category AND Account.id = :userid';
             }else{
-                if(isset($_GET["category"])){
+                if(isset($_GET["category"]) && $_GET["category"] != ""){
                     $category = $_GET["category"];
                     $params = array(':category' => $category);
                     $query .= 'WHERE Category.id = :category';
                 }
-                if(isset($_GET["userid"])){
+                if(isset($_GET["userid"]) && $_GET["userid"] != ""){
                     $userid = $_GET["userid"];
                     $params = array(':userid' => $userid);
                     $query .= 'WHERE Account.id = :userid';
