@@ -11,7 +11,7 @@
 			<?php
 			foreach($friends as $friend){
 			?>
-			<option value="<?= $friend["id"] ?>" <?php if($_GET["userid"] == $friend["id"]){ echo 'selected="selected"'; }?>><?= $friend["Username"] ?></option>
+			<option value="<?= $friend["id"] ?>" <?php if($_SESSION["userid"] == $friend["id"]){ echo 'selected="selected"'; }?>><?= $friend["Username"] ?></option>
 			<?php } ?>
 			<!--Foreach (SQLarray) as $friend (join with account to get Firstlast-->
 			<!--<option value="...">FirstName Lastname</option>-->
