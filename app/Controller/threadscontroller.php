@@ -135,7 +135,7 @@
         
         function viewallthreads(){
 		global $page;
-            $params = array(':UserID' => 2 /*$_SESSION['userid']*/);
+            $params = array(':UserID' => $_SESSION['userid']);
 			
 			//SQL code that orders threads by stats (custom order). To be appended to end of lend/borrow queries.
 			$orderby = " ORDER BY ( CASE WHEN ThreadStatus = 'requested' OR ThreadStatus = 'approved' OR ThreadStatus = 'waiting' THEN 0	WHEN ThreadStatus = 'current' OR ThreadStatus='Open' THEN 1 ELSE 3	END),ThreadStatus, DueDate DESC";

@@ -6,7 +6,7 @@
      if($user){
         //session_start();
         $_SESSION["userid"] = $user[0]["id"];
-        echo "You are now logged in"
+        echo "You are now logged in";
      }else{   echo "Wrong Username or Password";
      }
     

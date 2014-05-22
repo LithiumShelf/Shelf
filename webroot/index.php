@@ -39,12 +39,17 @@ if($page == "ajax"){
     <body>
         <?php include(ROOT . DS . 'app' . DS . 'View' . DS . 'header.php');?>
         <?php
+            if(isset($_SESSION["userid"]) || isset($_GET["url"])){
                 if(isset($_GET['url'])){
                      $url = $_GET['url'];
                     callHook();
                }else{
                     include(ROOT . DS . 'app' . DS . 'View' . DS . $page . '.php');
                }
+            }else{
+                echo 'You are not logged in, <a href="/more/accounts/logonform"> Click here to login </a>';
+            }
+                
         ?>
     </body>
 </html>
