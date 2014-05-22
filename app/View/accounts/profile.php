@@ -9,9 +9,13 @@ $borrowed = $user["Borrowed"];
 $src = $user["profilePic"];
 $name = $user["firstName"]." ".$user["lastName"];
 ?>
-
+	<style scoped>
+		div > div{background-color: #DDDDDD !important;
+    	color: #000000 !important;}
+	</style>
 <div id="profile_container">
-	<section id="info">
+
+	<div id="info">
 		<h1><?= $name?></h1>
 		<h2><?= $user["Username"]?></h2>
 		
@@ -28,26 +32,26 @@ $name = $user["firstName"]." ".$user["lastName"];
 		<?php //} ?>
 		
 		
-		<p>
+		<h7>
 			<?php if($lent + $borrowed == 0){
 				echo "0%";
 				}else{ ?>
 			<?= round(100*($user["numSuccessful"]/($lent + $borrowed)), 0) ?>% Reputation<br>			
 			<?php } ?>
 			Lent <?= $lent ?> times | Borrowed <?= $borrowed ?> times
-		</p>
-	</section>
+		</h7>
+	</div>
 	
 	<?php if($user['UserID'] != $_SESSION['userid']) {?>
-	<section id="actions">
+	<div id="actions">
 		<button class="lend" type="button" name="offer">Offer an item</button>
 		<button type="button" name="message">Send a message</button>
 		<button class="addFriend" type="submit">Add Friend</button>
-	</section>
+	</div>
 	<?php }?>
 
 	
-	<section id="inventory">
+	<div id="inventory">
 		<h1>Inventory</h1>
 		<!--<a href="searchresults?userid=<?= $user['id']?>" class="ui-btn ui-corner-all">Search Inventory</a>-->
 		<?php 
@@ -66,12 +70,12 @@ $name = $user["firstName"]." ".$user["lastName"];
 		<?php
 			}	
 		?>
-	</section>
+	</div>
 	
-	<section id="reviews">
+	<div id="reviews">
 		<h1>Reviews</h1>
 		
-	</section>
+	</div>
 </div>
 
 
