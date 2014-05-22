@@ -95,10 +95,14 @@ class accountsController extends Controller {
                                                 //run imageMagic to make thumbnail of the new file at file_thumb.ext
                                                 
                                                 //thumbnail image created, write to directory
-                                                $imagethumbnailpath = findThumbnailPath($_FILES["profileimg"]["name"]);//$_FILES["profileimg"]["name"]."_thumb.jpg";
+                                                $imagethumbnailpath = findThumbnailPath($_FILES["profileimg"]["name"]."_thumb.jpg");
                                                 $imagethumbnail = new imagick($imagethumbnailpath);
                                                 $imagethumbnail->cropThumbnailImage(150, 150);
-                                                //$imagethumbnail->writeImage() 
+                                                $imagethumbnail->setImageFormat("png");
+                                                header("Content-Type: image/png");
+                                                //$imagethumbnail->writeImage(""
+
+
                                                 //bool Imagick::cropThumbnailImage ()
 
                                                  echo "Stored in: " . $path . $_FILES["profileimg"]["name"];
