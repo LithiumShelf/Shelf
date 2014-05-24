@@ -62,7 +62,7 @@ $name = $user["firstName"]." ".$user["lastName"];
 				}
 				
 		?> 
-			<a href="http://www.dontbeshelfish.com/lend/items/itempage/<?= $item['ItemID']?>">
+			<a href="http://www.dontbeshelfish.com/<?php if($user['UserID'] == $_SESSION['userid']){echo "lend";}else{echo "borrow";} ?>/items/itempage/<?= $item['ItemID']?>">
 				<strong><?= $itemname ?></strong>  
 			</a>
 			<br>

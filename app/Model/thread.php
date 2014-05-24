@@ -60,5 +60,24 @@
                     break;
             }
         }
+        
+        function startThread($initStat, $itemID, $userid, $dueDate){
+            $params = array(':BorrowerID' => $userid,
+                            ':itemid' => $itemID);
+            $inProgress = $this->query('SELECT * FROM Thread WHERE BorrowerID = :BorrowerID AND ItemID = :itemid AND (ThreadStatus = "requested" OR ThreadStatus = "approved" OR ThreadStatus = "current" OR ThreadStatus = "Open")', $params);
+            if(!$inProgress){
+                $hashCode = hash('CRC32', $itemID . $userid );
+                $params = array(':itemid' => $itemID,
+                                ':BorrowerID' => $userid,
+                                ':DueDate' => $dueDate,
+                                ':threadstatus' => $initStat,
+                                ':hashCode' => $hashCode
+                                );
+                $this->set('thread', $this->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate, HashCode)
+                                                          VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate, $hashCode)', $params));
+            }else{
+                die("Similar Item Already in Progress");
+            }
+        }
     }
 ?>

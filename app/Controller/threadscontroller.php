@@ -10,28 +10,12 @@
         }
         
         function itemrequest(){
-            $hashCode = hash('CRC32', $_POST['itemid'] . $_SESSION['userid'] );
-            $params = array(':itemid' => $_POST['itemid'],
-                            ':BorrowerID' => $_SESSION['userid'],
-                            ':DueDate' => null, //$_POST['DueDate'],
-                            ':threadstatus' => "Requested",
-                            ':hashCode' => $hashCode
-                            );
-            $this->set('thread', $this->Thread->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate, HashCode)
-                                                      VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate, :hashCode)', $params));
+            $this->set('thread', $this->Thread->startThread("requested", $_POST['id'], $_SESSION['userid'], null));
         }
-
+        
         function itemoffer(){
-            $params = array(':itemid' => $_POST['itemid'],
-                            ':BorrowerID' => $_POST['userid'],
-                            ':DueDate' => null, //$_POST['DueDate'],
-                            ':threadstatus' => "Offered",
-                            ':hashCode' => $hashCode
-                            );
-            $this->set('thread', $this->Thread->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate)
-                                                      VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate)', $params));
+            $this->set('thread', $this->Thread->startThread("offered", $_POST['id'], $_POST['userid'], null));
         }
-		
 		/*
 			-Award points
 			-

@@ -49,6 +49,7 @@
         
         function itempage($id){
             $this->set('item', $this->Item->selectjoinaccount($id));
+            $this->set('itemID',($id));
         }
         
         function findbyuser(){
