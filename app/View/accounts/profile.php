@@ -44,7 +44,14 @@ $name = $user["firstName"]." ".$user["lastName"];
 	
 	<?php if($user['UserID'] != $_SESSION['userid']) {?>
 	<div id="actions">
-		<button class="lend" type="button" name="offer">Offer an item</button>
+		<!--<button class="lend" type="button" name="offer">Offer an item</button>-->
+                <a href="#offer" data-rel="popup" data-inline="true" data-role="button">Offer an item</a>
+                <div data-role="popup" id="offer">
+                     <a class="ui-icon-delete" href="#" data-icon="delete">Cancel</a>
+                    <ul>
+                        <li data-role="divider">Your items</li>
+                    </ul>
+                </div>
 		<button type="button" name="message">Send a message</button>
 		<button class="addFriend" type="submit">Add Friend</button>
 	</div>
@@ -118,5 +125,21 @@ $name = $user["firstName"]." ".$user["lastName"];
                 $(this).text("Success");
             }
         });
-    }); 
+    });
+    
+    
+    $("#offer ul").load("/ajax/items/myitems", function(){
+        $("#offer ul li button").click(function(event){
+            //event.preventDefault();
+            $this = $(this);
+            console.log($this);
+            $.post("/ajax/threads/itemoffer",{id: $this.val(), userid:<?= $user['id']?>}, function(data, status){
+                console.log(data);
+                $this.html(data);
+            });
+        });
+    });
+    
+    $('a.ui-icon-delete').click(function(event){event.preventDefault();$( "#offer" ).popup( "close" ); })
+    
 </script>

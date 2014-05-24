@@ -107,5 +107,10 @@
             }
             $this->set('items', $this->Item->query($query, $params));
         }
+        
+        function myitems(){
+            $params = array(':id' => $_SESSION['userid']);
+            $this->set('inventory', $this->Item->query('SELECT *, Item.id as ItemID, Account.id as UserID FROM Account JOIN Item ON (Account.id = Item.LenderID) WHERE LenderID = :id', $params));
+        }
     }
 ?>

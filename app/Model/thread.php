@@ -61,10 +61,10 @@
             }
         }
         
-        function startThread($initStat, $itemID, $userid, $dueDate){
+        function startThread($initStat, $itemID, $userid, $dueDate = null){
             $params = array(':BorrowerID' => $userid,
                             ':itemid' => $itemID);
-            $inProgress = $this->query('SELECT * FROM Thread WHERE BorrowerID = :BorrowerID AND ItemID = :itemid AND (ThreadStatus = "requested" OR ThreadStatus = "approved" OR ThreadStatus = "current" OR ThreadStatus = "Open")', $params);
+            $inProgress = $this->query('SELECT * FROM Thread WHERE BorrowerID = :BorrowerID AND ItemID = :itemid AND (ThreadStatus = "offered" OR ThreadStatus = "requested" OR ThreadStatus = "approved" OR ThreadStatus = "current" OR ThreadStatus = "Open")', $params);
             if(!$inProgress){
                 $hashCode = hash('CRC32', $itemID . $userid );
                 $params = array(':itemid' => $itemID,
@@ -73,8 +73,8 @@
                                 ':threadstatus' => $initStat,
                                 ':hashCode' => $hashCode
                                 );
-                $this->set('thread', $this->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate, HashCode)
-                                                          VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate, $hashCode)', $params));
+                return $this->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate, HashCode)
+                                                          VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate, :hashCode)', $params);
             }else{
                 die("Similar Item Already in Progress");
             }
