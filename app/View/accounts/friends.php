@@ -68,6 +68,10 @@
 }
 ?>
 
+<div><a href="local">
+    Browse Local People to add as friends
+</a></div>
+
 <script>
     $("button.addFriend").click(function(){
         friend = $(this).val();

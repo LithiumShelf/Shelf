@@ -62,7 +62,8 @@ class accountsController extends Controller {
         function local(){
                 //find hot item owners in your area
                 $params = array(':userid' => $_SESSION['userid']);
-                $this->set('localusers', $this->Account->query('SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid)', $params)); 
+                $this->set('localusers', $this->Account->potentialfriends($params));
+                //$this->set('localusers', $this->Account->query('SELECT a2.* FROM Account a1 JOIN Account a2 ON (a1.LocationID = a2.LocationID) WHERE a1.id = :userid)', $params)); 
         }
         
         function uploadprofileimg(){
