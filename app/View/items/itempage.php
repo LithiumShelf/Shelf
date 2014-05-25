@@ -61,9 +61,9 @@ function printSearchResults($parsed_xml, $item){
 <h2> <?= $parsed_xml->Items->Item->ItemAttributes->Title ?> </h2>
 <a href="<?= $parsed_xml->Items->Item->DetailPageURL ?>"></a>
 <?php if(isset($item[0]["ItemPic"])){ ?>
-<img src="<?= $BASE_URL ?>/images/item/<?=$item[0]["ItemPic"]?> ?>">
+<img src="<?= $item[0]["ItemPic"]?>">
 <?php }else{ ?>
-<img src="<?= $parsed_xml->Items->Item->LargeImage->URL ?>" height="<?= $parsed_xml->Items->Item->LargeImage->Height?>" width="<?= $parsed_xml->Items->Item->LargeImage->Width ?>">
+<img src="<?= $parsed_xml->Items->Item->LargeImage->URL ?>">
 <?php } 
   global $page;
   if($page == "borrow"){

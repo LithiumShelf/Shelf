@@ -97,7 +97,7 @@ $name = $user["firstName"]." ".$user["lastName"];
 			if(isset($user["profilePic"])){
 				$fullsize = explode('.', $user["profilePic"]);
 				$ext = array_pop($fullsize);
-				$thumbnail = implode('.', array_push($fullsize, "_thumb", $ext));
+				//$thumbnail = implode('.', array_push($fullsize, "_thumb", $ext));
 			?>
 			<img src="<?= $BASE_URL ?>/images/profile/<?= $thumbnail ?>">
 			<?php } ?>

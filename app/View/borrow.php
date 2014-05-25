@@ -1,6 +1,6 @@
 <?php
 	//For debugging, assume login
-	$_SESSION['userid']=  2;
+	//$_SESSION['userid']=  2;
 ?>
 <!--NEED: Search, Borrow History view-->
 <!--Container-->

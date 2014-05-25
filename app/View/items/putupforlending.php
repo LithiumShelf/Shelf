@@ -32,6 +32,9 @@
     -->
     <?php if($inventory){ ?>
     <h3>You have successfully put this item up for lending</h3>
+    <a href="/">Click here to go home</a>
+    <br />
+    <a href="/more/accounts/profile/<?= $_SESSION["userid"] ?>">Click here to view your inventory</a>
     <?php }else{ ?>
     <h3>There has been an error, please make sure you've selected an item</h3>
     <?php } ?>

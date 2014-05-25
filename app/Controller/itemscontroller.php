@@ -30,11 +30,52 @@
                 }else{
                     $listprice = null;
                 }
+                
+                if($_FILES){
+                //http://www.w3schools.com/php/php_file_upload.asp
+                $allowedExts = array("gif", "jpeg", "jpg", "png");
+                $temp = explode(".", $_FILES["img"]["name"]);
+                $extension = end($temp);
+                if ((($_FILES["img"]["type"] == "image/gif")
+                        || ($_FILES["img"]["type"] == "image/jpeg")
+                        || ($_FILES["img"]["type"] == "image/jpg")
+                        || ($_FILES["img"]["type"] == "image/pjpeg")
+                        || ($_FILES["img"]["type"] == "image/x-png")
+                        || ($_FILES["img"]["type"] == "image/png"))
+                        && ($_FILES["img"]["size"] < 2048000)
+                        && in_array($extension, $allowedExts)) {
+                                if ($_FILES["img"]["error"] > 0) {
+                                        echo "Error: " . $_FILES["img"]["error"] . "<br>";
+                                } else {
+                                        echo "Upload: " . $_FILES["img"]["name"] . "<br>";
+                                        echo "Type: " . $_FILES["img"]["type"] . "<br>";
+                                        echo "Size: " . ($_FILES["img"]["size"] / 1024) . " kB<br>";
+                                        $path = ROOT . DS . 'webroot' . DS . 'images' . DS . 'item' . DS;
+                                        if (file_exists($path . $_FILES["img"]["name"])) {
+                                                echo $_FILES["profileimg"]["name"] . " already exists. ";
+                                                die('Item NOT put up for lending, please go back and try again');
+                                         } else {
+                                                //save file to directory
+                                                move_uploaded_file($_FILES["img"]["tmp_name"],
+                                                $path .  $_FILES["img"]["name"]);
+                                                 echo "Uploaded Image Stored in: " . $path . $_FILES["img"]["name"];
+                                                $picurl = 'http://' . $_SERVER['HTTP_HOST'] . '/' . 'webroot' . '/' . 'images' . '/' . 'item' . '/' . $_FILES["img"]["name"];
+                                         }
+                                }
+                        }else {
+                                echo "Invalid file";
+                                $picurl = $product[4];
+                                die("Invalid file");
+                        }
+                }else{
+                    $picurl = $product[4];
+                    die("NO FILE");
+                }
                 $params = array(':userid' => $_SESSION["userid"],
                                 ':asin' => $product[0],
                                 ':name' => $product[1],
                                 ':category' => $productGroup,
-                                ':picURL' => null/*$_POST['picurl']*/,
+                                ':picURL' => $picurl,
                                 ':status' => "Available",
                                 ':listprice' => $listprice);
                 $this->set('inventory', $this->Item->query('INSERT INTO Item VALUES (null, :asin, :category, :name, :picURL, :status, :userid, :listprice)', $params));

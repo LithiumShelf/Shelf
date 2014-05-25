@@ -62,7 +62,7 @@ function printSearchResults($parsed_xml){
     if($numOfItems){
         ?>
             <div class="ui-field-contain">
-            <form action="putupforlending" method="post" data-ajax="false">
+            <form enctype="multipart/form-data" action="putupforlending" method="post" data-ajax="false">
             Upload your own image: <input type="file" name="img">
              
             <fieldset data-role="controlgroup">
@@ -73,6 +73,11 @@ function printSearchResults($parsed_xml){
             $values = $current->ASIN . '|' . $current->ItemAttributes->Title . '|' . $current->ItemAttributes->ProductGroup;
             if($current->ItemAttributes->ListPrice->Amount){
                 $values .= "|" . $current->ItemAttributes->ListPrice->Amount / 100;
+            }else{
+                $values .= "|";
+            }
+            if($current->LargeImage->URL){
+                $values .= "|" . $current->LargeImage->URL;
             }
 ?>
     <input type="radio" name="product" id="<?= $current->ASIN ?>" value="<?= $values ?>">
@@ -86,7 +91,7 @@ function printSearchResults($parsed_xml){
     <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
         <a href="<?= $current->DetailPageURL ?>"></a>
-        <img src="<?= $current->MediumImage->URL ?>" height="<?= $parsed_xml->Items->Item->MediumImage->Height?>" width="<?= $parsed_xml->Items->Item->MediumImage->Width ?>">
+        <img src="<?= $current->LargeImage->URL ?>"?>">
         <ul>
             <?php if(isset($current->ASIN)){ ?>
                 <li>Amazon Serial Identification Number a.k.a ASIN:<?= $current->ASIN ?></li>
@@ -124,6 +129,7 @@ if (isset($keywords)){
         What do you wish to lend?: <input type="search" name="keywords">
         <input type="submit" value="Submit">
     </form>
+    <h6>Powered by Amazon</h6>
 <?php
 }
 //Run and Print (perform the item search)
