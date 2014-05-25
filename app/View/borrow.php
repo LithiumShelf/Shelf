@@ -49,7 +49,7 @@ $('li').click(function(event){
 		$options.append($send);
 		$this.append($options);
 		
-		$send.click(function(){
+		$send.click(function(event){
 			event.stopPropagation();
 			$button = $(this);
 			$.post("/ajax/threads/composemessage",{subject: $subject.val(), body:$body.val(), threadID:id, page:"<?= $page ?>"}, function(data){
@@ -77,11 +77,12 @@ $('li').click(function(event){
 	//$(this).parent().parent().parent('li').attr('id');
 </script>
 <script>
-    $('button:not(button:first)').click(function(){
+    $('button:not(form button)').click(function(event){
 	event.stopPropagation();
     	var id = $(this).parent().parent().parent('li').attr('id');
+	var hashCode = $(this).parent().siblings().children().children().val();
     	var $this = $(this);
-        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>"}, function(data, status){
+        $.post("/ajax/threads/changestatus",{action:$(this).val(), id:id, page:"<?= $page ?>", hashCode:hashCode}, function(data, status){
         	console.log(data);
         		$this.html(data);
         });

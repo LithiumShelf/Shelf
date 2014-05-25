@@ -11,5 +11,5 @@ RewriteRule ^(ajax|feed|lend|borrow|more)/(.*) index.php?url=$2&page=$1 [PT,L,QS
 RewriteRule ^(ajax|feed|lend|borrow|more)?/? index.php?page=$1 [PT,L]
  
  #Error Pages
-ErrorDocument 404     /404.html
+ErrorDocument 404     /404.php
 ErrorDocument 500     /500.php
