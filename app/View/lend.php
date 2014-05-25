@@ -81,7 +81,7 @@ $('li').click(function(event){
 	//$(this).parent().parent().parent('li').attr('id');
 </script>
 <script>
-    $('button:not(button:first)').click(function(){
+    $('button:not(button:first)').click(function(event){
 	event.stopPropagation();
     	var id = $(this).parent().parent().parent('li').attr('id');
     	var $this = $(this);

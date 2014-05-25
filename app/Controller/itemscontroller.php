@@ -63,13 +63,11 @@
                                          }
                                 }
                         }else {
-                                echo "Invalid file";
+                                //echo "Invalid file";
                                 $picurl = $product[4];
-                                die("Invalid file");
                         }
                 }else{
                     $picurl = $product[4];
-                    die("NO FILE");
                 }
                 $params = array(':userid' => $_SESSION["userid"],
                                 ':asin' => $product[0],
