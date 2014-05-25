@@ -122,7 +122,7 @@
             $params = array(':UserID' => $_SESSION['userid']);
 			
 			//SQL code that orders threads by stats (custom order). To be appended to end of lend/borrow queries.
-			$orderby = " ORDER BY ( CASE WHEN ThreadStatus = 'requested' OR ThreadStatus = 'approved' OR ThreadStatus = 'waiting' THEN 0	WHEN ThreadStatus = 'current' OR ThreadStatus='Open' THEN 1 ELSE 3	END),ThreadStatus, DueDate DESC";
+			$orderby = " ORDER BY ( CASE WHEN ThreadStatus = 'requested' OR ThreadStatus = 'approved' OR ThreadStatus = 'waiting' OR ThreadStatus = 'offered' THEN 0	WHEN ThreadStatus = 'current' OR ThreadStatus='Open' THEN 1 ELSE 3	END),ThreadStatus, DueDate DESC";
 			
             if($page != "feed"){
                 //Select all your threads

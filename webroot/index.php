@@ -39,6 +39,8 @@ if($page == "ajax"){
         -->
         <link rel="stylesheet" type="text/css" href="<?= $BASE_URL ?>/css/general.css" />
 		
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		
         <script src="<?= $BASE_URL ?>/js/jquery-2.1.0.min.js"></script>
         <script src="<?= $BASE_URL ?>/js/jquery.mobile-1.4.2.min.js"></script>
     </head>
