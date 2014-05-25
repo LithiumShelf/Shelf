@@ -1,7 +1,7 @@
 <?php
     if($request){
-        echo Success;
+        echo "Success";
     }else{
-        echo Failed;
+        echo "Failed";
     }
 ?>

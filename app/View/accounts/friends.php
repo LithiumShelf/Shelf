@@ -30,8 +30,8 @@
 <?php
     function printuser($user, $request){
 ?>
-    <a href="profile/<?= $user["id"]?>">
     <div class="user">
+        <a href="profile/<?= $user["id"]?>">
         <?php if (isset($user['profilepic'])){
             $thumb = findThumbnailPath($user['profilepic']);
             ?>
@@ -51,6 +51,7 @@
         <h3><?= $user['Username'] ?></h3>
         <p><?= $user['firstName'] ?> <?= $user['lastName'] ?></p>
         <br />
+        </a>
        Borrowed: <?= $b ?> times <br />
        Lent: <?= $l ?> times <br />
        Percent successful: <?= $pSuccess ?>% <br />
@@ -62,7 +63,7 @@
             }
        ?>
     </div>
-    </a>
+    
     
 <?php
 }
@@ -73,7 +74,9 @@
 </a></div>
 
 <script>
-    $("button.addFriend").click(function(){
+    $("button.addFriend").click(function(event){
+        event.stopPropagation;
+        event.preventDefault;
         friend = $(this).val();
         $.post("/ajax/accounts/addfriend",{id:friend},function(data,status){
             if (status == "success") {

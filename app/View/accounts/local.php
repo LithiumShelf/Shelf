@@ -43,10 +43,9 @@
 <script>
     $("button.addFriend").click(function(){
         friend = $(this).val();
-        $.post("/ajax/accounts/addfriend",{id:friend},function(data,status){
-            if (status == "success") {
-                $(this).text("Success");
-            }
+        $this = $(this);
+        $.post("/ajax/accounts/addfriend",{id:friend},function(data){
+            $this.text(data);
         });
     }); 
 </script>

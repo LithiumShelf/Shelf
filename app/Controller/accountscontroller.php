@@ -8,7 +8,7 @@ class accountsController extends Controller {
                     //check if the user already sent you a friend request
                 ////$this->set('accept',$this->Account->query(''), $params);
                     //send the user a new friend request, or accepts an existing request.
-                    $this->set('request', $this->Account->query('INSERT INTO Friend (:userid, :friendid)', $params));
+                    $this->set('request', $this->Account->query('INSERT INTO Friend VALUES (:userid, :friendid)', $params));
                 }else{
                         
                 }
@@ -45,13 +45,13 @@ class accountsController extends Controller {
                                 ':passhash' => $hashedpass,
                                 ':location' => $_POST['location']);
                 //Only location is ID 1: Seattle WA
-                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID) VALUES (:username, :fname, :lname, :passhash, :location)', $params));
+                $this->set('register', $this->Account->query('INSERT INTO Account (Username, firstName, lastName, passhash, LocationID, Lent, Borrowed, numSuccessful) VALUES (:username, :fname, :lname, :passhash, :location, 0, 0, 0)', $params));
         }
         
         function friends(){
                 //Check Requests (return AccountID of users who have requested friendship)
                 $params = array(':userid' => $_SESSION['userid']);
-                $this->set('requests', $this->Account->query('SELECT id FROM Account JOIN Friend ON (Friend.User = Account.id) 
+                $this->set('requests', $this->Account->query('SELECT * FROM Account JOIN Friend ON (Friend.User = Account.id) 
                         WHERE Friend.Friend = :userid AND Friend.User NOT IN (SELECT Friend.Friend FROM Friend WHERE Friend.User = :userid)', $params));
                 //List out confirm friends JOINed with Accounts
                 //$params = array(':userid' => $_SESSION['userid']);
