@@ -74,5 +74,17 @@ class PDOhandler {
 		}
 	}
 
+	function beginTransaction(){
+		$this->_dbh->beginTransaction();
+	}
+
+	function rollBack(){
+		$this->_dbh->rollBack();
+	}
+
+	function commit(){
+		$this->_dbh->commit();
+	}
+
 }
 ?>

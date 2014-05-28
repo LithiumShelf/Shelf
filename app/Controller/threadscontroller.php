@@ -40,81 +40,87 @@
             }else{
                 die("Error");
             }
-            //confirmed role in, page setting, and participation in thread
-            if(isset($thread)){
-                switch($page){
-                    case "borrow":
-                        switch($thread["ThreadStatus"]){
-                            case "offered": //borrower -> requested
-                                $changeStatusTo = "requested";
-                                break;
-                            case "approved": //borrower -> current
-                            //force borrower to enter hashcode
-                            //set availability to unavailable
-                                if(isset($_POST['hashCode']) && $_POST['hashCode'] == $thread["HashCode"]){
-                                    if(isset($_POST['action']) && $_POST['action'] == "current"){
-                                        $changeStatusTo = "current";
-                                        $availability = "unavailable";
+            try{
+                $this->Thread->beginTransaction();
+                //confirmed role in, page setting, and participation in thread
+                if(isset($thread)){
+                    switch($page){
+                        case "borrow":
+                            switch($thread["ThreadStatus"]){
+                                case "offered": //borrower -> requested
+                                    $changeStatusTo = "requested";
+                                    break;
+                                case "approved": //borrower -> current
+                                //force borrower to enter hashcode
+                                //set availability to unavailable
+                                    if(isset($_POST['hashCode']) && $_POST['hashCode'] == $thread["HashCode"]){
+                                        if(isset($_POST['action']) && $_POST['action'] == "current"){
+                                            $changeStatusTo = "current";
+                                            $availability = "unavailable";
+                                            $this->Thread->givePoint($thread["BorrowerID"], "borrow");
+                                            $this->Thread->givePoint($thread["LenderID"], "lend");
+                                            $this->Thread->givePoint($thread["LenderID"], "success");
+                                        }else{
+                                            $changeStatusTo = "cancelled";
+                                        }
                                     }else{
-                                        $changeStatusTo = "cancelled";
+                                        throw new Exception("incorrect code");
                                     }
-                                    $this->Thread->givePoint($thread["BorrowerID"], "borrow");
-                                    $this->Thread->givePoint($thread["LenderID"], "lend");
-                                    $this->Thread->givePoint($thread["LenderID"], "success");
-                                }else{
-                                    die("incorrect code");
-                                }
-                                break;
-                             default: //fail and die
-                                die("One or more parameters are out of bounds, please contact Shelf development team");
-                        }
-                        break;
-                    case "lend":
-                        switch($thread["ThreadStatus"]){
-                            case "requested": //lender -> approve or reject
-                                //display hashcode to lender (handled in view)
-                                $changeStatusTo = $_POST['action']; //"approved" or "rejected"
-                                break;
-                            case "current": //lender -> "rejected", "complete", "late", "failed"
-                                //increment lend for lender and borrow for borrower
-                                /*
-                                    Set to either "complete", "late", "failed"
-                                */
-                                $changeStatusTo = $_POST['action']; //complete or failed
-                                if($changeStatusTo == "complete"){
-                                    if(isset($thread["DueDate"]) && date("Y-m-d H:i:s") > $thread["DueDate"]){
-                                        $changeStatusTo = "late";
+                                    break;
+                                 default: //fail and die
+                                    throw new Exception("One or more parameters are out of bounds, please contact Shelf development team");
+                            }
+                            break;
+                        case "lend":
+                            switch($thread["ThreadStatus"]){
+                                case "requested": //lender -> approve or reject
+                                    //display hashcode to lender (handled in view)
+                                    $changeStatusTo = $_POST['action']; //"approved" or "rejected"
+                                    break;
+                                case "current": //lender -> "rejected", "complete", "late", "failed"
+                                    //increment lend for lender and borrow for borrower
+                                    /*
+                                        Set to either "complete", "late", "failed"
+                                    */
+                                    $changeStatusTo = $_POST['action']; //complete or failed
+                                    if($changeStatusTo == "complete"){
+                                        if(isset($thread["DueDate"]) && date("Y-m-d H:i:s") > $thread["DueDate"]){
+                                            $changeStatusTo = "late";
+                                        }
+                                        $this->Thread->givePoint($thread["BorrowerID"], "borrow");
+                                        $availability = "available";
+                                    }else{
+                                        $changeStatusTo = "failed";
+                                        $availability = "missing";
                                     }
-                                    $this->Thread->givePoint($thread["BorrowerID"], "borrow");
-                                    $availability = "available";
-                                }else{
-                                    $changeStatusTo = "failed";
-                                    $availability = "missing";
-                                }
-                                break;
-                            default: //fail and die
-                                die("One or more parameters are out of bounds, please contact Shelf development team");
-                        }
-                        break;
-                    default://fail and die
-                        die("The page you are in is out of bounds, please contact Shelf development team");
+                                    break;
+                                default: //fail and die
+                                    throw new Exception("One or more parameters are out of bounds, please contact Shelf development team");
+                            }
+                            break;
+                        default://fail and die
+                            throw new Exception("The page you are in is out of bounds, please contact Shelf development team");
+                    }
+                    //echo $changeStatusTo;
+                    $params = array(':threadid' => $threadid,
+                                    ':newstatus' => $changeStatusTo);
+                    //change thread status
+                    $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:threadid', $params));
+                    if(isset($availability)){
+                        $params = array(':itemid' => $thread["ItemID"],
+                            ':availability' => $availability);
+                        $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE id = :itemid', $params));
+                    }
+                    $this->Thread->commit();
+                    echo "success";
+                    //change item availability
+                }else{
+                    throw new exception("There was an error");
                 }
-                //echo $changeStatusTo;
-                $params = array(':threadid' => $threadid,
-                                ':newstatus' => $changeStatusTo);
-                //change thread status
-                $this->set('thread', $this->Thread->query('UPDATE Thread SET ThreadStatus=:newstatus WHERE id=:threadid', $params));
-                if(isset($availability)){
-                    $params = array(':itemid' => $thread["ItemID"],
-                        ':availability' => $availability);
-                    $this->set('itemlock', $this->Thread->query('UPDATE Item SET ItemStatus=:availability WHERE id = :itemid', $params));
-                }
-                echo "success";
-                //change item availability
-            }else{
-                echo "There was an error";
+            } catch (Exception $e){
+                $this->Thread->rollBack();
+                die('Failed: ' . $e->getMessage());
             }
-
         }
         
         function viewallthreads(){
