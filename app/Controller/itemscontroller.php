@@ -81,9 +81,21 @@
         }
         
         function removefromlending(){
-            $params = array(':id' => $_POST["id"],
+
+            try{
+                $this->Item->beginTransaction();
+                $params = array(':itemid' => $_POST["id"]);
+                $this->Item->query('DELETE FROM Thread WHERE ItemID = :itemid', $params);
+                $params = array(':id' => $_POST["id"],
                             ':userid' => $_SESSION["userid"]);
-            $this->set('inventory', $this->Item->query('DELETE FROM Item WHERE LenderID = :userid AND id = :id', $params));
+                $this->Item->query('DELETE FROM Item WHERE LenderID = :userid AND id = :id', $params);
+                $this->Item->commit();
+                echo "Success";
+            }catch(Exception $e){
+                $this->Item->rollBack();
+                echo "Failed";
+            }
+            
         }
         
         function itempage($id){
