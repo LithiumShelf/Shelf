@@ -87,7 +87,7 @@
                                         if(isset($thread["DueDate"]) && date("Y-m-d H:i:s") > $thread["DueDate"]){
                                             $changeStatusTo = "late";
                                         }
-                                        $this->Thread->givePoint($thread["BorrowerID"], "borrow");
+                                        $this->Thread->givePoint($thread["BorrowerID"], "success");
                                         $availability = "available";
                                     }else{
                                         $changeStatusTo = "failed";

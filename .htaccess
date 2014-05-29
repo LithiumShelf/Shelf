@@ -1,5 +1,8 @@
 #Redirect traffic to www.
 RewriteEngine on
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
 
 #All traffic to webroot except for progress
 RewriteCond %{REQUEST_URI} !^/progress/(.*)$
