@@ -63,7 +63,7 @@ function printSearchResults($parsed_xml){
         ?>
             <div class="ui-field-contain">
             <form enctype="multipart/form-data" action="putupforlending" method="post" data-ajax="false">
-            <label for="imgupload">Upload your own image:</label>
+            Upload your own image:
             <style scoped>
                 #imguploadWrapper {
                     height: 90px;
@@ -82,13 +82,16 @@ function printSearchResults($parsed_xml){
                     display:inline-block;
                     width:1em;
                 }
+                label{
+                    clear:right;
+                }
             </style>
             <div id=imguploadWrapper>
                 <input type="file" id="imgupload" name="img" accept="image/*" capture="camera">
             </div>
             <fieldset data-role="controlgroup">
                 <button type="submit" value="Submit">Submit</button>
-                <legend>Choose your product</legend>
+                Choose your product
         <?php
         foreach($parsed_xml->Items->Item as $current){
             $values = $current->ASIN . '|' . $current->ItemAttributes->Title . '|' . $current->ItemAttributes->ProductGroup;
