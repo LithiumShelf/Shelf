@@ -63,8 +63,29 @@ function printSearchResults($parsed_xml){
         ?>
             <div class="ui-field-contain">
             <form enctype="multipart/form-data" action="putupforlending" method="post" data-ajax="false">
-            Upload your own image: <input type="file" name="img">
-             
+            <label for="imgupload">Upload your own image:</label>
+            <style scoped>
+                #imguploadWrapper {
+                    height: 90px;
+                    background: url('http://www.clker.com/cliparts/8/n/1/t/R/c/camera-icon-th.png') 0 0 no-repeat;
+                    border:none;
+                    overflow:hidden;
+                }
+                #imgupload, .ui-input-text.ui-body-inherit.ui-corner-all.ui-shadow-inset{
+                    margin-left:-145px;
+                    opacity:0;
+                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+                    /*display:none;*/
+                }
+                #camera{
+                    display:inline-block;
+                    width:1em;
+                }
+            </style>
+            <div id=imguploadWrapper>
+                <input type="file" id="imgupload" name="img" accept="image/*" capture="camera">
+            </div>
             <fieldset data-role="controlgroup">
                 <button type="submit" value="Submit">Submit</button>
                 <legend>Choose your product</legend>
@@ -91,7 +112,7 @@ function printSearchResults($parsed_xml){
     <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
         <a href="<?= $current->DetailPageURL ?>"></a>
-        <img src="<?= $current->LargeImage->URL ?>"?>">
+        <img src="<?= $current->LargeImage->URL ?>">
         <ul>
             <?php if(isset($current->ASIN)){ ?>
                 <li>Amazon Serial Identification Number a.k.a ASIN:<?= $current->ASIN ?></li>
