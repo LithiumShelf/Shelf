@@ -90,7 +90,10 @@ function printSearchResults($parsed_xml){
                 <input type="file" id="imgupload" name="img" accept="image/*" capture="camera">
             </div>
             <fieldset data-role="controlgroup">
-                <button type="submit" value="Submit">Submit</button>
+               <div data-role="footer" data-position="fixed">
+                  <button type="submit" value="Submit">Submit</button>
+               </div>
+                
                 Choose your product
         <?php
         foreach($parsed_xml->Items->Item as $current){
@@ -114,25 +117,26 @@ function printSearchResults($parsed_xml){
     </style>
     <label for="<?= $current->ASIN ?>">
         <h2> <?= $current->ItemAttributes->Title ?> </h2>
-        <a href="<?= $current->DetailPageURL ?>"></a>
-        <img src="<?= $current->LargeImage->URL ?>">
-        <ul>
-            <?php if(isset($current->ASIN)){ ?>
-                <li>Amazon Serial Identification Number a.k.a ASIN:<?= $current->ASIN ?></li>
-            <?php } ?>
-            <?php if(isset($current->DetailPageURL)){ ?>
-                <li><a href=<?= $current->DetailPageURL ?>>Product Detail Page on Amazon</a></li>
-            <?php } ?>
-            <?php if(isset($current->ItemAttributes->ProductGroup)){ ?>
-                <li>Product Group:<?= $current->ItemAttributes->ProductGroup ?></li>
-            <?php } ?>
-            <?php if(isset($current->ItemAttributes->Artist)){ ?>
-                <li>Artist:<?= $current->ItemAttributes->Artist ?></li>
-            <?php } ?>
-            <?php if(isset($current->ItemAttributes->Manufacturer)){ ?>
-                <li>Manufacturer:<?= $current->ItemAttributes->Manufacturer ?></li>
-            <?php } ?>
-        </ul>
+        <div class="ui-grid-a my-breakpoint">
+         <div class="ui-block-a">
+         <a href="<?= $current->DetailPageURL ?>">
+         <img src="<?= $current->LargeImage->URL ?>">
+         </a>
+         </div>
+          <div class="ui-block-b">
+         <ul>
+             <?php if(isset($current->ItemAttributes->ProductGroup)){ ?>
+                 <li>Product Group: <?= $current->ItemAttributes->ProductGroup ?></li>
+             <?php } ?>
+             <?php if(isset($current->ItemAttributes->Artist)){ ?>
+                 <li>Artist: <?= $current->ItemAttributes->Artist ?></li>
+             <?php } ?>
+             <?php if(isset($current->ItemAttributes->Manufacturer)){ ?>
+                 <li>Manufacturer: <?= $current->ItemAttributes->Manufacturer ?></li>
+             <?php } ?>
+         </ul>
+          </div>
+        </div>
     </label>
 <?php
         }
