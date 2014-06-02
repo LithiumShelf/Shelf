@@ -131,6 +131,7 @@ ItemLookup($item[0]["ASIN"], $item);
 
 <script>
     $('button').click(function(){
+        $this = $(this);
         $.post("/ajax/threads/itemrequest",{id:<?= $itemID ?>}, function(data, status){
         	console.log(data);
         	$this.html(data);

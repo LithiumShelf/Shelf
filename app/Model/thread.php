@@ -76,7 +76,7 @@
                 return $this->query('INSERT INTO Thread (ThreadStatus, BorrowerID, ItemID, DueDate, HashCode)
                                                           VALUES (:threadstatus, :BorrowerID, :itemid, :DueDate, :hashCode)', $params);
             }else{
-                die("Similar Item Already in Progress");
+                die("Similar Item Already in Progress... ");
             }
         }
     }

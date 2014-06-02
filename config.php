@@ -4,7 +4,7 @@
                 $_REQUEST['page'] : 'home';
  
   /** Configuration Variables **/
-  define ('DEVELOPMENT_ENVIRONMENT',true);
+  define ('DEVELOPMENT_ENVIRONMENT',false);
    
   define('DB_NAME', 'loztwodc_shelf');
   define('DB_USER', 'loztwodc_shelf');

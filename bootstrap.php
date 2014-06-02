@@ -1,7 +1,10 @@
 <?php
 //enable error reporting, please disable for production
 ini_set('display_errors',1); 
- error_reporting(E_ALL);
+ //error_reporting(E_ALL); //error reporting on
+
+
+error_reporting(0); //error reporting off
 
 require_once "config.php";
 
